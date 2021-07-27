@@ -5,10 +5,10 @@
 </template>
 
 <script>
-const { eventRegistrationValidation } = require("@/validation/validation.js");
+// const { eventRegistrationValidation } = require("@/validation/validation.js");
 
 export default {
-  name: "Register",
+  name: "Event Registration",
   data() {
     return {
       name: "",
