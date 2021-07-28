@@ -3,29 +3,60 @@ const { tldSet } = require("@/validation/tlds.js");
 
 const eventRegistrationValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string()
+    firstName: Joi.string()
       .alphanum()
-      .min(3)
+      .min(2)
       .max(30)
       .required().messages({
-        "string.base": `Username should be a string`,
-        "string.empty": `Username cannot be left empty`,
-        "string.min": `Username should be at least {#limit} characters`,
-        "string.max": `Username should be under {#limit} characters`,
-        "any.required": `Username is a required field`,
-        "string.pattern.base": `Username can only contain numbers, letters, spaces, or underscores`,
+        "string.base": `First Name should be a string`,
+        "string.empty": `First Name cannot be left empty`,
+        "string.min": `First Name should be at least {#limit} characters`,
+        "string.max": `First Name should be under {#limit} characters`,
+        "any.required": `First Name is a required field`,
       }),
-    name: Joi.string()
+    lastName: Joi.string()
       .alphanum()
-      .min(3)
+      .min(2)
       .max(30)
       .required().messages({
-        "string.base": `Username should be a string`,
-        "string.empty": `Username cannot be left empty`,
-        "string.min": `Username should be at least {#limit} characters`,
-        "string.max": `Username should be under {#limit} characters`,
-        "any.required": `Username is a required field`,
-        "string.pattern.base": `Username can only contain numbers, letters, spaces, or underscores`,
+        "string.base": `Last Name should be a string`,
+        "string.empty": `Last Name cannot be left empty`,
+        "string.min": `Last Name should be at least {#limit} characters`,
+        "string.max": `Last Name should be under {#limit} characters`,
+        "any.required": `Last Name is a required field`,
+      }),
+    email: Joi.string()
+      .email({ tlds: { allow: tldSet } })
+      .min(2)
+      .max(30)
+      .required().messages({
+        "string.base": `Email should be a string`,
+        "string.empty": `Email cannot be left empty`,
+        "string.min": `Email should be at least {#limit} characters`,
+        "string.max": `Email should be under {#limit} characters`,
+        "any.required": `Email is a required field`,
+      }),
+    phoneNumber: Joi.string()
+      .length(10)
+      .pattern(/^[0-9]+$/)
+      .required().messages({
+        "string.base": `Phone Number should be a string`,
+        "string.empty": `Phone Number cannot be left empty`,
+        "string.min": `Phone Number should be at least {#limit} characters`,
+        "string.max": `Phone Number should be under {#limit} characters`,
+        "any.required": `Phone Number is a required field`,
+        "string.pattern.base": `Phone Number can only contain numbers`,
+      }),
+    attendeeInfo: Joi.string()
+      .alphanum()
+      .max(30)
+      .allow("", null)
+      .messages({
+        "string.base": `Attendee Info should be a string`,
+        "string.empty": `Attendee Info cannot be left empty`,
+        "string.min": `Attendee Info should be at least {#limit} characters`,
+        "string.max": `Attendee Info should be under {#limit} characters`,
+        "any.required": `Attendee Info is a required field`,
       }),
   });
   return schema.validate(data, {

@@ -30,33 +30,73 @@
       </p>
     </div>
 
-    <form action="#" @submit.prevent="">
+    <form action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
         <h3 class="card-title">Attendee Info</h3>
-        <div class="form-control">
+
+        <div class="form-control" >
           <span class="p-float-label">
-            <InputText type="text" id="first-name" v-model="firstName" />
+            <InputText
+              type="text"
+              id="first-name"
+              v-model="firstName"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('firstName')
+              }"
+            />
             <label for="first-name">First Name</label>
           </span>
+          <div
+            v-for="(message, index) of validationMessages['firstName']"
+            :key="index"
+          >
+            <div class="error-message">{{ message }}</div>
+          </div>
         </div>
+
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="last-name" v-model="lastName" />
+            <InputText type="text" id="last-name" v-model="lastName" :class="{
+                'p-invalid': validationMessages.hasOwnProperty('lastName'),
+              }"/>
             <label for="last-name">Last Name</label>
           </span>
+          <div
+            v-for="(message, index) of validationMessages['lastName']"
+            :key="index"
+          >
+            <div class="error-message">{{ message }}</div>
+          </div>
         </div>
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="email" v-model="email" />
+            <InputText type="text" id="email" v-model="email" :class="{
+                'p-invalid': validationMessages.hasOwnProperty('email'),
+              }"/>
             <label for="email">Email</label>
           </span>
+          <div
+            v-for="(message, index) of validationMessages['email']"
+            :key="index"
+          >
+            <div class="error-message">{{ message }}</div>
+          </div>
         </div>
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="phone-number" v-model="phoneNumber" />
+            <InputText type="text" id="phone-number" v-model="phoneNumber" :class="{
+                'p-invalid': validationMessages.hasOwnProperty('phoneNumber'),
+              }"/>
             <label for="phone-number">Phone Number</label>
           </span>
+          <div
+            v-for="(message, index) of validationMessages['phoneNumber']"
+            :key="index"
+          >
+            <div class="error-message">{{ message }}</div>
+          </div>
         </div>
+
         <div class="form-control">
           <span>
             <label class="regular-label" for="attendee-info">
@@ -66,9 +106,18 @@
               id="attendee-info"
               v-model="attendeeInfo"
               :autoResize="true"
-              placeholder="e.g. Allergies, transportation, etc."
+              placeholder="E.g. Allergies, transportation, etc."
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('attendeeInfo'),
+              }"
             />
           </span>
+          <div
+            v-for="(message, index) of validationMessages['attendeeInfo']"
+            :key="index"
+          >
+            <div class="error-message">{{ message }}</div>
+          </div>
         </div>
       </div>
 
@@ -91,7 +140,7 @@
 </template>
 
 <script>
-// const { eventRegistrationValidation } = require("@/validation/validation.js");
+const { eventRegistrationValidation } = require("@/validation/validation.js");
 
 export default {
   name: "Event Registration",
@@ -101,8 +150,31 @@ export default {
       lastName: "",
       email: "",
       phoneNumber: "",
-      attendeeInfo: ""
+      attendeeInfo: "",
+      validationMessages: {}
     };
+  },
+  methods: {
+    submitRegistration() {
+      this.validationMessages = {};
+      const { error } = eventRegistrationValidation({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        phoneNumber: this.phoneNumber,
+        attendeeInfo: this.attendeeInfo
+      });
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter(val => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        return;
+      }
+    }
   }
 };
 </script>
@@ -159,7 +231,7 @@ export default {
 
 .regular-label {
   display: block;
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 
 .submit-button {
