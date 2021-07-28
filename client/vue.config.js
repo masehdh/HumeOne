@@ -9,9 +9,18 @@ module.exports = {
   devServer: {
     // These are the proxy settings for the dev server. It is currently set to the default IP address given by docker. You can also set it to localhost:8080 or wherever. In production, it should automatically use the correct IP address.
     proxy: {
-      "/": {
+      "/api": {
         target: "http://localhost:8010/",
       },
     },
   },
+  // Load SCSS Variables to entire project
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData:
+          `@import "@/scss/_variables.scss";`
+      }
+    }
+  }
 };

@@ -18,6 +18,7 @@ import 'primeflex/primeflex.css';
 import InputText from "primevue/inputtext";
 import Textarea from 'primevue/textarea';
 import Button from "primevue/button";
+import AutoComplete from 'primevue/autocomplete';
 
 createApp(App)
   .use(store)
@@ -26,4 +27,5 @@ createApp(App)
   .component("InputText", InputText)
   .component("Textarea", Textarea)
   .component("Button", Button)
+  .component("AutoComplete", AutoComplete)
   .mount('#app')

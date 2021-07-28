@@ -4,59 +4,76 @@ const { tldSet } = require("@/validation/tlds.js");
 const eventRegistrationValidation = (data) => {
   const schema = Joi.object({
     firstName: Joi.string()
-      .alphanum()
+      .pattern(/^[a-zA-z'-]+$/)
       .min(2)
-      .max(30)
+      .max(40)
       .required().messages({
-        "string.base": `First Name should be a string`,
-        "string.empty": `First Name cannot be left empty`,
-        "string.min": `First Name should be at least {#limit} characters`,
-        "string.max": `First Name should be under {#limit} characters`,
-        "any.required": `First Name is a required field`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
       }),
     lastName: Joi.string()
-      .alphanum()
+      .pattern(/^[a-zA-z'-]+$/)
       .min(2)
-      .max(30)
+      .max(40)
       .required().messages({
-        "string.base": `Last Name should be a string`,
-        "string.empty": `Last Name cannot be left empty`,
-        "string.min": `Last Name should be at least {#limit} characters`,
-        "string.max": `Last Name should be under {#limit} characters`,
-        "any.required": `Last Name is a required field`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
       }),
     email: Joi.string()
       .email({ tlds: { allow: tldSet } })
       .min(2)
       .max(30)
       .required().messages({
-        "string.base": `Email should be a string`,
-        "string.empty": `Email cannot be left empty`,
-        "string.min": `Email should be at least {#limit} characters`,
-        "string.max": `Email should be under {#limit} characters`,
-        "any.required": `Email is a required field`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.email": `The email you entered appears to be invalid`
+      }),
+    gender: Joi.string()
+      .pattern(/^[a-zA-z'-]+$/)
+      .min(2)
+      .max(40)
+      .required().messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
       }),
     phoneNumber: Joi.string()
       .length(10)
       .pattern(/^[0-9]+$/)
       .required().messages({
-        "string.base": `Phone Number should be a string`,
-        "string.empty": `Phone Number cannot be left empty`,
-        "string.min": `Phone Number should be at least {#limit} characters`,
-        "string.max": `Phone Number should be under {#limit} characters`,
-        "any.required": `Phone Number is a required field`,
-        "string.pattern.base": `Phone Number can only contain numbers`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.pattern.base": `This field can only contain numbers`,
+        "string.length": `Phone number should be 10-digits long`,
       }),
     attendeeInfo: Joi.string()
-      .alphanum()
-      .max(30)
+      .max(140)
       .allow("", null)
+      .pattern(/^[a-zA-Z0-9.,!?:'"/-]+$/)
       .messages({
-        "string.base": `Attendee Info should be a string`,
-        "string.empty": `Attendee Info cannot be left empty`,
-        "string.min": `Attendee Info should be at least {#limit} characters`,
-        "string.max": `Attendee Info should be under {#limit} characters`,
-        "any.required": `Attendee Info is a required field`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.pattern.base": `This field cannot contain special characters`,
       }),
   });
   return schema.validate(data, {

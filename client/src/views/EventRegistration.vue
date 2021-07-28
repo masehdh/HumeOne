@@ -1,6 +1,9 @@
 <template>
   <div class="section form-section">
     <div class="container form-card">
+      <div id="hero-image">
+        &nbsp;
+      </div>
       <h1 id="form-title">Event Registration</h1>
       <h2 id="event-title">Bonfire at Earl Bales Park</h2>
       <div class="line-divider">&nbsp;</div>
@@ -33,8 +36,7 @@
     <form action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
         <h3 class="card-title">Attendee Info</h3>
-
-        <div class="form-control" >
+        <div class="form-control">
           <span class="p-float-label">
             <InputText
               type="text"
@@ -50,50 +52,89 @@
             v-for="(message, index) of validationMessages['firstName']"
             :key="index"
           >
-            <div class="error-message">{{ message }}</div>
+            <div class="validation-message">{{ message }}</div>
           </div>
         </div>
 
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="last-name" v-model="lastName" :class="{
-                'p-invalid': validationMessages.hasOwnProperty('lastName'),
-              }"/>
+            <InputText
+              type="text"
+              id="last-name"
+              v-model="lastName"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('lastName')
+              }"
+            />
             <label for="last-name">Last Name</label>
           </span>
           <div
             v-for="(message, index) of validationMessages['lastName']"
             :key="index"
           >
-            <div class="error-message">{{ message }}</div>
+            <div class="validation-message">{{ message }}</div>
           </div>
         </div>
+
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="email" v-model="email" :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email'),
-              }"/>
+            <InputText
+              type="text"
+              id="email"
+              v-model="email"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('email')
+              }"
+            />
             <label for="email">Email</label>
           </span>
           <div
             v-for="(message, index) of validationMessages['email']"
             :key="index"
           >
-            <div class="error-message">{{ message }}</div>
+            <div class="validation-message">{{ message }}</div>
           </div>
         </div>
+
         <div class="form-control">
           <span class="p-float-label">
-            <InputText type="text" id="phone-number" v-model="phoneNumber" :class="{
-                'p-invalid': validationMessages.hasOwnProperty('phoneNumber'),
-              }"/>
+            <AutoComplete
+              type="text"
+              id="gender"
+              v-model="gender"
+              :suggestions="filteredGenderOptions"
+              @complete="searchGenderOptions($event)"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('gender')
+              }"
+            />
+            <label for="gender">Gender</label>
+          </span>
+          <div
+            v-for="(message, index) of validationMessages['gender']"
+            :key="index"
+          >
+            <div class="validation-message">{{ message }}</div>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <span class="p-float-label">
+            <InputText
+              type="text"
+              id="phone-number"
+              v-model="phoneNumber"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
+              }"
+            />
             <label for="phone-number">Phone Number</label>
           </span>
           <div
             v-for="(message, index) of validationMessages['phoneNumber']"
             :key="index"
           >
-            <div class="error-message">{{ message }}</div>
+            <div class="validation-message">{{ message }}</div>
           </div>
         </div>
 
@@ -108,7 +149,7 @@
               :autoResize="true"
               placeholder="E.g. Allergies, transportation, etc."
               :class="{
-                'p-invalid': validationMessages.hasOwnProperty('attendeeInfo'),
+                'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
               }"
             />
           </span>
@@ -116,7 +157,7 @@
             v-for="(message, index) of validationMessages['attendeeInfo']"
             :key="index"
           >
-            <div class="error-message">{{ message }}</div>
+            <div class="validation-message">{{ message }}</div>
           </div>
         </div>
       </div>
@@ -149,8 +190,11 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      gender: "",
       phoneNumber: "",
       attendeeInfo: "",
+      filteredGenderOptions: [],
+      genderOptions: ["Male", "Female"],
       validationMessages: {}
     };
   },
@@ -161,6 +205,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
+        gender: this.gender,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo
       });
@@ -174,12 +219,24 @@ export default {
         });
         return;
       }
+    },
+    searchGenderOptions(event) {
+      setTimeout(() => {
+        if (event.query.trim().length < 1) {
+          this.filteredGenderOptions = this.genderOptions;
+        } else {
+          this.filteredGenderOptions = this.genderOptions.filter(option => {
+            return option.toLowerCase().startsWith(event.query.toLowerCase());
+          });
+        }
+      }, 250);
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+
 #form-title {
   font-size: 16px;
   text-transform: uppercase;
@@ -208,6 +265,7 @@ export default {
 .card-title {
   font-weight: 400;
   font-size: 24px;
+  max-width: 100%;
 }
 
 .event-detail-item {
@@ -220,12 +278,18 @@ export default {
 
 .form-control {
   margin-top: 16px;
+  max-width: 100%;
   .p-inputtext {
     max-width: 100%;
   }
   .p-inputtextarea {
     width: 100%;
     max-width: 100%;
+  }
+  .validation-message {
+    padding-top: 4px;
+    font-size: 14px;
+    color: rgb(255, 62, 62);
   }
 }
 
@@ -236,5 +300,26 @@ export default {
 
 .submit-button {
   margin-top: 16px;
+  max-width: 100%;
+}
+
+form {
+  max-width: 100%;
+}
+
+#hero-image {
+  padding: 200px 0;
+  border-radius: 8px;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 32px;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("../assets/bonfire-image.jpg");
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  @media (max-width: $mobile-breakpoint) {
+    padding: 125px 0;
+  }
 }
 </style>
