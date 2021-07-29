@@ -1,35 +1,36 @@
 <template>
   <div class="section form-section">
     <div class="container form-card">
+
       <div id="hero-image">
         &nbsp;
       </div>
       <h1 id="form-title">Event Registration</h1>
-      <h2 id="event-title">Bonfire at Earl Bales Park</h2>
+      <h2 id="event-title">{{ eventDetails.eventName }}</h2>
       <div class="line-divider">&nbsp;</div>
       <p class="event-detail-item">
         <span class="event-detail-title">Date & time:</span>
-        something about the location
+        {{ eventDetails.dateTime }}
       </p>
       <p class="event-detail-item">
         <span class="event-detail-title">Location:</span>
-        something about the location
+        {{ eventDetails.location }}
       </p>
       <p class="event-detail-item">
         <span class="event-detail-title">What to bring:</span>
-        something about the location
+        {{ eventDetails.whatToBring }}
       </p>
       <p class="event-detail-item">
         <span class="event-detail-title">When you arrive:</span>
-        something about the location
+        {{ eventDetails.whenYouArrive }}
       </p>
       <p class="event-detail-item">
         <span class="event-detail-title">What to expect:</span>
-        something about the location
+        {{ eventDetails.whatToExpect }}
       </p>
       <p class="event-detail-item">
         <span class="event-detail-title">Cancellation:</span>
-        something about the location
+        {{ eventDetails.cancellation }}
       </p>
     </div>
 
@@ -182,11 +183,13 @@
 
 <script>
 const { eventRegistrationValidation } = require("@/validation/validation.js");
+import eventList from "@/assets/events.json";
 
 export default {
   name: "Event Registration",
   data() {
     return {
+      eventDetails: eventList[0],
       firstName: "",
       lastName: "",
       email: "",
@@ -219,6 +222,8 @@ export default {
         });
         return;
       }
+
+      return this.$router.push({ name: "Registration Confirmation" });
     },
     searchGenderOptions(event) {
       setTimeout(() => {
@@ -231,12 +236,11 @@ export default {
         }
       }, 250);
     }
-  }
+  },
 };
 </script>
 
 <style scoped lang="scss">
-
 #form-title {
   font-size: 16px;
   text-transform: uppercase;

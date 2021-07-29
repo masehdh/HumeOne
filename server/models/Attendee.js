@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
 const attendeeSchema = new mongoose.Schema({
-  name: {
+  event: {},
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
@@ -9,10 +14,18 @@ const attendeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: {
+  gender: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  attendeeInfo: {
     type: String,
     required: false,
-  }
+  },
 }, { timestamps: true }
 );
 

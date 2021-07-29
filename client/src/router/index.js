@@ -8,7 +8,7 @@ const routes = [
       import(/* webpackChunkName: "register" */ "@/views/EventRegistration.vue"),
   },
   {
-    path: '/registration-confirmation',
+    path: '/registration-confirmation/',
     name: 'Registration Confirmation',
     component: () =>
       import(/* webpackChunkName: "confirmation" */ "@/views/RegistrationConfirmation.vue"),
@@ -26,7 +26,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes: routes,
+  scrollBehavior() {
+    // always scroll to top
+    return { top: 0 }
+  },
 })
 
 export default router
