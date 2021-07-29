@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/event-registration',
+    path: '/event-registration/',
     name: 'Event Registration',
     component: () =>
       import(/* webpackChunkName: "register" */ "@/views/EventRegistration.vue"),

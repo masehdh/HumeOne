@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const attendeeSchema = new mongoose.Schema({
-  event: {},
+  eventId: {
+    type: String,
+    required: true
+  },
   firstName: {
     type: String,
     required: true,

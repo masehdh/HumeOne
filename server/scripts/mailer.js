@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const nodemailer = require("nodemailer");
 // SCRIPTS
-const executePalliatrack = require("./executePalliatrack");
 const newsletter_template = require("./newsletter_template");
 
 // AGGREGATOR. SET OF STEPS THAT ALLOW FEWER QUERY RESULTS AFTER EACH STEP. FINAL ARRAY CONTAINS CORRECT STRUCTURE FOR MAILER.
@@ -110,21 +109,6 @@ const start = () =>
 // SEND NEWSLETTER
 const send = async (newsletterName) => {
   try {
-    const newsletter = await Newsletter.findOne({ name: newsletterName });
-    await executePalliatrack(newsletter.searches);
-    const results = await aggregator(newsletter);
-    if (results.length < newsletter.min_results) {
-      return `Less than ${newsletter.min_results} result(s) were found, newsletter has not been sent`;
-    }
-    const termMentions = termCounter(results);
-    const lastSentString =
-      newsletter.last_sent == undefined
-        ? `found since ${newsletter.last_sent.toDateString()}`
-        : "";
-    const numNewArticles = results.length;
-    const assortedResults = distributor(results, newsletter.max_results);
-    const recipients = newsletter.emails;
-    const subject = `CHPCA Newsletter: ${newsletter.title}`;
     recipients.forEach(async (recipient) => {
       const unsubLink = unsubMaker(recipient, newsletter._id);
       await transporter.sendMail(
@@ -133,12 +117,6 @@ const send = async (newsletterName) => {
           to: recipient,
           subject: subject,
           html: newsletter_template(
-            newsletter.title,
-            assortedResults,
-            unsubLink,
-            numNewArticles,
-            lastSentString,
-            termMentions
           ),
           attachments: [
             {
@@ -166,53 +144,6 @@ const send = async (newsletterName) => {
 };
 
 // SEND TEST NEWSLETTER.
-const test = async (newsletter, recipients) => {
-  try {
-    await executePalliatrack(newsletter.searches);
-    const results = await aggregator(newsletter);
-    const termMentions = termCounter(results);
-    const lastSentString =
-      newsletter.last_sent == undefined
-        ? `found since ${newsletter.last_sent.toDateString()}`
-        : "";
-    const numNewArticles = results.length;
-    const assortedResults = distributor(results, newsletter.max_results);
-    const subject = `CHPCA Newsletter: ${newsletter.title}`;
-    recipients.forEach(async (recipient) => {
-      await transporter.sendMail(
-        {
-          from: '"Test" <test@deeptox.co>',
-          to: recipient,
-          subject: subject,
-          html: newsletter_template(
-            `${newsletter.title} (TEST)`,
-            assortedResults,
-            "",
-            numNewArticles,
-            lastSentString,
-            termMentions
-          ),
-          attachments: [
-            {
-              filename: "image.png",
-              path: path.join(__dirname, "../assets/chpca-logo.png"),
-              cid: "chpca-logo",
-            },
-          ],
-        },
-        async (error, info) => {
-          if (error) {
-            return error;
-          }
-          return "Message sent: " + info.response;
-        }
-      );
-    });
-  } catch (error) {
-    return error;
-  }
-};
 
 module.exports.start = start;
-module.exports.test = test;
 module.exports.send = send;

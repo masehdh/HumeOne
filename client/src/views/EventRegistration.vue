@@ -222,7 +222,6 @@ export default {
         });
         return;
       }
-
       return this.$router.push({ name: "Registration Confirmation" });
     },
     searchGenderOptions(event) {

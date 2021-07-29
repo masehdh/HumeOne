@@ -1,41 +1,86 @@
 const Joi = require("joi");
+const { tldSet } = require("./tlds");
 
-const registerValidation = (data) => {
+const eventRegistrationValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string()
-      .alphanum()
-      .min(3)
-      .max(30)
+    firstName: Joi.string()
+      .pattern(/^[a-zA-z'-]+$/)
+      .min(2)
+      .max(40)
       .required().messages({
-        "string.base": `Username should be a string`,
-        "string.empty": `Username cannot be left empty`,
-        "string.min": `Username should be at least {#limit} characters`,
-        "string.max": `Username should be under {#limit} characters`,
-        "any.required": `Username is a required field`,
-        "string.pattern.base": `Username can only contain numbers, letters, spaces, or underscores`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
+      }),
+    lastName: Joi.string()
+      .pattern(/^[a-zA-z'-]+$/)
+      .min(2)
+      .max(40)
+      .required().messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
       }),
     email: Joi.string()
-      .min(6)
+      .email({ tlds: { allow: tldSet } })
+      .min(2)
+      .max(30)
       .required().messages({
-        "string.base": `Password should be a string`,
-        "string.empty": `Password cannot be left empty`,
-        "string.min": `Password should be at least {#limit} characters`,
-        "string.max": `Password should be under {#limit} characters`,
-        "any.required": `Password is a required field`,
-        "string.pattern.base": `Password can only contain numbers, letters, spaces, or underscores`,
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.email": `The email you entered appears to be invalid`
       }),
-    phoneNumber: Joi.string().min(9).max(10).pattern(/^[0-9]+$/).messages({
-      "string.base": `Phone Number should be a string`,
-      "string.empty": `Phone Number cannot be left empty`,
-      "string.min": `Phone Number should be at least {#limit} digits`,
-      "string.max": `Phone Number should be under {#limit} digits`,
-      "string.pattern.base": `Phone Number can only contain numbers.`,
-    })
-  }),
+    gender: Joi.string()
+      .pattern(/^[a-zA-z'-]+$/)
+      .min(2)
+      .max(40)
+      .required().messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
+      }),
+    phoneNumber: Joi.string()
+      .length(10)
+      .pattern(/^[0-9]+$/)
+      .required().messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.pattern.base": `This field can only contain numbers`,
+        "string.length": `Phone number should be 10-digits long`,
+      }),
+    attendeeInfo: Joi.string()
+      .max(140)
+      .allow("", null)
+      .pattern(/^[a-zA-Z0-9.,!?:'"/-]+$/)
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.pattern.base": `This field cannot contain special characters`,
+      }),
+  });
   return schema.validate(data, {
     abortEarly: false,
     errors: { label: "key", escapeHtml: true },
   });
 };
 
-module.exports.registerValidation = registerValidation;
+// exporting this way allows us to access the functions directly. See /routes/auth.js
+module.exports.eventRegistrationValidation = eventRegistrationValidation;
