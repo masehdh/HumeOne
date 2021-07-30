@@ -1,6 +1,6 @@
 [
   {
-    "eventId": 0,
+    "eventId": "0",
     "eventImage": "bonfire-image.jpg",
     "eventName": "Bonfire at Earl Bales Park",
     "dateTime": "7 PM on Sunday August 1. Note that this weekend is a long weekend!",
@@ -8,7 +8,10 @@
     "map": "https://maps.app.goo.gl/4UxBnykYcxjX4be16",
     "whatToBring": "Warm jacket and personal snacks. It's looking like it will be ~18 degrees.",
     "whenYouArrive": "Give Maseh a call at 647-561-4010 if you need support.",
-    "whatToExpect": "Nothing",
-    "cancellation": "If you are unable to attend, please let us know at humeoneteam@gmail.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded."
+    "whatToExpect": "",
+    "cancellation": "If you are unable to attend, please let us know at humeoneteam@gmail.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
+    "reservationFee": "$5.00",
+    "paymentDeadline":"August 1st, 2021",
+    "maxSpots": "20"
   }
 ]

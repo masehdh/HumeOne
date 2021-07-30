@@ -1,11 +1,4 @@
-const template = function (
-  newsletterTitle,
-  results,
-  unsubLink = "",
-  numNewArticles,
-  lastSentString,
-  termMentions
-) {
+const template = function () {
   let message = `
   <!doctype html>
   <html>
@@ -114,21 +107,13 @@ const template = function (
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">
-                        <img src="cid:chpca-logo" alt="CHPCA Logo" width="100%" height="100%" max-width="160px" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin:0;">
+                        <img src="cid:humeone-logo" alt="Humeone Logo" width="100%" height="100%" max-width="160px" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin:0;">
 
-                        <h1 style="font-family: Raleway, Helvetica; font-size: 24px; font-weight: 900; color: #333333; margin: 0; Margin-bottom: 24px; Margin-top: 32px">${newsletterTitle}</h1>
-  `;
-  results.forEach((result) => {
-    const source = result.result_source;
-    const title = result.result_title;
-    const url = result.result_url;
-    const excerpt = result.result_excerpt;
-    const pubDate = new Date(result.result_date);
-    message += `
-                        <h3 style="font-family: Raleway, Helvetica; font-size: 14px; font-weight: 700;color: rgb(204,0,51); margin: 0; Margin-bottom: 4px;">${source}</h3>
-                        <h2 style="font-family: Raleway, Helvetica; font-size: 18px; font-weight: 700;color: #333333; margin: 0; Margin-bottom: 0;">${title}</h2>
-                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 700; color: #888888 ;margin: 0; Margin-bottom: 16px;">${pubDate.toDateString()}</p>
-                        <p style="font-family: Raleway, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">${excerpt}</p>
+                        <h1 style="font-family: Raleway, Helvetica; font-size: 24px; font-weight: 900; color: #333333; margin: 0; Margin-bottom: 24px; Margin-top: 32px">hi</h1>
+                        <h3 style="font-family: Raleway, Helvetica; font-size: 14px; font-weight: 700;color: rgb(204,0,51); margin: 0; Margin-bottom: 4px;">test</h3>
+                        <h2 style="font-family: Raleway, Helvetica; font-size: 18px; font-weight: 700;color: #333333; margin: 0; Margin-bottom: 0;">test</h2>
+                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 700; color: #888888 ;margin: 0; Margin-bottom: 16px;">test</p>
+                        <p style="font-family: Raleway, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">test</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>
                             <tr>
@@ -136,7 +121,7 @@ const template = function (
                                 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; background-color: rgb(34,104,155); border-radius: 5px; text-align: center;"> <a href="${url}" target="_blank" style="display: inline-block; color: #ffffff; background-color: rgb(34,104,155); border: solid 1px rgb(34,104,155); border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none !important; font-size: 12px; font-weight: bold; margin: 0; padding: 8px 12px; text-transform: capitalize; border-color: rgb(34,104,155);">Read More</a> </td>
+                                      <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; background-color: rgb(34,104,155); border-radius: 5px; text-align: center;"> <a href="test" target="_blank" style="display: inline-block; color: #ffffff; background-color: rgb(34,104,155); border: solid 1px rgb(34,104,155); border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none !important; font-size: 12px; font-weight: bold; margin: 0; padding: 8px 12px; text-transform: capitalize; border-color: rgb(34,104,155);">Read More</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -144,25 +129,13 @@ const template = function (
                             </tr>
                           </tbody>
                         </table>
-      `;
-  });
-  message += `
                       </td>
                     </tr>
                     <tr>
                       <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 4px; Margin-top: 16px; text-align: center;">Showing ${results.length} of ${numNewArticles} new articles ${lastSentString}</p>
+                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 4px; Margin-top: 16px; text-align: center;">Showing test of testnew articles test</p>
                         <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 0; text-align: center; text-transform: capitalize !important;">
-  `;
-  if (Object.keys(termMentions).length > 0) {
-    message += "Mentions:";
-  }
-  for (term in termMentions) {
-    message += `
-    <span style="color: #888888; font-size: 12px; text-align: center; text-transform: uppercase !important;"> ${term} </span><span style="color: #777777; font-size: 12px; text-align: center; font-weight:500">(${termMentions[term]}) </span>
-    `;
-  }
-  message += `
+                          <span style="color: #888888; font-size: 12px; text-align: center; text-transform: uppercase !important;"> test </span><span style="color: #777777; font-size: 12px; text-align: center; font-weight:500">test </span>
                           </p>
                         </td>
                       </tr>
@@ -175,7 +148,7 @@ const template = function (
                   <tr>
                     <td class="content-block" style="font-family: Raleway, Helvetica; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                       <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">You are receiving this email because you have been subscribed by <a href="https://www.chpca.ca/" style="text-decoration: underline; color: #444444 !important; font-size: 12px; text-align: center;">CHPCA</a> for this newsletter.</span>
-                      <br> Don't like these emails? <a href="${unsubLink}" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+                      <br> Don't like these emails? <a href="test" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
                     </td>
                   </tr>
                 </table>
