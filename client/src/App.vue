@@ -11,6 +11,9 @@
         <router-link :to="{ name: 'Registration Confirmation' }">
           Registration Confirmation
         </router-link>
+        <router-link :to="{ name: 'Sign Up' }">
+          Sign Up
+        </router-link>
       </div>
     </div>
   </div>

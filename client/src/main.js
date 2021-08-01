@@ -19,6 +19,21 @@ import InputText from "primevue/inputtext";
 import Textarea from 'primevue/textarea';
 import Button from "primevue/button";
 import AutoComplete from 'primevue/autocomplete';
+import Dropdown from 'primevue/dropdown';
+import TreeSelect from 'primevue/treeselect';
+import MultiSelect from 'primevue/multiselect';
+
+// FONTAWESOME
+import {
+  faRunning,
+} from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+
+// FONTAWESOME ICONS
+library.add(
+  faRunning,
+);
 
 createApp(App)
   .use(store)
@@ -28,4 +43,7 @@ createApp(App)
   .component("Textarea", Textarea)
   .component("Button", Button)
   .component("AutoComplete", AutoComplete)
+  .component("Dropdown", Dropdown)
+  .component("TreeSelect", TreeSelect)
+  .component("MultiSelect", MultiSelect)
   .mount('#app')

@@ -1,181 +1,102 @@
 <template>
-  <div class="section form-section">
-    <form action="#" @submit.prevent="submitRegistration">
-      <div class="container form-card">
-        <h3 class="card-title">Attendee Sign Up</h3>
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="first-name"
-              v-model="firstName"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('firstName')
-              }"
-            />
-            <label for="first-name">First Name</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['firstName']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
+  <div class="container form-card">
+    {{selectedInterestNodeKey}}
+    <br>
+    {{test}}
+    <h3 class="card-title">Preferences</h3>
+    <div class="form-control">
+      <span class="p-float-label">
+        <MultiSelect v-model="preferredAgeGroup" :options="ageOptions" optionLabel="ageGroup" />
+        <label for="age">Age Group</label>
+      </span>
+    </div>
 
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="last-name"
-              v-model="lastName"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('lastName')
-              }"
-            />
-            <label for="last-name">Last Name</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['lastName']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
+    <div class="form-control">
+      <span class="p-float-label">
+        <AutoComplete
+          type="text"
+          id="city"
+          v-model="selectedCity"
+          :suggestions="filteredCityOptions"
+          @complete="searchCityOptions($event)"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('city')
+          }"
+        />
+        <label for="city">City</label>
+      </span>
+    </div>
 
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="email"
-              v-model="email"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email')
-              }"
-            />
-            <label for="email">Email</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['email']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
+    <div class="form-control">
+      <span class="p-float-label">
+        <TreeSelect v-model="selectedInterestNodeKey" :options="interestNodes" display="chip" selectionMode="checkbox" />
+        <label for="interests">Interests</label>
+      </span>
+    </div>
 
-        <div class="form-control">
-          <span class="p-float-label">
-            <AutoComplete
-              type="text"
-              id="gender"
-              v-model="gender"
-              :suggestions="filteredGenderOptions"
-              @complete="searchGenderOptions($event)"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('gender')
-              }"
-            />
-            <label for="gender">Gender</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['gender']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="phone-number"
-              v-model="phoneNumber"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
-              }"
-            />
-            <label for="phone-number">Phone Number</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['phoneNumber']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div class="form-control">
-          <span>
-            <label class="regular-label" for="attendee-info">
-              Anything else you would like us to know?
-            </label>
-            <Textarea
-              id="attendee-info"
-              v-model="attendeeInfo"
-              :autoResize="true"
-              placeholder="E.g. Allergies, transportation, etc."
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
-              }"
-            />
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['attendeeInfo']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
+      <div class="form-control">
+        <span class="p-float-label">
+          <MultiSelect v-model="selectedAvailability" :options="availabilityOptions" optionLabel="time" optionValue="value" display="chip"/>
+          <label for="availability">Availability</label>
+        </span>
       </div>
-    </form>
   </div>
 </template>
 
 <script>
-const { eventRegistrationValidation } = require("@/validation/validation.js");
+
+import cityList from "@/assets/canadianCities.json";
 
 export default {
-  name: "Sign Up Form",
+  name: "Preferences Form",
   data() {
     return {
-      age: "",
-      city: "",
-      interests: "",
-      availability: "",
+      ageOptions: [
+        {ageGroup:"18-24"},
+        {ageGroup:"25-34"},
+        {ageGroup:"35+"}
+        ],
+      preferredAgeGroup: [],
+      interestNodes: [
+        {"key":"0","label":"Sports","data":"Sports", "children": [{"key": "0-0","label": "Basketball","data": "Basketball"},{"key": "0-1","label": "Soccer","data": "Soccer"},{"key": "0-2","label": "Basketball","data": "Basketball"},{"key": "0-3","label": "Volleyball","data": "Volleyball"}]},{"key":"1","label":"Nature","data":"Nature","children": [{"key": "1-0","label": "Hiking","data": "Hiking"},{"key": "1-1","label": "Bonfire","data": "Bonfire"},{"key": "1-2","label": "Biking","data": "Biking"}]},
+        {"key":"2","label":"Networking","data":"Networking","children": [{"key": "2-0","label": "Tech","data": "Tech"},{"key": "2-1","label": "Policy","data": "Policy"}]},
+        {"key":"3","label":"Food","data":"Food","children": [{"key": "3-0","label": "Trendy Restaurants","data": "Trendy Restaurants"},{"key": "3-1","label": "Potlucks and picnics","data": "Potlucks and picnics"}]},
+        {"key":"4","label":"Learning Experiences","data":"Learning Experiences","children": [{"key": "4-0","label": "Personal development","data": "Personal development"},{"key": "4-1","label": "Skillsharing","data": "Skillsharing"},{"key": "4-2","label": "Coding","data": "Coding"}]}
+        ],
+      selectedInterestNodeKey: [],
       filteredCityOptions: [],
-      cityOptions: ["Male", "Female"],
+      selectedCity: "",
+      selectedAvailability: "",
+      availabilityOptions: [{time: "Weekday mornings (9-12)", value:"Weekday mornings (9-12)"}, {time:"Weekday afternoons (12-5)",value:"Weekday afternoons (12-5)"},{time:"Weekday evenings (5-10)",value:"Weekday evenings (5-10)"},{time:"Weekend mornings (9-12)",value:"Weekend mornings (9-12)"},{time:"Weekend afternoons (12-5)",value:"Weekend afternoons (12-5)"},{time:"Weekend evenings (5-10)",value:"Weekend evenings (5-10)"}],
       validationMessages: {}
     };
   },
-  methods: {
-    submitRegistration() {
-      this.validationMessages = {};
-      const { error } = eventRegistrationValidation({
-        age: this.firstName,
-        city: this.lastName,
-        interests: this.email,
-        availability: this.gender,
-      });
-      if (error) {
-        error.details.forEach(({ path }) => {
-          let messages = error.details
-            .filter(val => val.path[0] === path[0])
-            .map(({ message }) => message);
-          messages = [...new Set(messages)];
-          return (this.validationMessages[path[0]] = messages);
-        });
-        return;
-      }
-      return this.$router.push({ name: "Registration Confirmation" });
+  computed: {
+    test() {
+      return this.interestNodes.filter((node)=> Object.keys(selectedInterestNodeKey).includes(node.)))
     },
-    searchGenderOptions(event) {
+    cityOptions() {
+      return cityList.map((cityEntry)=>`${cityEntry.city}, ${cityEntry.province}`)
+    },
+    preferencesPayload() {
+      return {
+        preferredAgeGroup: this.preferredAgeGroup,
+        lastName: this.lastName,
+        email: this.email,
+        gender: this.gender,
+        phoneNumber: this.phoneNumber,
+        attendeeInfo: this.attendeeInfo,
+      };  
+    }
+  },
+  methods: {
+    searchCityOptions(city) {
       setTimeout(() => {
-        if (event.query.trim().length < 1) {
-          this.filteredGenderOptions = this.genderOptions;
+        if (city.query.trim().length < 1) {
+          this.filteredCityOptions = this.cityOptions;
         } else {
-          this.filteredGenderOptions = this.genderOptions.filter(option => {
-            return option.toLowerCase().startsWith(event.query.toLowerCase());
+          this.filteredCityOptions = this.cityOptions.filter(option => {
+            return option.toLowerCase().startsWith(city.query.toLowerCase());
           });
         }
       }, 250);
@@ -227,13 +148,14 @@ export default {
 .form-control {
   margin-top: 16px;
   max-width: 100%;
-  .p-inputtext {
+  .p-multiselect, .p-treeselect, .p-dropdown, .p-autocomplete, .p-autocomplete-input {
     max-width: 100%;
-  }
+    width: 200px;
+  };
   .p-inputtextarea {
     width: 100%;
     max-width: 100%;
-  }
+  };
   .validation-message {
     padding-top: 4px;
     font-size: 14px;
