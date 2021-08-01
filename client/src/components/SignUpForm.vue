@@ -8,7 +8,7 @@
           id="first-name"
           v-model="firstName"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('firstName')
+            'p-invalid': validationMessages.hasOwnProperty('firstName'),
           }"
           @blur="sendSignUpInfo()"
         />
@@ -29,7 +29,7 @@
           id="last-name"
           v-model="lastName"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('lastName')
+            'p-invalid': validationMessages.hasOwnProperty('lastName'),
           }"
           @blur="sendSignUpInfo()"
         />
@@ -50,18 +50,33 @@
           id="email"
           v-model="email"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('email')
+            'p-invalid': validationMessages.hasOwnProperty('email'),
           }"
           @blur="sendSignUpInfo()"
         />
         <label for="email">Email</label>
       </span>
-      <div
-        v-for="(message, index) of validationMessages['email']"
-        :key="index"
-      >
+      <div v-for="(message, index) of validationMessages['email']" :key="index">
         <div class="validation-message">{{ message }}</div>
       </div>
+    </div>
+
+    <div class="form-control">
+      <span class="p-float-label">
+        <AutoComplete
+          forceSelection
+          type="text"
+          id="city"
+          v-model="selectedCity"
+          :suggestions="filteredCityOptions"
+          @complete="searchCityOptions($event)"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('city'),
+          }"
+          @blur="sendSignUpInfo()"
+        />
+        <label for="city">City</label>
+      </span>
     </div>
 
     <div class="form-control">
@@ -73,7 +88,7 @@
           :suggestions="filteredGenderOptions"
           @complete="searchGenderOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('gender')
+            'p-invalid': validationMessages.hasOwnProperty('gender'),
           }"
           @blur="sendSignUpInfo()"
         />
@@ -89,9 +104,13 @@
 
     <div class="form-control">
       <span class="p-float-label">
-        <Dropdown v-model="age" :options="ageOptions" optionLabel="ageGroup" @blur="sendSignUpInfo()"/>
+        <Dropdown
+          v-model="age"
+          :options="ageOptions"
+          optionLabel="ageGroup"
+          @change="sendSignUpInfo()"
+        />
         <label for="age">Age Group</label>
-
       </span>
     </div>
 
@@ -102,7 +121,7 @@
           id="phone-number"
           v-model="phoneNumber"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
+            'p-invalid': validationMessages.hasOwnProperty('phoneNumber'),
           }"
           @blur="sendSignUpInfo()"
         />
@@ -127,7 +146,7 @@
           :autoResize="true"
           placeholder="E.g. Allergies, transportation, etc."
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
+            'p-invalid': validationMessages.hasOwnProperty('attendeeInfo'),
           }"
           @blur="sendSignUpInfo()"
         />
@@ -143,6 +162,7 @@
 </template>
 
 <script>
+import cityList from "@/assets/canadianCities.json";
 
 export default {
   name: "Sign Up Form",
@@ -151,21 +171,34 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
+      filteredCityOptions: [],
+      selectedCity: "",
       gender: "",
       ageOptions: [
-        {ageGroup:"18-24"},
-        {ageGroup:"25-34"},
-        {ageGroup:"35+"}
-        ],
+        { ageGroup: "18-24" },
+        { ageGroup: "25-34" },
+        { ageGroup: "35+" },
+      ],
       age: "",
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
       genderOptions: ["Male", "Female"],
-      validationMessages: {}
+      validationMessages: {},
     };
   },
   methods: {
+    searchCityOptions(city) {
+      setTimeout(() => {
+        if (city.query.trim().length < 1) {
+          this.filteredCityOptions = this.cityOptions;
+        } else {
+          this.filteredCityOptions = this.cityOptions.filter((option) => {
+            return option.toLowerCase().startsWith(city.query.toLowerCase());
+          });
+        }
+      }, 250);
+    },
     sendSignUpInfo() {
       return this.$emit("send-sign-up-info", this.signUpInfoPayload);
     },
@@ -174,26 +207,32 @@ export default {
         if (event.query.trim().length < 1) {
           this.filteredGenderOptions = this.genderOptions;
         } else {
-          this.filteredGenderOptions = this.genderOptions.filter(option => {
+          this.filteredGenderOptions = this.genderOptions.filter((option) => {
             return option.toLowerCase().startsWith(event.query.toLowerCase());
           });
         }
       }, 250);
-    }
+    },
   },
   computed: {
+    cityOptions() {
+      return cityList.map(
+        (cityEntry) => `${cityEntry.city}, ${cityEntry.province}`
+      );
+    },
     signUpInfoPayload() {
       return {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
+        selectedCity: this.selectedCity,
         gender: this.gender,
         age: this.age,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo,
-      };  
-    }
-  }
+      };
+    },
+  },
 };
 </script>
 
@@ -240,7 +279,7 @@ export default {
 .form-control {
   margin-top: 16px;
   max-width: 100%;
-  
+
   .p-inputtext {
     max-width: 100%;
   }
@@ -248,8 +287,8 @@ export default {
     width: 60%;
     max-width: 100%;
     @media (max-width: $mobile-breakpoint) {
-    width: 100%
-  }
+      width: 100%;
+    }
   }
   .validation-message {
     padding-top: 4px;
