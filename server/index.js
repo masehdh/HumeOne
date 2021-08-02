@@ -35,6 +35,8 @@ app.use(cors());
 // API ROUTE HANDLERS
 const eventRegistrationRoute = require("./routes/eventRegistration");
 app.use("/api/event-registration", eventRegistrationRoute);
+const signUpRoute = require("./routes/signUp");
+app.use("/api/sign-up", signUpRoute);
 
 // CATCH-ALL ROUTER FOR VUE. NECESSARY FOR SINGLE PAGE APPLICATION ROUTING. API/BACKEND ROUTES MUST BE HANDLED BEFORE THIS.
 app.use(express.static(`${__dirname}/public`));

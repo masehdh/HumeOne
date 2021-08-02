@@ -33,7 +33,7 @@
         {{ eventDetails.cancellation }}
       </p>
     </div>
-
+    {{validationMessages}}
     <form action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
         <h3 class="card-title">Attendee Info</h3>

@@ -1,23 +1,29 @@
 <template>
   <div class="section form-section">
     <form action="#" @submit.prevent="submitRegistration">
-      <SignUpForm @send-sign-up-info="setSignUpInfo" />
-      <PreferencesForm @send-preferences="setPreferences" />
-    </form>
-    <div>
+      <SignUpForm
+        @send-sign-up-info="setSignUpInfo"
+        :validationMessagesProp="validationMessages"
+      />
+      <PreferencesForm
+        @send-preferences="setPreferences"
+        :validationMessagesProp="validationMessages"
+      />
       <Button
-        type="Submit"
+        type="submit"
         label="Submit"
         class="p-button-md p-button-primary submit-button"
       />
-    </div>
+    </form>
   </div>
 </template>
 
 <script>
-const { eventRegistrationValidation } = require("@/validation/validation.js");
+const {signUpValidation} = require("@/validation/validation.js");
 import SignUpForm from "../components/SignUpForm.vue";
 import PreferencesForm from "../components/PreferencesForm.vue";
+import axios from "axios";
+
 export default {
   components: { SignUpForm, PreferencesForm },
   name: "Sign Up",
@@ -27,13 +33,14 @@ export default {
       lastName: "",
       email: "",
       gender: "",
-      age: "",
+      city: "",
+      ageGroup: "",
       phoneNumber: "",
       attendeeInfo: "",
       preferredAgeGroup: [],
-      city: "",
-      availability: "",
-      interests: "",
+      availability: [],
+      interests: [],
+      validationMessages: {},
     };
   },
   methods: {
@@ -41,26 +48,31 @@ export default {
       this.firstName = payload.firstName;
       this.lastName = payload.lastName;
       this.email = payload.email;
+      this.city = payload.city;
       this.gender = payload.gender;
-      this.age = payload.age;
+      this.ageGroup = payload.ageGroup;
       this.attendeeInfo = payload.attendeeInfo;
       this.phoneNumber = payload.phoneNumber;
     },
     setPreferences(payload) {
       this.preferredAgeGroup = payload.preferredAgeGroup;
-      this.city = payload.selectedCity;
-      this.availability = payload.selectedAvailability;
+      this.availability = payload.vailability;
       this.interests = payload.selectedInterests;
     },
     submitRegistration() {
       this.validationMessages = {};
-      const { error } = eventRegistrationValidation({
+      const { error } = signUpValidation({
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         gender: this.gender,
+        ageGroup: this.ageGroup,
+        city: this.city,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo,
+        preferredAgeGroup: this.preferredAgeGroup,
+        interests: this.interests,
+        availability: this.availability,
       });
       if (error) {
         error.details.forEach(({ path }) => {
@@ -72,7 +84,22 @@ export default {
         });
         return;
       }
-      return this.$router.push({ name: "Registration Confirmation" });
+      axios.post("/api/sign-up", {
+        eventId: "0",
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        gender: this.gender,
+        ageGroup: this.ageGroup,
+        city: this.city,
+        phoneNumber: this.phoneNumber,
+        attendeeInfo: this.attendeeInfo,
+        preferredAgeGroup: this.preferredAgeGroup,
+        interests: this.interests,
+        availability: this.availability,
+      })
+      .then(()=> this.$router.push({ name: "Registration Confirmation" }))
+      .catch((error) => console.log(error.response.data));
     },
   },
 };

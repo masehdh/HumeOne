@@ -12,8 +12,17 @@
           :options="ageOptions"
           optionLabel="ageGroup"
           @change="sendPreferences()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('preferredAgeGroup'),
+          }"
         />
       </span>
+      <div
+        v-for="(message, index) of validationMessages['preferredAgeGroup']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
 
     <div class="form-control">
@@ -28,8 +37,17 @@
           display="chip"
           selectionMode="checkbox"
           @change="sendPreferences()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('interests'),
+          }"
         />
       </span>
+      <div
+        v-for="(message, index) of validationMessages['interests']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
 
     <div class="form-control">
@@ -39,14 +57,23 @@
         </label>
         <MultiSelect
           id="availability"
-          v-model="selectedAvailability"
+          v-model="availability"
           :options="availabilityOptions"
           optionLabel="time"
           optionValue="value"
           display="chip"
           @change="sendPreferences()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('availability'),
+          }"
         />
       </span>
+      <div
+        v-for="(message, index) of validationMessages['availability']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +81,9 @@
 <script>
 export default {
   name: "Preferences Form",
+  props: {
+    validationMessagesProp: Object,
+  },
   data() {
     return {
       ageOptions: [
@@ -108,7 +138,7 @@ export default {
         },
       ],
       selectedInterestNodeKey: [],
-      selectedAvailability: "",
+      availability: "",
       availabilityOptions: [
         { time: "Weekday mornings (9-12)", value: "Weekday mornings (9-12)" },
         {
@@ -123,7 +153,7 @@ export default {
         },
         { time: "Weekend evenings (5-10)", value: "Weekend evenings (5-10)" },
       ],
-      validationMessages: {},
+      validationMessages: this.validationMessagesProp,
     };
   },
   computed: {
@@ -137,9 +167,14 @@ export default {
         preferredAgeGroup: this.preferredAgeGroup.map(
           ({ ageGroup }) => ageGroup
         ),
-        selectedInterests: this.selectedInterests,
-        selectedAvailability: this.selectedAvailability,
+        interests: this.selectedInterests,
+        availability: this.availability,
       };
+    },
+  },
+  watch: {
+    validationMessagesProp: function(newVal) {
+      return (this.validationMessages = newVal);
     },
   },
   methods: {

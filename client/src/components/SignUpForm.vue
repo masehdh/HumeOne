@@ -67,7 +67,7 @@
           forceSelection
           type="text"
           id="city"
-          v-model="selectedCity"
+          v-model="city"
           :suggestions="filteredCityOptions"
           @complete="searchCityOptions($event)"
           :class="{
@@ -77,6 +77,12 @@
         />
         <label for="city">City</label>
       </span>
+      <div
+        v-for="(message, index) of validationMessages['city']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
 
     <div class="form-control">
@@ -105,13 +111,22 @@
     <div class="form-control">
       <span class="p-float-label">
         <Dropdown
-          v-model="age"
+          v-model="ageGroup"
           :options="ageOptions"
           optionLabel="ageGroup"
           @change="sendSignUpInfo()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('ageGroup'),
+          }"
         />
-        <label for="age">Age Group</label>
+        <label for="ageGroup">Age Group</label>
       </span>
+      <div
+        v-for="(message, index) of validationMessages['ageGroup']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
 
     <div class="form-control">
@@ -166,26 +181,34 @@ import cityList from "@/assets/canadianCities.json";
 
 export default {
   name: "Sign Up Form",
+  props: {
+    validationMessagesProp: Object,
+  },
   data() {
     return {
       firstName: "",
       lastName: "",
       email: "",
       filteredCityOptions: [],
-      selectedCity: "",
+      city: "",
       gender: "",
       ageOptions: [
         { ageGroup: "18-24" },
         { ageGroup: "25-34" },
         { ageGroup: "35+" },
       ],
-      age: "",
+      ageGroup: "",
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
       genderOptions: ["Male", "Female"],
-      validationMessages: {},
+      validationMessages: this.validationMessagesProp,
     };
+  },
+  watch: {
+    validationMessagesProp: function(newVal) {
+      return (this.validationMessages = newVal);
+    },
   },
   methods: {
     searchCityOptions(city) {
@@ -225,9 +248,9 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        selectedCity: this.selectedCity,
+        city: this.city,
         gender: this.gender,
-        age: this.age,
+        ageGroup: this.ageGroup.ageGroup,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo,
       };
