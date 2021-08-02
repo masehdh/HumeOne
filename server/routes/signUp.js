@@ -11,7 +11,6 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const attendee = new Attendee({
-    eventId: req.body.eventId,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,

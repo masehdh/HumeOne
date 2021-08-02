@@ -1,7 +1,6 @@
 <template>
   <div class="section form-section">
     <div class="container form-card">
-
       <div id="hero-image">
         &nbsp;
       </div>
@@ -33,49 +32,9 @@
         {{ eventDetails.cancellation }}
       </p>
     </div>
-    {{validationMessages}}
     <form action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
         <h3 class="card-title">Attendee Info</h3>
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="first-name"
-              v-model="firstName"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('firstName')
-              }"
-            />
-            <label for="first-name">First Name</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['firstName']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="last-name"
-              v-model="lastName"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('lastName')
-              }"
-            />
-            <label for="last-name">Last Name</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['lastName']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
 
         <div class="form-control">
           <span class="p-float-label">
@@ -97,83 +56,9 @@
           </div>
         </div>
 
-        <div class="form-control">
-          <span class="p-float-label">
-            <AutoComplete
-              type="text"
-              id="gender"
-              v-model="gender"
-              :suggestions="filteredGenderOptions"
-              @complete="searchGenderOptions($event)"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('gender')
-              }"
-            />
-            <label for="gender">Gender</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['gender']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="phone-number"
-              v-model="phoneNumber"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
-              }"
-            />
-            <label for="phone-number">Phone Number</label>
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['phoneNumber']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div class="form-control">
-          <span>
-            <label class="regular-label" for="attendee-info">
-              Anything else you would like us to know?
-            </label>
-            <Textarea
-              id="attendee-info"
-              v-model="attendeeInfo"
-              :autoResize="true"
-              placeholder="E.g. Allergies, transportation, etc."
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
-              }"
-            />
-          </span>
-          <div
-            v-for="(message, index) of validationMessages['attendeeInfo']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container form-card">
-        <h3 class="card-title">Payment to reserve spot</h3>
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText type="text" id="first-name" v-model="firstName" />
-            <label for="first-name">First Name</label>
-          </span>
-        </div>
         <Button
           type="submit"
-          label="Submit"
+          label="Next"
           class="p-button-md p-button-primary submit-button"
         />
       </div>
@@ -182,7 +67,7 @@
 </template>
 
 <script>
-const { eventRegistrationValidation } = require("@/validation/validation.js");
+const { emailValidation } = require("@/validation/validation.js");
 import eventList from "@/assets/events.json";
 
 export default {
@@ -190,27 +75,15 @@ export default {
   data() {
     return {
       eventDetails: eventList[0],
-      firstName: "",
-      lastName: "",
       email: "",
-      gender: "",
-      phoneNumber: "",
-      attendeeInfo: "",
-      filteredGenderOptions: [],
-      genderOptions: ["Male", "Female"],
       validationMessages: {}
     };
   },
   methods: {
     submitRegistration() {
       this.validationMessages = {};
-      const { error } = eventRegistrationValidation({
-        firstName: this.firstName,
-        lastName: this.lastName,
+      const { error } = emailValidation({
         email: this.email,
-        gender: this.gender,
-        phoneNumber: this.phoneNumber,
-        attendeeInfo: this.attendeeInfo
       });
       if (error) {
         error.details.forEach(({ path }) => {
@@ -224,17 +97,6 @@ export default {
       }
       return this.$router.push({ name: "Registration Confirmation" });
     },
-    searchGenderOptions(event) {
-      setTimeout(() => {
-        if (event.query.trim().length < 1) {
-          this.filteredGenderOptions = this.genderOptions;
-        } else {
-          this.filteredGenderOptions = this.genderOptions.filter(option => {
-            return option.toLowerCase().startsWith(event.query.toLowerCase());
-          });
-        }
-      }, 250);
-    }
   },
 };
 </script>

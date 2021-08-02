@@ -1,6 +1,28 @@
 const Joi = require("joi");
 const { tldSet } = require("@/validation/tlds.js");
 
+const emailValidation = (data) => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .email({ tlds: { allow: tldSet } })
+      .min(2)
+      .max(30)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.email": `The email you entered appears to be invalid`,
+      }),
+  });
+  return schema.validate(data, {
+    abortEarly: false,
+    errors: { label: "key", escapeHtml: true },
+  });
+};
+
 const signUpValidation = (data) => {
   const schema = Joi.object({
     eventId: Joi.string(),
@@ -101,8 +123,7 @@ const signUpValidation = (data) => {
         "string.pattern.base": `This field cannot contain special characters`,
       }),
     preferredAgeGroup: Joi.array()
-      .items(
-      Joi.any().valid("18-24", "25-34", "35+",""))
+      .items(Joi.any().valid("18-24", "25-34", "35+", ""))
       .messages({
         "any.only": `You can only choose between the three provided options`,
       }),
@@ -155,4 +176,5 @@ const signUpValidation = (data) => {
   });
 };
 // exporting this way allows us to access the functions directly. See /routes/auth.js
+module.exports.emailValidation = emailValidation;
 module.exports.signUpValidation = signUpValidation;

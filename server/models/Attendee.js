@@ -18,10 +18,10 @@ const preferenceSchema = new mongoose.Schema({
   ],
 })
 const attendeeSchema = new mongoose.Schema({
-  eventId: {
+  eventIds: [{
     type: String,
-    required: true
-  },
+    required: false
+  }],
   firstName: {
     type: String,
     required: true,
