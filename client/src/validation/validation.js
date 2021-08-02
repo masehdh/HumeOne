@@ -3,6 +3,7 @@ const { tldSet } = require("@/validation/tlds.js");
 
 const signUpValidation = (data) => {
   const schema = Joi.object({
+    eventId: Joi.string(),
     firstName: Joi.string()
       .pattern(/^[a-zA-z'-]+$/)
       .min(2)

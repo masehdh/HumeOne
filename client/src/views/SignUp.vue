@@ -1,5 +1,6 @@
 <template>
   <div class="section form-section">
+    {{ageGroup}}
     <form action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
@@ -29,6 +30,7 @@ export default {
   name: "Sign Up",
   data() {
     return {
+      eventId: "0",
       firstName: "",
       lastName: "",
       email: "",
@@ -85,7 +87,7 @@ export default {
         return;
       }
       axios.post("/api/sign-up", {
-        eventId: "0",
+        eventId: this.eventId,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,

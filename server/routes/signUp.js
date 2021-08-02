@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
     lastName: req.body.lastName,
     email: req.body.email,
     gender: req.body.gender,
+    ageGroup: req.body.ageGroup,
     city: req.body.city,
     phoneNumber: req.body.phoneNumber,
     attendeeInfo: req.body.attendeeInfo,
