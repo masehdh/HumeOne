@@ -1,6 +1,7 @@
 // MODULES
 const express = require("express");
 const cors = require("cors");
+
 require("dotenv/config");
 // SCRIPTS
 const connectDB = require("./scripts/connectDB");
@@ -32,11 +33,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
 // API ROUTE HANDLERS
 const eventRegistrationRoute = require("./routes/eventRegistration");
 app.use("/api/event-registration", eventRegistrationRoute);
 const signUpRoute = require("./routes/signUp");
 app.use("/api/sign-up", signUpRoute);
+const paymentRoute = require("./routes/payment");
+app.use("/api/payment", paymentRoute);
 
 // CATCH-ALL ROUTER FOR VUE. NECESSARY FOR SINGLE PAGE APPLICATION ROUTING. API/BACKEND ROUTES MUST BE HANDLED BEFORE THIS.
 app.use(express.static(`${__dirname}/public`));
