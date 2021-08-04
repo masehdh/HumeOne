@@ -25,7 +25,6 @@ const emailValidation = (data) => {
 
 const signUpValidation = (data) => {
   const schema = Joi.object({
-    eventId: Joi.string(),
     firstName: Joi.string()
       .pattern(/^[a-zA-z'-]+$/)
       .min(2)
@@ -124,7 +123,7 @@ const signUpValidation = (data) => {
       }),
     preferredAgeGroup: Joi.array()
       .items(
-      Joi.any().valid("18-24", "25-34", "35+",""))
+        Joi.any().valid("18-24", "25-34", "35+", ""))
       .messages({
         "any.only": `You can only choose between the three provided options`,
       }),

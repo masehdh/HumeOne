@@ -7,7 +7,7 @@
         Thank you for registering! You should receive a confirmation email
         shortly with additional details. If you have any questions or would like
         to cancel, please email
-        <a href="mailto:humeoneteam@gmail.com">humeoneteam@gmail.com</a>.
+        <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
     </div>
   </div>
@@ -17,7 +17,7 @@
 // const { eventRegistrationValidation } = require("@/validation/validation.js");
 
 export default {
-  name: "Registration Confirmation",
+  name: "Event Registration Confirmation",
   data() {
     return {};
   }

@@ -1,10 +1,13 @@
 <template>
   <div class="section form-section">
-    {{ageGroup}}
+    <h3 class="card-title" v-if="emailProp">
+      In order to register for an event, you must first sign up
+    </h3>
     <form action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
         :validationMessagesProp="validationMessages"
+        :emailProp="emailProp"
       />
       <PreferencesForm
         @send-preferences="setPreferences"
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-const {signUpValidation} = require("@/validation/validation.js");
+const { signUpValidation } = require("@/validation/validation.js");
 import SignUpForm from "../components/SignUpForm.vue";
 import PreferencesForm from "../components/PreferencesForm.vue";
 import axios from "axios";
@@ -28,9 +31,12 @@ import axios from "axios";
 export default {
   components: { SignUpForm, PreferencesForm },
   name: "Sign Up",
+  props: {
+    emailProp: String,
+    eventIdProp: String
+  },
   data() {
     return {
-      eventId: "0",
       firstName: "",
       lastName: "",
       email: "",
@@ -42,7 +48,7 @@ export default {
       preferredAgeGroup: [],
       availability: [],
       interests: [],
-      validationMessages: {},
+      validationMessages: {}
     };
   },
   methods: {
@@ -74,37 +80,54 @@ export default {
         attendeeInfo: this.attendeeInfo,
         preferredAgeGroup: this.preferredAgeGroup,
         interests: this.interests,
-        availability: this.availability,
+        availability: this.availability
       });
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter((val) => val.path[0] === path[0])
+            .filter(val => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
         return;
       }
-      axios.post("/api/sign-up", {
-        eventId: this.eventId,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        gender: this.gender,
-        ageGroup: this.ageGroup,
-        city: this.city,
-        phoneNumber: this.phoneNumber,
-        attendeeInfo: this.attendeeInfo,
-        preferredAgeGroup: this.preferredAgeGroup,
-        interests: this.interests,
-        availability: this.availability,
-      })
-      .then(()=> this.$router.push({ name: "Registration Confirmation" }))
-      .catch((error) => console.log(error.response.data));
-    },
-  },
+      axios
+        .post("/api/sign-up", {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          gender: this.gender,
+          ageGroup: this.ageGroup,
+          city: this.city,
+          phoneNumber: this.phoneNumber,
+          attendeeInfo: this.attendeeInfo,
+          preferredAgeGroup: this.preferredAgeGroup,
+          interests: this.interests,
+          availability: this.availability
+        })
+        .then(() => {
+          if (this.eventIdProp) {
+            this.$router.push({
+              name: "Payment Processing",
+              params: { emailProp: this.email, eventIdProp: this.eventIdProp }
+            });
+          } else {
+            this.$router.push({
+              name: "Sign Up Confirmation",
+            });
+          }
+        })
+        .catch(error => console.log(error.response.data));
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card-title {
+  font-weight: 400;
+  font-size: 24px;
+  max-width: 100%;
+}
+</style>
