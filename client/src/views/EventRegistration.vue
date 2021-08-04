@@ -107,7 +107,9 @@ export default {
             //   name: "Payment Processing",
             //   params: { emailProp: this.email, eventIdProp: this.eventId }
             // });
-            axios.post("/api/payment/create-checkout-session")
+            axios
+              .post("/api/payment/create-checkout-session")
+              .then(res => (window.location.href = res.data.url));
           } else {
             // Redirect to sign up
             this.$router.push({

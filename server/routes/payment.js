@@ -15,15 +15,11 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `https://${process.env.DOMAIN}/registration-confirmation`,
-    cancel_url: `https://${process.env.DOMAIN}/event-registration`,
+    success_url: `http://${process.env.DOMAIN}:3000/event-registration-confirmation`,
+    cancel_url: `http://${process.env.DOMAIN}:3000/event-registration`,
   });
   console.log(session.url);
-  res
-    .set({
-      "Access-Control-Allow-Origin": "localhost",
-    })
-    .redirect(303, session.url);
+  res.status(200).json({ url: session.url })
 });
 
 module.exports = router;
