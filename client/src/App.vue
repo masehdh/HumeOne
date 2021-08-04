@@ -8,8 +8,8 @@
         <router-link :to="{ name: 'Event Registration' }">
           Event Registration
         </router-link>
-        <router-link :to="{ name: 'Registration Confirmation' }">
-          Registration Confirmation
+        <router-link :to="{ name: 'Event Registration Confirmation' }">
+          Event Registration Confirmation
         </router-link>
         <router-link :to="{ name: 'Sign Up' }">
           Sign Up
@@ -59,7 +59,7 @@
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.1);
-    color: #444450;
+    color: $primary-font-color;
     display: flex;
     flex-direction: column;
     padding: 32px;

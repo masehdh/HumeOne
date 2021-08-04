@@ -34,7 +34,7 @@
     </div>
     <form action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
-        <h3 class="card-title">Attendee Info</h3>
+        <h3 class="card-title">Please enter your email</h3>
 
         <div class="form-control">
           <span class="p-float-label">
@@ -69,12 +69,14 @@
 <script>
 const { emailValidation } = require("@/validation/validation.js");
 import eventList from "@/assets/events.json";
+import axios from "axios";
 
 export default {
   name: "Event Registration",
   data() {
     return {
       eventDetails: eventList[0],
+      eventId: eventList[0].eventId,
       email: "",
       validationMessages: {}
     };
@@ -83,7 +85,7 @@ export default {
     submitRegistration() {
       this.validationMessages = {};
       const { error } = emailValidation({
-        email: this.email,
+        email: this.email
       });
       if (error) {
         error.details.forEach(({ path }) => {
@@ -95,9 +97,27 @@ export default {
         });
         return;
       }
-      return this.$router.push({ name: "Registration Confirmation" });
-    },
-  },
+
+      axios
+        .post("/api/event-registration/check-email", { email: this.email })
+        .then(res => {
+          if (res.data.output) {
+            // Redirect to payment processing
+            this.$router.push({
+              name: "Payment Processing",
+              params: { emailProp: this.email, eventIdProp: this.eventId }
+            });
+          } else {
+            // Redirect to sign up
+            this.$router.push({
+              name: "Sign Up",
+              params: { emailProp: this.email, eventIdProp: this.eventId }
+            });
+          }
+        })
+        .catch(error => console.log("from error ", error.response.data));
+    }
+  }
 };
 </script>
 

@@ -183,6 +183,7 @@ export default {
   name: "Sign Up Form",
   props: {
     validationMessagesProp: Object,
+    emailProp: String
   },
   data() {
     return {
@@ -209,6 +210,9 @@ export default {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
     },
+  },
+  created() {
+    if (this.emailProp) return this.email = this.emailProp
   },
   methods: {
     searchCityOptions(city) {
