@@ -103,10 +103,11 @@ export default {
         .then(res => {
           if (res.data.output) {
             // Redirect to payment processing
-            this.$router.push({
-              name: "Payment Processing",
-              params: { emailProp: this.email, eventIdProp: this.eventId }
-            });
+            // this.$router.push({
+            //   name: "Payment Processing",
+            //   params: { emailProp: this.email, eventIdProp: this.eventId }
+            // });
+            axios.post("/api/payment/create-checkout-session")
           } else {
             // Redirect to sign up
             this.$router.push({
