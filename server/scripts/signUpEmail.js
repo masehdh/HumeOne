@@ -1,11 +1,11 @@
-const template = function () {
+const template = function (name, event) {
   let message = `
   <!doctype html>
   <html>
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <style>
     @media only screen and (max-width: 620px) {
       table[class=body] h1 {
@@ -50,7 +50,7 @@ const template = function () {
     }
     @media all {
       * {
-        font-family: Raleway, Helvetica;
+        font-family: Montserrat, Helvetica;
         color: #333333;
         line-height: 1.5;
       }
@@ -91,11 +91,11 @@ const template = function () {
     }
     </style>
   </head>
-  <body class="" style="background-color: #f6f6f6; font-family: Raleway, Helvetica; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+  <body class="" style="background-color: #f6f6f6; font-family: Montserrat, Helvetica; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
     <table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #f6f6f6;">
       <tr>
-        <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">&nbsp;</td>
-        <td class="container" style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
+        <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">&nbsp;</td>
+        <td class="container" style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
@@ -103,25 +103,25 @@ const template = function () {
 
               <!-- START MAIN CONTENT AREA -->
               <tr>
-                <td class="wrapper" style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+                <td class="wrapper" style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
-                      <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">
+                      <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">
                         <img src="cid:humeone-logo" alt="Humeone Logo" width="100%" height="100%" max-width="160px" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin:0;">
 
-                        <h1 style="font-family: Raleway, Helvetica; font-size: 24px; font-weight: 900; color: #333333; margin: 0; Margin-bottom: 24px; Margin-top: 32px">hi</h1>
-                        <h3 style="font-family: Raleway, Helvetica; font-size: 14px; font-weight: 700;color: rgb(204,0,51); margin: 0; Margin-bottom: 4px;">test</h3>
-                        <h2 style="font-family: Raleway, Helvetica; font-size: 18px; font-weight: 700;color: #333333; margin: 0; Margin-bottom: 0;">test</h2>
-                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 700; color: #888888 ;margin: 0; Margin-bottom: 16px;">test</p>
-                        <p style="font-family: Raleway, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">test</p>
+                        <h1 style="font-family: Montserrat, Helvetica; font-size: 24px; font-weight: 900; color: #333333; margin: 0; Margin-bottom: 24px; Margin-top: 32px">hi</h1>
+                        <h3 style="font-family: Montserrat, Helvetica; font-size: 14px; font-weight: 700;color: rgb(204,0,51); margin: 0; Margin-bottom: 4px;">test</h3>
+                        <h2 style="font-family: Montserrat, Helvetica; font-size: 18px; font-weight: 700;color: #333333; margin: 0; Margin-bottom: 0;">test</h2>
+                        <p style="font-family: Montserrat, Helvetica; font-size: 12px; font-weight: 700; color: #888888 ;margin: 0; Margin-bottom: 16px;">test</p>
+                        <p style="font-family: Montserrat, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">test</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>
                             <tr>
-                              <td align="left" style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; padding-bottom: 28px;">
+                              <td align="left" style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; padding-bottom: 28px;">
                                 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
                                   <tbody>
                                     <tr>
-                                      <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top; background-color: rgb(34,104,155); border-radius: 5px; text-align: center;"> <a href="test" target="_blank" style="display: inline-block; color: #ffffff; background-color: rgb(34,104,155); border: solid 1px rgb(34,104,155); border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none !important; font-size: 12px; font-weight: bold; margin: 0; padding: 8px 12px; text-transform: capitalize; border-color: rgb(34,104,155);">Read More</a> </td>
+                                      <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; background-color: rgb(34,104,155); border-radius: 5px; text-align: center;"> <a href="test" target="_blank" style="display: inline-block; color: #ffffff; background-color: rgb(34,104,155); border: solid 1px rgb(34,104,155); border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none !important; font-size: 12px; font-weight: bold; margin: 0; padding: 8px 12px; text-transform: capitalize; border-color: rgb(34,104,155);">Read More</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -132,9 +132,9 @@ const template = function () {
                       </td>
                     </tr>
                     <tr>
-                      <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 4px; Margin-top: 16px; text-align: center;">Showing test of testnew articles test</p>
-                        <p style="font-family: Raleway, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 0; text-align: center; text-transform: capitalize !important;">
+                      <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">
+                        <p style="font-family: Montserrat, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 4px; Margin-top: 16px; text-align: center;">Showing test of testnew articles test</p>
+                        <p style="font-family: Montserrat, Helvetica; font-size: 12px; font-weight: 500; color: #888888 ;margin: 0; Margin-bottom: 0; text-align: center; text-transform: capitalize !important;">
                           <span style="color: #888888; font-size: 12px; text-align: center; text-transform: uppercase !important;"> test </span><span style="color: #777777; font-size: 12px; text-align: center; font-weight:500">test </span>
                           </p>
                         </td>
@@ -146,7 +146,7 @@ const template = function () {
               <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">
                 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                   <tr>
-                    <td class="content-block" style="font-family: Raleway, Helvetica; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
+                    <td class="content-block" style="font-family: Montserrat, Helvetica; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                       <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">You are receiving this email because you have been subscribed by <a href="https://www.chpca.ca/" style="text-decoration: underline; color: #444444 !important; font-size: 12px; text-align: center;">CHPCA</a> for this newsletter.</span>
                       <br> Don't like these emails? <a href="test" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
                     </td>
@@ -155,7 +155,7 @@ const template = function () {
               </div>
             </div>
           </td>
-          <td style="font-family: Raleway, Helvetica; font-size: 14px; vertical-align: top;">&nbsp;</td>
+          <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">&nbsp;</td>
         </tr>
       </table>
     </body>

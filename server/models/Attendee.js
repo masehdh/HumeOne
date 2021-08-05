@@ -17,6 +17,7 @@ const preferenceSchema = new mongoose.Schema({
     }
   ],
 })
+
 const attendeeSchema = new mongoose.Schema({
   eventIds: [{
     type: String,

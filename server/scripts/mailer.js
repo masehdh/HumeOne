@@ -1,8 +1,11 @@
 // MODULES
 const path = require("path");
 const nodemailer = require("nodemailer");
+// MODELS
+const Attendee = require("../models/Attendee.js");
+const eventList = require("../../client/src/assets/events.json")
 // SCRIPTS
-const newsletter_template = require("./newsletter_template");
+const confirmationEmail = require("./confirmationEmail");
 
 // INITIALIZER FOR MAILER
 const start = () =>
@@ -17,15 +20,17 @@ const start = () =>
   });
 
 // SEND NEWSLETTER
-const send = async (newsletterName) => {
+const sendEventConfirmation = async (email, eventId) => {
+  const event = eventList.find(event => event.id === eventId)
+  const attendee = await Attendee.findOne({email: email})
+
   try {
     await transporter.sendMail(
       {
         from: '"HumeOne" <team@humeone.com>',
-        to: "maseh46@gmail.com",
-        subject: "subject",
-        html: newsletter_template(
-        ),
+        to: email,
+        subject: `Registration Confirmation: ${event.name}`,
+        html: confirmationEmail(attendee.firstName, event),
         attachments: [
           {
             filename: "humeone-logo.png",
@@ -49,4 +54,4 @@ const send = async (newsletterName) => {
 // SEND TEST NEWSLETTER.
 
 module.exports.start = start;
-module.exports.send = send;
+module.exports.sendEventConfirmation = sendEventConfirmation;
