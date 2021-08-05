@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { tldSet } = require("./tlds.js");
+const { tldSet } = require("../resources/tlds.js");
 
 const emailValidation = (data) => {
   const schema = Joi.object({
@@ -122,8 +122,7 @@ const signUpValidation = (data) => {
         "string.pattern.base": `This field cannot contain special characters`,
       }),
     preferredAgeGroup: Joi.array()
-      .items(
-        Joi.any().valid("18-24", "25-34", "35+", ""))
+      .items(Joi.any().valid("18-24", "25-34", "35+", ""))
       .messages({
         "any.only": `You can only choose between the three provided options`,
       }),

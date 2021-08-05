@@ -15,7 +15,7 @@
 
 <script>
 import axios from "axios";
-import eventList from "@/assets/events.json";
+import eventList from "../../../resources/events.json";
 
 export default {
   name: "Event Registration Confirmation",

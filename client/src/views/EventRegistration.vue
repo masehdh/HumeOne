@@ -3,7 +3,13 @@
     <div class="container form-card">
       <div
         id="hero-image"
-        :style="{background:'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../assets/'+ eventDetails.image + ')'}"
+        v-if="eventDetails.image"
+        :style="{
+          backgroundImage:
+            'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' +
+            require('../../../resources/' + eventDetails.image) +
+            ')'
+        }"
       >
         &nbsp;
       </div>
@@ -70,8 +76,8 @@
 </template>
 
 <script>
-const { emailValidation } = require("@/validation/validation.js");
-import eventList from "@/assets/events.json";
+const { emailValidation } = require("../../../resources/validation.js");
+import eventList from "../../../resources/events.json";
 import axios from "axios";
 
 export default {
@@ -86,12 +92,8 @@ export default {
       eventList: eventList
     };
   },
-  computed: {
-    cssVars() {
-      return {
-        "--image-url": this.eventDetails.image
-      };
-    }
+  mounted() {
+    if (!this.eventDetails.id) this.$router.push({ name: "404" });
   },
   methods: {
     submitRegistration() {
@@ -118,7 +120,10 @@ export default {
         .then(res => {
           if (res.data.output) {
             axios
-              .post("/api/payment/create-checkout-session", {eventId: this.eventId, email: this.email})
+              .post("/api/payment/create-checkout-session", {
+                eventId: this.eventId,
+                email: this.email
+              })
               .then(res => (window.location.href = res.data.url));
           } else {
             // Redirect to sign up
@@ -210,8 +215,6 @@ form {
   border-radius: 8px;
   box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 32px;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("../assets/bonfire-image.jpg");
   background-attachment: scroll;
   background-repeat: no-repeat;
   background-size: cover;

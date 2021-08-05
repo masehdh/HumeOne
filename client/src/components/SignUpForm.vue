@@ -8,7 +8,7 @@
           id="first-name"
           v-model="firstName"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('firstName'),
+            'p-invalid': validationMessages.hasOwnProperty('firstName')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -29,7 +29,7 @@
           id="last-name"
           v-model="lastName"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('lastName'),
+            'p-invalid': validationMessages.hasOwnProperty('lastName')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -50,7 +50,7 @@
           id="email"
           v-model="email"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('email'),
+            'p-invalid': validationMessages.hasOwnProperty('email')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -71,16 +71,13 @@
           :suggestions="filteredCityOptions"
           @complete="searchCityOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('city'),
+            'p-invalid': validationMessages.hasOwnProperty('city')
           }"
           @blur="sendSignUpInfo()"
         />
         <label for="city">City</label>
       </span>
-      <div
-        v-for="(message, index) of validationMessages['city']"
-        :key="index"
-      >
+      <div v-for="(message, index) of validationMessages['city']" :key="index">
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
@@ -94,7 +91,7 @@
           :suggestions="filteredGenderOptions"
           @complete="searchGenderOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('gender'),
+            'p-invalid': validationMessages.hasOwnProperty('gender')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -116,7 +113,7 @@
           optionLabel="ageGroup"
           @change="sendSignUpInfo()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('ageGroup'),
+            'p-invalid': validationMessages.hasOwnProperty('ageGroup')
           }"
         />
         <label for="ageGroup">Age Group</label>
@@ -136,7 +133,7 @@
           id="phone-number"
           v-model="phoneNumber"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('phoneNumber'),
+            'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -161,7 +158,7 @@
           :autoResize="true"
           placeholder="E.g. Allergies, transportation, etc."
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('attendeeInfo'),
+            'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
           }"
           @blur="sendSignUpInfo()"
         />
@@ -177,7 +174,7 @@
 </template>
 
 <script>
-import cityList from "@/assets/canadianCities.json";
+import cityList from "../../../resources/canadianCities.json";
 
 export default {
   name: "Sign Up Form",
@@ -196,23 +193,23 @@ export default {
       ageOptions: [
         { ageGroup: "18-24" },
         { ageGroup: "25-34" },
-        { ageGroup: "35+" },
+        { ageGroup: "35+" }
       ],
       ageGroup: "",
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
       genderOptions: ["Male", "Female"],
-      validationMessages: this.validationMessagesProp,
+      validationMessages: this.validationMessagesProp
     };
   },
   watch: {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
-    },
+    }
   },
   created() {
-    if (this.emailProp) return this.email = this.emailProp
+    if (this.emailProp) return (this.email = this.emailProp);
   },
   methods: {
     searchCityOptions(city) {
@@ -220,7 +217,7 @@ export default {
         if (city.query.trim().length < 1) {
           this.filteredCityOptions = this.cityOptions;
         } else {
-          this.filteredCityOptions = this.cityOptions.filter((option) => {
+          this.filteredCityOptions = this.cityOptions.filter(option => {
             return option.toLowerCase().startsWith(city.query.toLowerCase());
           });
         }
@@ -234,17 +231,17 @@ export default {
         if (event.query.trim().length < 1) {
           this.filteredGenderOptions = this.genderOptions;
         } else {
-          this.filteredGenderOptions = this.genderOptions.filter((option) => {
+          this.filteredGenderOptions = this.genderOptions.filter(option => {
             return option.toLowerCase().startsWith(event.query.toLowerCase());
           });
         }
       }, 250);
-    },
+    }
   },
   computed: {
     cityOptions() {
       return cityList.map(
-        (cityEntry) => `${cityEntry.city}, ${cityEntry.province}`
+        cityEntry => `${cityEntry.city}, ${cityEntry.province}`
       );
     },
     signUpInfoPayload() {
@@ -256,10 +253,10 @@ export default {
         gender: this.gender,
         ageGroup: this.ageGroup.ageGroup,
         phoneNumber: this.phoneNumber,
-        attendeeInfo: this.attendeeInfo,
+        attendeeInfo: this.attendeeInfo
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -338,19 +335,4 @@ form {
   max-width: 100%;
 }
 
-#hero-image {
-  padding: 200px 0;
-  border-radius: 8px;
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 32px;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("../assets/bonfire-image.jpg");
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
-  @media (max-width: $mobile-breakpoint) {
-    padding: 125px 0;
-  }
-}
 </style>

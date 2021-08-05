@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const { signUpValidation } = require("@/validation/validation.js");
+const { signUpValidation } = require("../../../resources/validation.js");
 import SignUpForm from "../components/SignUpForm.vue";
 import PreferencesForm from "../components/PreferencesForm.vue";
 import axios from "axios";

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// const { eventRegistrationValidation } = require("@/validation/validation.js");
 
 export default {
   name: "Payment Processing",

@@ -2,7 +2,7 @@ const express = require("express");
 const Attendee = require("../models/Attendee.js");
 const mailer = require("../scripts/mailer.js");
 
-const { signUpValidation } = require("../scripts/validation");
+const { signUpValidation } = require("../../resources/validation");
 
 const router = express.Router();
 
