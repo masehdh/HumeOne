@@ -261,19 +261,4 @@ form {
   max-width: 100%;
 }
 
-#hero-image {
-  padding: 200px 0;
-  border-radius: 8px;
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 32px;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("../assets/bonfire-image.jpg");
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
-  @media (max-width: $mobile-breakpoint) {
-    padding: 125px 0;
-  }
-}
 </style>

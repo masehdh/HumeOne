@@ -4,7 +4,6 @@ const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 const router = express.Router();
 
 router.post("/create-checkout-session", async (req, res) => {
-  console.log("test1");
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -15,8 +14,8 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://${process.env.DOMAIN}:3000/event-registration-confirmation?eventId=${req.body.eventId}&email=${req.body.email}`,
-    cancel_url: `http://${process.env.DOMAIN}:3000/event-registration`,
+    success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}&email=${req.body.email}`,
+    cancel_url: `http://${process.env.DOMAIN}/event-registration`,
   });
   res.status(200).json({ url: session.url })
 });

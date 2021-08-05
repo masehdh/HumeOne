@@ -3,7 +3,7 @@ const path = require("path");
 const nodemailer = require("nodemailer");
 // MODELS
 const Attendee = require("../models/Attendee.js");
-const eventList = require("../../client/src/assets/events.json")
+const eventList = require("../../resources/events.json")
 // SCRIPTS
 const confirmationEmail = require("./confirmationEmail");
 
@@ -22,7 +22,7 @@ const start = () =>
 // SEND NEWSLETTER
 const sendEventConfirmation = async (email, eventId) => {
   const event = eventList.find(event => event.id === eventId)
-  const attendee = await Attendee.findOne({email: email})
+  const attendee = await Attendee.findOne({ email: email })
 
   try {
     await transporter.sendMail(
@@ -33,9 +33,9 @@ const sendEventConfirmation = async (email, eventId) => {
         html: confirmationEmail(attendee.firstName, event),
         attachments: [
           {
-            filename: "humeone-logo.png",
-            path: path.join(__dirname, "../../client/src/assets/humeone-logo.png"),
-            cid: "humeone-logo",
+            filename: "humeone-email-banner.png",
+            path: path.join(__dirname, "../../resources/humeone-email-banner.png"),
+            cid: "humeone-email-banner",
           },
         ],
       },
