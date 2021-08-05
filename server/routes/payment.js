@@ -15,10 +15,9 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://${process.env.DOMAIN}:3000/event-registration-confirmation`,
+    success_url: `http://${process.env.DOMAIN}:3000/event-registration-confirmation?eventId=${req.body.eventId}&email=${req.body.email}`,
     cancel_url: `http://${process.env.DOMAIN}:3000/event-registration`,
   });
-  console.log(session.url);
   res.status(200).json({ url: session.url })
 });
 

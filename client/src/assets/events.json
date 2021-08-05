@@ -1,15 +1,15 @@
 [
   {
-    "eventId": "0",
-    "eventImage": "bonfire-image.jpg",
-    "eventName": "Bonfire at Earl Bales Park",
-    "dateTime": "7 PM on Sunday August 1. Note that this weekend is a long weekend!",
+    "id": "0",
+    "image": "bonfire-image.jpg",
+    "name": "Bonfire at Earl Bales Park",
+    "dateTime": "7 PM on Sunday August 1",
     "location": "Firepit beside the parking lot at Earl Bales Park, please use the dropped pin below for the exact location. Entering in Earl Bales Park on google maps will bring you to a different point in the park. The nearest bus stop is at Bathurst and Sheppard and it's about a 10 minute walk. Parking is free!",
     "map": "https://maps.app.goo.gl/4UxBnykYcxjX4be16",
     "whatToBring": "Warm jacket and personal snacks. It's looking like it will be ~18 degrees.",
     "whenYouArrive": "Give Maseh a call at 647-561-4010 if you need support.",
     "whatToExpect": "",
-    "cancellation": "If you are unable to attend, please let us know at humeoneteam@gmail.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
+    "cancellation": "If you are unable to attend, please let us know at team@humeone.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
     "reservationFee": "$5.00",
     "paymentDeadline":"August 1st, 2021",
     "maxSpots": "20"

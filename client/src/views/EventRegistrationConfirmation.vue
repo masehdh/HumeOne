@@ -2,7 +2,7 @@
   <div class="section form-section">
     <div class="container form-card">
       <h1 id="form-title">Registration Confirmation</h1>
-      <h2 id="event-title">Bonfire at Earl Bales Park</h2>
+      <h2 id="event-title">{{ eventDetails.name }}</h2>
       <p>
         Thank you for registering! You should receive a confirmation email
         shortly with additional details. If you have any questions or would like
@@ -14,12 +14,26 @@
 </template>
 
 <script>
-// const { eventRegistrationValidation } = require("@/validation/validation.js");
+import axios from "axios";
+import eventList from "@/assets/events.json";
 
 export default {
   name: "Event Registration Confirmation",
   data() {
-    return {};
+    return {
+      eventDetails:
+        eventList.find(event => event.id === this.$route.query.eventId) || {},
+      eventId: this.$route.query.eventId,
+      email: this.$route.query.email
+    };
+  },
+  mounted() {
+    axios
+      .post("/api/event-registration/confirmation", {
+        email: this.email,
+        eventId: this.eventId
+      })
+      .catch(error => console.log(error.response.data));
   }
 };
 </script>

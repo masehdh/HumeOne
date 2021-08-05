@@ -108,13 +108,15 @@ export default {
         })
         .then(() => {
           if (this.eventIdProp) {
-            this.$router.push({
-              name: "Payment Processing",
-              params: { emailProp: this.email, eventIdProp: this.eventIdProp }
-            });
+            axios
+              .post("/api/payment/create-checkout-session", {
+                eventId: this.eventIdProp,
+                email: this.email
+              })
+              .then(res => (window.location.href = res.data.url));
           } else {
             this.$router.push({
-              name: "Sign Up Confirmation",
+              name: "Sign Up Confirmation"
             });
           }
         })

@@ -1,33 +1,36 @@
 <template>
   <div class="section form-section">
     <div class="container form-card">
-      <div id="hero-image">
+      <div
+        id="hero-image"
+        :style="{background:'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../assets/'+ eventDetails.image + ')'}"
+      >
         &nbsp;
       </div>
       <h1 id="form-title">Event Registration</h1>
-      <h2 id="event-title">{{ eventDetails.eventName }}</h2>
+      <h2 id="event-title">{{ eventDetails.name }}</h2>
       <div class="line-divider">&nbsp;</div>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.dateTime">
         <span class="event-detail-title">Date & time:</span>
         {{ eventDetails.dateTime }}
       </p>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.location">
         <span class="event-detail-title">Location:</span>
         {{ eventDetails.location }}
       </p>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.whatToBring">
         <span class="event-detail-title">What to bring:</span>
         {{ eventDetails.whatToBring }}
       </p>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.whenYouArrive">
         <span class="event-detail-title">When you arrive:</span>
         {{ eventDetails.whenYouArrive }}
       </p>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.whatToExpect">
         <span class="event-detail-title">What to expect:</span>
         {{ eventDetails.whatToExpect }}
       </p>
-      <p class="event-detail-item">
+      <p class="event-detail-item" v-if="eventDetails.cancellation">
         <span class="event-detail-title">Cancellation:</span>
         {{ eventDetails.cancellation }}
       </p>
@@ -75,11 +78,20 @@ export default {
   name: "Event Registration",
   data() {
     return {
-      eventDetails: eventList[0],
-      eventId: eventList[0].eventId,
+      eventDetails:
+        eventList.find(event => event.id === this.$route.query.eventId) || {},
+      eventId: this.$route.query.eventId,
       email: "",
-      validationMessages: {}
+      validationMessages: {},
+      eventList: eventList
     };
+  },
+  computed: {
+    cssVars() {
+      return {
+        "--image-url": this.eventDetails.image
+      };
+    }
   },
   methods: {
     submitRegistration() {
@@ -99,16 +111,14 @@ export default {
       }
 
       axios
-        .post("/api/event-registration/check-email", { email: this.email })
+        .post("/api/event-registration/check-email", {
+          email: this.email,
+          eventId: this.eventId
+        })
         .then(res => {
           if (res.data.output) {
-            // Redirect to payment processing
-            // this.$router.push({
-            //   name: "Payment Processing",
-            //   params: { emailProp: this.email, eventIdProp: this.eventId }
-            // });
             axios
-              .post("/api/payment/create-checkout-session")
+              .post("/api/payment/create-checkout-session", {eventId: this.eventId, email: this.email})
               .then(res => (window.location.href = res.data.url));
           } else {
             // Redirect to sign up
