@@ -1,9 +1,9 @@
 <template>
   <div class="section form-section">
-    <h3 class="card-title" v-if="emailProp">
+    <h3 id="sign-up-prompt" v-if="emailProp">
       In order to register for an event, you must first sign up
     </h3>
-    <form action="#" @submit.prevent="submitRegistration">
+    <form class="max-w-100" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
         :validationMessagesProp="validationMessages"
@@ -127,9 +127,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-title {
-  font-weight: 400;
-  font-size: 24px;
-  max-width: 100%;
+#sign-up-prompt {
+  color: #444450;
+  font-size: 32px;
+  font-weight: 600;
 }
 </style>

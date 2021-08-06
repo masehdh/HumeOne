@@ -13,8 +13,8 @@
       >
         &nbsp;
       </div>
-      <h1 id="form-title">Event Registration</h1>
-      <h2 id="event-title">{{ eventDetails.name }}</h2>
+      <h1 class="form-header">Event Registration</h1>
+      <h2 class="form-title">{{ eventDetails.name }}</h2>
       <div class="line-divider">&nbsp;</div>
       <p class="event-detail-item" v-if="eventDetails.dateTime">
         <span class="event-detail-title">Date & time:</span>
@@ -41,9 +41,10 @@
         {{ eventDetails.cancellation }}
       </p>
     </div>
-    <form action="#" @submit.prevent="submitRegistration">
+
+    <form class="max-w-100" action="#" @submit.prevent="submitRegistration">
       <div class="container form-card">
-        <h3 class="card-title">Please enter your email</h3>
+        <h3 class="form-section-title">Please enter your email</h3>
 
         <div class="form-control">
           <span class="p-float-label">
@@ -140,87 +141,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#form-title {
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: #e67e73;
-}
-
-#event-title {
-  padding-top: 8px;
-  font-size: 32px;
-  font-weight: 600;
-}
-
-.line-divider {
-  background: linear-gradient(
-    90deg,
-    rgba(230, 92, 138, 0.9) 0%,
-    rgba(255, 204, 102, 0.9) 100%
-  );
-  margin: 8px 0px;
-  height: 1.8px;
-  width: 80px;
-  max-width: 100%;
-}
-
-.card-title {
-  font-weight: 400;
-  font-size: 24px;
-  max-width: 100%;
-}
-
-.event-detail-item {
-  margin-top: 16px;
-  font-size: 16px;
-  .event-detail-title {
-    font-weight: 500;
-  }
-}
-
-.form-control {
-  margin-top: 16px;
-  max-width: 100%;
-  .p-inputtext {
-    max-width: 100%;
-  }
-  .p-inputtextarea {
-    width: 100%;
-    max-width: 100%;
-  }
-  .validation-message {
-    padding-top: 4px;
-    font-size: 14px;
-    color: rgb(255, 62, 62);
-  }
-}
-
-.regular-label {
-  display: block;
-  margin: 8px 0;
-}
-
-.submit-button {
-  margin-top: 16px;
-  max-width: 100%;
-}
-
-form {
-  max-width: 100%;
-}
-
-#hero-image {
-  padding: 200px 0;
-  border-radius: 8px;
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 32px;
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
-  @media (max-width: $mobile-breakpoint) {
-    padding: 125px 0;
-  }
-}
 </style>

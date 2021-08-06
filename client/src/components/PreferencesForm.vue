@@ -1,6 +1,6 @@
 <template>
   <div class="container form-card">
-    <h3 class="card-title">Preferences</h3>
+    <h3 class="form-section-title">Preferences</h3>
     <div class="form-control">
       <span>
         <label class="regular-label" for="preferred-age-group">
@@ -13,7 +13,7 @@
           optionLabel="ageGroup"
           @change="sendPreferences()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('preferredAgeGroup'),
+            'p-invalid': validationMessages.hasOwnProperty('preferredAgeGroup')
           }"
         />
       </span>
@@ -38,7 +38,7 @@
           selectionMode="checkbox"
           @change="sendPreferences()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('interests'),
+            'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
         />
       </span>
@@ -64,7 +64,7 @@
           display="chip"
           @change="sendPreferences()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('availability'),
+            'p-invalid': validationMessages.hasOwnProperty('availability')
           }"
         />
       </span>
@@ -82,14 +82,14 @@
 export default {
   name: "Preferences Form",
   props: {
-    validationMessagesProp: Object,
+    validationMessagesProp: Object
   },
   data() {
     return {
       ageOptions: [
         { ageGroup: "18-24" },
         { ageGroup: "25-34" },
-        { ageGroup: "35+" },
+        { ageGroup: "35+" }
       ],
       preferredAgeGroup: [],
       interestNodes: [
@@ -99,8 +99,8 @@ export default {
           children: [
             { key: "Basketball", label: "Basketball" },
             { key: "Soccer", label: "Soccer" },
-            { key: "Volleyball", label: "Volleyball" },
-          ],
+            { key: "Volleyball", label: "Volleyball" }
+          ]
         },
         {
           key: "Nature",
@@ -108,24 +108,24 @@ export default {
           children: [
             { key: "Hiking", label: "Hiking" },
             { key: "Bonfire", label: "Bonfire" },
-            { key: "Biking", label: "Biking" },
-          ],
+            { key: "Biking", label: "Biking" }
+          ]
         },
         {
           key: "Networking",
           label: "Networking",
           children: [
             { key: "Tech", label: "Tech" },
-            { key: "Policy", label: "Policy" },
-          ],
+            { key: "Policy", label: "Policy" }
+          ]
         },
         {
           key: "Food",
           label: "Food",
           children: [
             { key: "Restaurant Dinner", label: "Restaurant Dinner" },
-            { key: "Potluck", label: "Potluck" },
-          ],
+            { key: "Potluck", label: "Potluck" }
+          ]
         },
         {
           key: "Learning Experiences",
@@ -133,9 +133,9 @@ export default {
           children: [
             { key: "Personal development", label: "Personal development" },
             { key: "Skillsharing", label: "Skillsharing" },
-            { key: "Coding", label: "Coding" },
-          ],
-        },
+            { key: "Coding", label: "Coding" }
+          ]
+        }
       ],
       selectedInterestNodeKey: [],
       availability: "",
@@ -143,24 +143,24 @@ export default {
         { time: "Weekday mornings (9-12)", value: "Weekday mornings (9-12)" },
         {
           time: "Weekday afternoons (12-5)",
-          value: "Weekday afternoons (12-5)",
+          value: "Weekday afternoons (12-5)"
         },
         { time: "Weekday evenings (5-10)", value: "Weekday evenings (5-10)" },
         { time: "Weekend mornings (9-12)", value: "Weekend mornings (9-12)" },
         {
           time: "Weekend afternoons (12-5)",
-          value: "Weekend afternoons (12-5)",
+          value: "Weekend afternoons (12-5)"
         },
-        { time: "Weekend evenings (5-10)", value: "Weekend evenings (5-10)" },
+        { time: "Weekend evenings (5-10)", value: "Weekend evenings (5-10)" }
       ],
-      validationMessages: this.validationMessagesProp,
+      validationMessages: this.validationMessagesProp
     };
   },
   computed: {
     selectedInterests() {
       return Object.entries(this.selectedInterestNodeKey)
-        .filter((interest) => interest[1].checked)
-        .map((interest) => interest[0]);
+        .filter(interest => interest[1].checked)
+        .map(interest => interest[0]);
     },
     preferencesPayload() {
       return {
@@ -168,97 +168,36 @@ export default {
           ({ ageGroup }) => ageGroup
         ),
         interests: this.selectedInterests,
-        availability: this.availability,
+        availability: this.availability
       };
-    },
+    }
   },
   watch: {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
-    },
+    }
   },
   methods: {
     sendPreferences() {
       return this.$emit("send-preferences", this.preferencesPayload);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
-#form-title {
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: #e67e73;
+
+.p-multiselect,
+.p-treeselect,
+.p-dropdown,
+.p-autocomplete,
+.p-autocomplete-input {
+  max-width: 100%;
+  width: 200px;
 }
 
-#event-title {
-  padding-top: 8px;
-  font-size: 32px;
-  font-weight: 600;
-}
-
-.line-divider {
-  background: linear-gradient(
-    90deg,
-    rgba(230, 92, 138, 0.9) 0%,
-    rgba(255, 204, 102, 0.9) 100%
-  );
-  margin: 8px 0px;
-  height: 1.8px;
-  width: 80px;
+.p-inputtextarea {
+  width: 100%;
   max-width: 100%;
 }
-
-.card-title {
-  font-weight: 400;
-  font-size: 24px;
-  max-width: 100%;
-}
-
-.event-detail-item {
-  margin-top: 16px;
-  font-size: 16px;
-  .event-detail-title {
-    font-weight: 500;
-  }
-}
-
-.form-control {
-  margin-top: 16px;
-  max-width: 100%;
-  .p-multiselect,
-  .p-treeselect,
-  .p-dropdown,
-  .p-autocomplete,
-  .p-autocomplete-input {
-    max-width: 100%;
-    width: 200px;
-  }
-  .p-inputtextarea {
-    width: 100%;
-    max-width: 100%;
-  }
-  .validation-message {
-    padding-top: 4px;
-    font-size: 14px;
-    color: rgb(255, 62, 62);
-  }
-}
-
-.regular-label {
-  display: block;
-  margin: 8px 0;
-}
-
-.submit-button {
-  margin-top: 16px;
-  max-width: 100%;
-}
-
-form {
-  max-width: 100%;
-}
-
 </style>

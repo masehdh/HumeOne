@@ -1,5 +1,8 @@
 const express = require("express");
-const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
+
+const STRIPE_KEY = process.env.NODE_ENV === "production" ? process.env.STRIPE_LIVE_SECRET_KEY : process.env.STRIPE_TEST_SECRET_KEY
+
+const stripe = require("stripe")(STRIPE_KEY);
 
 const router = express.Router();
 
