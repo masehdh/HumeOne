@@ -37,7 +37,7 @@ router.post("/webhook", express.json({ type: "application/json" }), (request, re
         //   expand: ["line_items", "line_items.data.price"],
         // });
         // console.log(session);
-        mailer.sendEventConfirmation(checkoutObject.customer_email, "prod_JynEqhz2NOTQqk");
+        mailer.sendEventConfirmation(checkoutObject.customer_details.email, "prod_JynEqhz2NOTQqk");
         // mailer.sendEventConfirmation("maseh46@gmail.com", "prod_JynEqhz2NOTQqk");
         break;
       default:
