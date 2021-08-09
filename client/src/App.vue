@@ -2,21 +2,31 @@
   <div class="section off-white-bg">
     <div class="container">
       <div id="nav" class="h-mg-10">
-        <router-link id="header-logo" :to="{name: 'Home'}">
-          <div >
-            <img
-              id="humeone-logo"
-              src="../../resources/humeone-logo.png"
-              alt="HumeOne Logo"
-            />
-          </div>
-        </router-link>
+        <div id="header-logo">
+          <img
+            id="humeone-logo"
+            src="../../resources/humeone-logo.png"
+            alt="HumeOne Logo"
+            @click.prevent="goHome()"
+          />
+        </div>
       </div>
     </div>
   </div>
 
   <router-view />
 </template>
+
+<script>
+export default {
+  name: "Home",
+  methods: {
+    goHome() {
+      return this.$router.push({ name: "Home" });
+    }
+  }
+};
+</script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -44,6 +54,11 @@
     justify-content: center;
     #humeone-logo {
       max-height: 100%;
+      transition: all 0.5s ease;
+      &:hover {
+        cursor: pointer;
+        transform: scale(0.95);
+      }
     }
   }
 }

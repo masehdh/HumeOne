@@ -19,7 +19,7 @@
           up today
         </p>
       </div>
-      <router-link class="router-link h-mg-10" :to="{name: 'Sign Up'}">
+      <router-link class="router-link h-mg-10" :to="{ name: 'Sign Up' }">
         <div class="cta-button">
           SIGN UP
         </div>
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Home"
 };
 </script>
 
@@ -49,7 +49,7 @@ export default {
     width: 680px;
     height: auto;
     align-self: center;
-    margin-top: 24px
+    margin-top: 24px;
   }
 
   .tagline {
@@ -69,28 +69,32 @@ export default {
   }
 
   .router-link {
-      text-decoration: none;
-      align-self: center;
-      margin-bottom: 40px
+    text-decoration: none;
+    align-self: center;
+    margin-bottom: 40px;
   }
 
   .cta-button {
-      padding: 8px 12px;
-      border-radius: 50px;
-      background: rgb(255,124,172);
-      background: linear-gradient(90deg, rgba(255,124,172,1) 0%, rgba(255,245,108,1) 100%);
-      max-width: 100%;
-      width: 140px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 18px;
-      box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
-      color: $primary-font-color;
-      transition: all 0.5s ease-out
-  }
-
-  .cta-button:hover {
-      box-shadow: 6px 6px 8px rgba($color: #000000, $alpha: 0.2);
+    padding: 8px 12px;
+    border-radius: 50px;
+    background: rgb(255, 124, 172);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 124, 172, 1) 0%,
+      rgba(255, 245, 108, 1) 100%
+    );
+    max-width: 100%;
+    width: 140px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px;
+    box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+    color: $primary-font-color;
+    transition: all 0.3s ease-out;
+    &:hover {
+      box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+      transform: scale(1.05);
+    }
   }
 }
 </style>
