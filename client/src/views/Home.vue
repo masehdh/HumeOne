@@ -70,7 +70,8 @@ export default {
 
   .router-link {
       text-decoration: none;
-      align-self: center
+      align-self: center;
+      margin-bottom: 40px
   }
 
   .cta-button {
@@ -79,10 +80,17 @@ export default {
       background: rgb(255,124,172);
       background: linear-gradient(90deg, rgba(255,124,172,1) 0%, rgba(255,245,108,1) 100%);
       max-width: 100%;
-      width: 120px;
+      width: 140px;
       text-align: center;
       font-weight: 600;
-      color: $primary-font-color
+      font-size: 18px;
+      box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+      color: $primary-font-color;
+      transition: all 0.5s ease-out
+  }
+
+  .cta-button:hover {
+      box-shadow: 6px 6px 8px rgba($color: #000000, $alpha: 0.2);
   }
 }
 </style>

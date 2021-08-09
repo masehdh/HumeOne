@@ -2,13 +2,15 @@
   <div class="section off-white-bg">
     <div class="container">
       <div id="nav" class="h-mg-10">
-        <div id="header-logo">
-          <img
-            id="humeone-logo"
-            src="../../resources/humeone-logo.png"
-            alt="HumeOne Logo"
-          />
-        </div>
+        <router-link id="header-logo" :to="{name: 'Home'}">
+          <div >
+            <img
+              id="humeone-logo"
+              src="../../resources/humeone-logo.png"
+              alt="HumeOne Logo"
+            />
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -27,7 +29,7 @@
 }
 
 .off-white-bg {
-  background-color: $off-white
+  background-color: $off-white;
 }
 
 #nav {
