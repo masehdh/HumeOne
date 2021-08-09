@@ -36,7 +36,7 @@ router.post("/webhook", express.json({ type: "application/json" }), (request, re
         // const session = stripe.checkout.sessions.retrieve(checkoutObject.id, {
         //   expand: ["line_items", "line_items.data.price"],
         // });
-        // console.log(session);
+        console.log(checkoutObject);
         mailer.sendEventConfirmation(checkoutObject.customer_details.email, "prod_JynEqhz2NOTQqk");
         // mailer.sendEventConfirmation("maseh46@gmail.com", "prod_JynEqhz2NOTQqk");
         break;
