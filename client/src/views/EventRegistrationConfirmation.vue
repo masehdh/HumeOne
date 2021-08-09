@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import eventList from "../../../resources/events.json";
 
 export default {
@@ -28,12 +28,12 @@ export default {
     };
   },
   mounted() {
-    axios
-      .post("/api/event-registration/confirmation", {
-        email: this.email,
-        eventId: this.eventId
-      })
-      .catch(error => console.log(error.response.data));
+    // axios
+    //   .post("/api/event-registration/confirmation", {
+    //     email: this.email,
+    //     eventId: this.eventId
+    //   })
+    //   .catch(error => console.log(error.response.data));
   }
 };
 </script>
