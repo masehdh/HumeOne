@@ -36,8 +36,7 @@ router.post("/webhook", express.json({ type: "application/json" }), async (reque
         const session = await stripe.checkout.sessions.retrieve(checkoutObject.id, {
           expand: ["line_items", "line_items.data.price"],
         });
-        console.log(session.line_items.data);
-        mailer.sendEventConfirmation(checkoutObject.customer_details.email, "prod_JynEqhz2NOTQqk");
+        mailer.sendEventConfirmation(checkoutObject.customer_details.email, session.line_items.data.price.product);
         // mailer.sendEventConfirmation("maseh46@gmail.com", "prod_JynEqhz2NOTQqk");
         break;
       default:
