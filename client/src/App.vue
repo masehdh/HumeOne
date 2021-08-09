@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="section off-white-bg">
     <div class="container">
       <div id="nav" class="h-mg-10">
         <div id="header-logo">
@@ -26,6 +26,10 @@
   box-sizing: border-box;
 }
 
+.off-white-bg {
+  background-color: $off-white
+}
+
 #nav {
   display: flex;
   justify-content: center;
@@ -33,6 +37,7 @@
 
   #header-logo {
     max-height: 100%;
+    max-width: 100%;
     display: flex;
     justify-content: center;
     #humeone-logo {
@@ -61,7 +66,7 @@
 }
 
 .form-section {
-  background-color: #f7f7f7;
+  background-color: $off-white;
   padding: 40px 10px;
   min-height: 100vh;
   display: flex;
