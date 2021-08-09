@@ -112,7 +112,7 @@ const signUpValidation = (data) => {
     attendeeInfo: Joi.string()
       .max(140)
       .allow("", null)
-      .pattern(/^[a-zA-Z0-9.,!?:'"/-]+$/)
+      .pattern(/^[a-zA-Z0-9.,!?:'"/- ]+$/)
       .messages({
         "string.base": `This field should be a string`,
         "string.empty": `This field cannot be left empty`,
