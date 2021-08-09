@@ -27,16 +27,16 @@ router.post("/create-checkout-session", async (req, res) => {
   res.status(200).json({ url: session.url });
 });
 
-router.post("/webhook", express.json({ type: "application/json" }), (request, response) => {
+router.post("/webhook", express.json({ type: "application/json" }), async (request, response) => {
     const event = request.body;
     // Handle the event
     switch (event.type) {
       case "checkout.session.completed":
         const checkoutObject = event.data.object;
-        // const session = stripe.checkout.sessions.retrieve(checkoutObject.id, {
-        //   expand: ["line_items", "line_items.data.price"],
-        // });
-        console.log(checkoutObject);
+        const session = await stripe.checkout.sessions.retrieve(checkoutObject.id, {
+          expand: ["line_items", "line_items.data.price"],
+        });
+        console.log(session);
         mailer.sendEventConfirmation(checkoutObject.customer_details.email, "prod_JynEqhz2NOTQqk");
         // mailer.sendEventConfirmation("maseh46@gmail.com", "prod_JynEqhz2NOTQqk");
         break;
