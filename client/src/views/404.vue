@@ -5,7 +5,7 @@
         <h1>404: Page Not Found</h1>
         <h2>
           If you have any questions, you can reach us at
-          <a href="mailto:team@huemone.com">team@huemone.com</a>
+          <a href="mailto:team@humeone.com">team@humeone.com</a>
         </h2>
       </div>
     </div>
