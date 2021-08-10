@@ -171,7 +171,7 @@ export default {
       max-width: 100%;
     }
 
-    #hero-image {
+    #event-image {
       padding: 200px 0;
       border-radius: 8px;
       box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);

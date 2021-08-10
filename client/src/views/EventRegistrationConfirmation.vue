@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import eventList from "../../../resources/events.json";
 
 export default {
@@ -26,14 +25,6 @@ export default {
       eventId: this.$route.query.eventId,
       email: this.$route.query.email
     };
-  },
-  mounted() {
-    // axios
-    //   .post("/api/event-registration/confirmation", {
-    //     email: this.email,
-    //     eventId: this.eventId
-    //   })
-    //   .catch(error => console.log(error.response.data));
   }
 };
 </script>

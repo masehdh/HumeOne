@@ -2,7 +2,7 @@
   <div class="section form-section">
     <div class="container form-card">
       <div
-        id="hero-image"
+        id="event-image"
         v-if="eventDetails.image"
         :style="{
           backgroundImage:
