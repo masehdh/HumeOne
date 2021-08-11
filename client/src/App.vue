@@ -1,7 +1,7 @@
 <template>
   <div class="section off-white-bg">
     <div class="container">
-      <div id="nav" class="h-mg-10">
+      <div id="nav" class="mx-3">
         <div id="header-logo">
           <img
             id="humeone-logo"
@@ -61,11 +61,6 @@ export default {
       }
     }
   }
-}
-
-.h-mg-10 {
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .max-w-100 {

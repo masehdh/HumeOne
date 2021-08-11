@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div class="container page-not-found-container">
-      <div class="h-mg-10">
+      <div class="mx-3">
         <h1>404: Page Not Found</h1>
         <h2>
           If you have any questions, you can reach us at

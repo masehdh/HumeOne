@@ -2,12 +2,12 @@
   <div class="section off-white-bg">
     <div class="container home-page">
       <img class="hero-image fadein animation-duration-1000" src="../../../resources/home-page-squad.png" />
-      <div class="tagline h-mg-10 fadein animation-duration-1000">
+      <div class="tagline mx-3 fadein animation-duration-1000">
         <h1>
           Make new friends, grow your circle
         </h1>
       </div>
-      <div class="details h-mg-10 fadein animation-duration-1000">
+      <div class="details mx-3 fadein animation-duration-1000">
         <p>
           No endless feeds, no need to coordinate. We'll only invite you to
           events that match your interests. We don't just tell you what's
@@ -16,7 +16,7 @@
           up today.
         </p>
       </div>
-      <router-link class="router-link h-mg-10 fadein animation-duration-1000" :to="{ name: 'Sign Up' }">
+      <router-link class="router-link mx-3 fadein animation-duration-1000" :to="{ name: 'Sign Up' }">
         <div class="cta-button">
           SIGN UP
         </div>
@@ -73,7 +73,7 @@ export default {
   }
 
   .cta-button {
-    padding: 8px 12px;
+    padding: 8px 16px;
     border-radius: 50px;
     background: rgb(255, 124, 172);
     background: linear-gradient(
@@ -85,7 +85,7 @@ export default {
     width: 140px;
     text-align: center;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
     box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
     color: $primary-font-color;
     transition: all 0.3s ease-out;
