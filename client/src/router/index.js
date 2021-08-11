@@ -64,14 +64,6 @@ const routes = [
   },
 ];
 
-//  DISPLAY PAGE TITLE BASED ON ROUTE META
-router.beforeEach((to, from, next) => {
-  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
-  if (nearestWithTitle) {
-    document.title = nearestWithTitle.meta.title;
-  }
-  next()
-})
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -81,5 +73,14 @@ const router = createRouter({
     return { top: 0 };
   },
 });
+
+//  DISPLAY PAGE TITLE BASED ON ROUTE META
+router.beforeEach((to, from, next) => {
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+  if (nearestWithTitle) {
+    document.title = nearestWithTitle.meta.title;
+  }
+  next()
+})
 
 export default router;
