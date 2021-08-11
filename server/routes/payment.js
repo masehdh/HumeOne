@@ -10,7 +10,9 @@ const stripe = require("stripe")(STRIPE_KEY);
 
 const router = express.Router();
 
-const endpointSecret = process.env.NODE_ENV === "production" ? process.env.STRIPE_REGISTRATION_CONFIRMATION_EPS : process.env.STRIPE_TEST_REGISTRATION_CONFIRMATION_EPS
+const endpointSecret = process.env.NODE_ENV === "production"
+  ? process.env.STRIPE_REGISTRATION_CONFIRMATION_EPS
+  : process.env.STRIPE_TEST_REGISTRATION_CONFIRMATION_EPS
 
 router.post("/create-checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -29,15 +31,15 @@ router.post("/create-checkout-session", async (req, res) => {
   res.status(200).json({ url: session.url });
 });
 
-router.post("/registration-confirmation-email", express.json({ type: "application/json" }), async (request, response) => {
-  const sig = request.headers['stripe-signature'];
+router.post("/registration-confirmation-email", bodyParser.raw({type: 'application/json'}), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   }
   catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
   }
   // Handle the event
   console.log(event)
@@ -53,8 +55,8 @@ router.post("/registration-confirmation-email", express.json({ type: "applicatio
       // Unexpected event type
       console.log(`Unhandled event type ${event.type}.`);
   }
-  // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  // Return a 200 res to acknowledge receipt of the event
+  res.send();
 }
 );
 
