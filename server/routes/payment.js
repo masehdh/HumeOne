@@ -20,11 +20,12 @@ router.post("/create-checkout-session", async (req, res) => {
         // TODO: replace this with the `price` of the product you want to sell
         price: req.body.priceId,
         quantity: 1,
+        tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
       },
     ],
     mode: "payment",
     success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}`,
-    cancel_url: `http://${process.env.DOMAIN}/event-registration`,
+    cancel_url: `http://${process.env.DOMAIN}/event-registration?eventId=${req.body.eventId}`,
   });
   res.status(200).json({ url: session.url });
 });

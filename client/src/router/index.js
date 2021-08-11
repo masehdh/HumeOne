@@ -6,6 +6,9 @@ const routes = [
     name: 'Home',
     component: () =>
       import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
+    meta: {
+      title: "Home"
+    }
   },
   {
     path: '/sign-up/',
@@ -13,12 +16,18 @@ const routes = [
     props: true,
     component: () =>
       import(/* webpackChunkName: "sign-up" */ "@/views/SignUp.vue"),
+      meta: {
+        title: "Sign Up"
+      }
   },
   {
     path: '/event-registration/',
     name: 'Event Registration',
     component: () =>
       import(/* webpackChunkName: "register" */ "@/views/EventRegistration.vue"),
+      meta: {
+        title: "Event Registration"
+      }
   },
   {
     path: '/event-registration-confirmation/',
@@ -26,12 +35,18 @@ const routes = [
     props: true,
     component: () =>
       import(/* webpackChunkName: "event registration confirmation" */ "@/views/EventRegistrationConfirmation.vue"),
+      meta: {
+        title: "Event Registration Confirmation"
+      }
   },
   {
     path: '/sign-up-confirmation/',
     name: 'Sign Up Confirmation',
     component: () =>
       import(/* webpackChunkName: "sign up confirmation" */ "@/views/SignUpConfirmation.vue"),
+      meta: {
+        title: "Sign Up Confirmation"
+      }
   },
   {
     path: '/:pathMatch(.*)*',
