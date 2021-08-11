@@ -31,7 +31,7 @@ router.post("/create-checkout-session", async (req, res) => {
   res.status(200).json({ url: session.url });
 });
 
-router.post("/registration-confirmation-email", bodyParser.raw({type: 'application/json'}), async (req, res) => {
+router.post("/registration-confirmation-email", express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
 
