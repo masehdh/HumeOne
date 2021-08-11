@@ -1,8 +1,15 @@
 <template>
   <div class="section form-section">
-    <h3 id="sign-up-prompt" v-if="emailProp">
-      In order to register for an event, you must first sign up
-    </h3>
+    <div v-if="emailProp">
+      <Message
+        v-for="msg of messages"
+        :severity="msg.severity"
+        :key="msg.content"
+        id="sign-up-prompt"
+      >
+        {{ msg.content }}
+      </Message>
+    </div>
     <form class="max-w-100" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
@@ -34,10 +41,16 @@ export default {
   props: {
     emailProp: String,
     eventIdProp: String,
-    priceIdProp: String
+    priceIdProp: String,
   },
   data() {
     return {
+      messages: [
+        {
+          severity: "warn",
+          content: "Before registering for this event, please sign up",
+        },
+      ],
       firstName: "",
       lastName: "",
       email: "",
@@ -49,7 +62,7 @@ export default {
       preferredAgeGroup: [],
       availability: [],
       interests: [],
-      validationMessages: {}
+      validationMessages: {},
     };
   },
   methods: {
@@ -81,12 +94,12 @@ export default {
         attendeeInfo: this.attendeeInfo,
         preferredAgeGroup: this.preferredAgeGroup,
         interests: this.interests,
-        availability: this.availability
+        availability: this.availability,
       });
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter(val => val.path[0] === path[0])
+            .filter((val) => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
@@ -105,7 +118,7 @@ export default {
           attendeeInfo: this.attendeeInfo,
           preferredAgeGroup: this.preferredAgeGroup,
           interests: this.interests,
-          availability: this.availability
+          availability: this.availability,
         })
         .then(() => {
           if (this.eventIdProp) {
@@ -114,16 +127,16 @@ export default {
                 eventId: this.eventIdProp,
                 priceId: this.priceIdProp,
               })
-              .then(res => (window.location.href = res.data.url));
+              .then((res) => (window.location.href = res.data.url));
           } else {
             this.$router.push({
-              name: "Sign Up Confirmation"
+              name: "Sign Up Confirmation",
             });
           }
         })
-        .catch(error => console.log(error.response.data));
-    }
-  }
+        .catch((error) => console.log(error.response.data));
+    },
+  },
 };
 </script>
 

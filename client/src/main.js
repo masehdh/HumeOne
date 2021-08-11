@@ -22,6 +22,7 @@ import AutoComplete from 'primevue/autocomplete';
 import Dropdown from 'primevue/dropdown';
 import TreeSelect from 'primevue/treeselect';
 import MultiSelect from 'primevue/multiselect';
+import Message from 'primevue/message';
 
 createApp(App)
   .use(store)
@@ -34,4 +35,5 @@ createApp(App)
   .component("Dropdown", Dropdown)
   .component("TreeSelect", TreeSelect)
   .component("MultiSelect", MultiSelect)
+  .component("Message", Message)
   .mount('#app')
