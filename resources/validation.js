@@ -77,16 +77,13 @@ const signUpValidation = (data) => {
       }),
     gender: Joi.string()
       .pattern(/^[a-zA-z'-]+$/)
-      .min(2)
+      .allow("", null)
       .max(40)
-      .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
       }),
     ageGroup: Joi.any()
       .valid("18-24", "25-34", "35+")
@@ -115,10 +112,8 @@ const signUpValidation = (data) => {
       .pattern(/^[a-zA-Z0-9.,!?:'"/-\s+]+$/)
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
         "string.pattern.base": `This field cannot contain special characters`,
       }),
     preferredAgeGroup: Joi.array()

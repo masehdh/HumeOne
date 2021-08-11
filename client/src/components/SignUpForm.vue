@@ -95,7 +95,7 @@
           }"
           @blur="sendSignUpInfo()"
         />
-        <label for="gender">Gender</label>
+        <label for="gender">Gender (optional)</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['gender']"
@@ -199,7 +199,7 @@ export default {
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
-      genderOptions: ["Male", "Female"],
+      genderOptions: ["Female", "Male", "Two spirit", "Transgender", "Non-binary","Agender","Genderqueer"],
       validationMessages: this.validationMessagesProp
     };
   },
