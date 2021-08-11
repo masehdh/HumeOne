@@ -25,6 +25,7 @@ const sendEventConfirmation = async (email, eventId) => {
     ? eventList.find(event => event.id === eventId) :
     eventList.find(event => event.testId === eventId)
 
+  console.log(event)
   const attendee = await Attendee.findOne({ email: email })
 
   try {

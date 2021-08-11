@@ -39,22 +39,23 @@ router.post("/registration-confirmation-email", express.json({ type: "applicatio
   catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
   }
-    // Handle the event
-    switch (event.type) {
-      case "checkout.session.completed":
-        const checkoutObject = event.data.object;
-        const session = await stripe.checkout.sessions.retrieve(checkoutObject.id, {
-          expand: ["line_items", "line_items.data.price"],
-        });
-        mailer.sendEventConfirmation(checkoutObject.customer_details.email, session.line_items.data[0].price.product);
-        break;
-      default:
-        // Unexpected event type
-        console.log(`Unhandled event type ${event.type}.`);
-    }
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
+  // Handle the event
+  console.log(event)
+  switch (event.type) {
+    case "checkout.session.completed":
+      const checkoutObject = event.data.object;
+      const session = await stripe.checkout.sessions.retrieve(checkoutObject.id, {
+        expand: ["line_items", "line_items.data.price"],
+      });
+      mailer.sendEventConfirmation(checkoutObject.customer_details.email, session.line_items.data[0].price.product);
+      break;
+    default:
+      // Unexpected event type
+      console.log(`Unhandled event type ${event.type}.`);
   }
+  // Return a 200 response to acknowledge receipt of the event
+  response.send();
+}
 );
 
 module.exports = router;
