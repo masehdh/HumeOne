@@ -29,7 +29,7 @@ transporter.verify((error, success) => {
 });
 
 // BASIC MIDDLEWARE FOR CROSS ORIGIN REQUESTS AND FORM HANDLING IN REQUESTS.
-app.use(express.json());
+// app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
