@@ -123,7 +123,7 @@ export default {
             axios
               .post("/api/payment/create-checkout-session", {
                 eventId: this.eventId,
-                priceId: this.eventDetails.priceId
+                priceId: this.eventDetails.testPriceId
               })
               .then(res => (window.location.href = res.data.url));
           } else {

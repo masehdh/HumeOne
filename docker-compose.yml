@@ -3,7 +3,7 @@ services:
   app:
     restart: always
     build: "."
-    command: ["/wait-for-it.sh", "mongo:27017", "-t", "0", "--", "npm", "staging"]
+    command: ["/wait-for-it.sh", "mongo:27017", "-t", "0", "--", "npm", "run", "staging"]
     ports:
       - "8010:3000"
     env_file: .env
