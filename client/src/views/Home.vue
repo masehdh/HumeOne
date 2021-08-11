@@ -1,7 +1,10 @@
 <template>
   <div class="section off-white-bg">
     <div class="container home-page">
-      <img class="hero-image fadein animation-duration-1000" src="../../../resources/home-page-squad.png" />
+      <img
+        class="hero-image fadein animation-duration-1000"
+        src="../../../resources/home-page-squad.png"
+      />
       <div class="tagline mx-3 fadein animation-duration-1000">
         <h1>
           Make new friends, grow your circle
@@ -9,14 +12,18 @@
       </div>
       <div class="details mx-3 fadein animation-duration-1000">
         <p>
-          No endless feeds, no need to coordinate. We'll only invite you to
-          events that match your interests. We don't just tell you what's
+          Humeone brings people together by organizing intimate hyper-local
+          events. No endless feeds, no need to coordinate. We'll only invite you
+          to events that match your interests. We don't just tell you what's
           already out there, our hosts create events designed for you and those
           in your area. Whether you’re looking to network, learn, or play, sign
           up today.
         </p>
       </div>
-      <router-link class="router-link mx-3 fadein animation-duration-1000" :to="{ name: 'Sign Up' }">
+      <router-link
+        class="router-link mx-3 fadein animation-duration-1000"
+        :to="{ name: 'Sign Up' }"
+      >
         <div class="cta-button">
           SIGN UP
         </div>
