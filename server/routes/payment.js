@@ -14,7 +14,9 @@ const endpointSecret = process.env.NODE_ENV === "production"
   ? process.env.STRIPE_REGISTRATION_CONFIRMATION_EPS
   : process.env.STRIPE_TEST_REGISTRATION_CONFIRMATION_EPS
 
-router.post("/create-checkout-session", async (req, res) => {
+console.log(endpointSecret)
+
+router.post("/create-checkout-session", express.json(), async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [

@@ -35,9 +35,9 @@ app.use(cors());
 
 // API ROUTE HANDLERS
 const eventRegistrationRoute = require("./routes/eventRegistration");
-app.use("/api/event-registration", eventRegistrationRoute);
+app.use("/api/event-registration", express.json(), eventRegistrationRoute);
 const signUpRoute = require("./routes/signUp");
-app.use("/api/sign-up", signUpRoute);
+app.use("/api/sign-up", express.json(), signUpRoute);
 const paymentRoute = require("./routes/payment");
 app.use("/api/payment", paymentRoute);
 
