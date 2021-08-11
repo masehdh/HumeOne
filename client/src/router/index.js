@@ -15,13 +15,6 @@ const routes = [
       import(/* webpackChunkName: "sign-up" */ "@/views/SignUp.vue"),
   },
   {
-    path: '/payment-processing/',
-    name: 'Payment Processing',
-    props: true,
-    component: () =>
-      import(/* webpackChunkName: "payment processing" */ "@/views/PaymentProcessing.vue"),
-  },
-  {
     path: '/event-registration/',
     name: 'Event Registration',
     component: () =>
