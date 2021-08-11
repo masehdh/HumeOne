@@ -19,7 +19,7 @@ router.post("/create-checkout-session", async (req, res) => {
       {
         price: req.body.priceId,
         quantity: 1,
-        tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
+        // tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
       },
     ],
     mode: "payment",
