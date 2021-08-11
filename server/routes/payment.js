@@ -17,7 +17,6 @@ router.post("/create-checkout-session", async (req, res) => {
     payment_method_types: ["card"],
     line_items: [
       {
-        // TODO: replace this with the `price` of the product you want to sell
         price: req.body.priceId,
         quantity: 1,
         tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
@@ -49,7 +48,6 @@ router.post("/registration-confirmation-email", express.json({ type: "applicatio
         });
         console.log( session.line_items.data[0].price.product)
         mailer.sendEventConfirmation(checkoutObject.customer_details.email, session.line_items.data[0].price.product);
-        // mailer.sendEventConfirmation("maseh46@gmail.com", "prod_JynEqhz2NOTQqk");
         break;
       default:
         // Unexpected event type

@@ -8,7 +8,10 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { error } = signUpValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).json({message: error.details[0].message});
+
+  const emailExists = await Attendee.findOne({ email: req.body.email })
+  if (emailExists) return res.status(400).json({message: "This email has already been registered"})
 
   const attendee = new Attendee({
     firstName: req.body.firstName,
