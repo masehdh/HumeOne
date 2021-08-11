@@ -46,7 +46,6 @@ router.post("/registration-confirmation-email", express.json({ type: "applicatio
         const session = await stripe.checkout.sessions.retrieve(checkoutObject.id, {
           expand: ["line_items", "line_items.data.price"],
         });
-        console.log( session.line_items.data[0].price.product)
         mailer.sendEventConfirmation(checkoutObject.customer_details.email, session.line_items.data[0].price.product);
         break;
       default:
