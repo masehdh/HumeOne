@@ -22,8 +22,7 @@ export default {
     return {
       eventDetails:
         eventList.find(event => event.id === this.$route.query.eventId) || {},
-      eventId: this.$route.query.eventId,
-      email: this.$route.query.email
+      eventId: this.$route.query.eventId
     };
   }
 };

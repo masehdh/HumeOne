@@ -3,12 +3,14 @@ const mailer = require("../scripts/mailer");
 
 const STRIPE_KEY =
   process.env.NODE_ENV === "production"
-    ? process.env.STRIPE_LIVE_SECRET_KEY
+    ? process.env.STRIPE_SECRET_KEY
     : process.env.STRIPE_TEST_SECRET_KEY;
 
 const stripe = require("stripe")(STRIPE_KEY);
 
 const router = express.Router();
+
+const endpointSecret = process.env.NODE_ENV === "production" ? process.env.STRIPE_REGISTRATION_CONFIRMATION_EPS : process.env.STRIPE_TEST_REGISTRATION_CONFIRMATION_EPS
 
 router.post("/create-checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -21,14 +23,22 @@ router.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}&email=${req.body.email}`,
+    success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}`,
     cancel_url: `http://${process.env.DOMAIN}/event-registration`,
   });
   res.status(200).json({ url: session.url });
 });
 
-router.post("/webhook", express.json({ type: "application/json" }), async (request, response) => {
-    const event = request.body;
+router.post("/registration-confirmation-email", express.json({ type: "application/json" }), async (request, response) => {
+  const sig = request.headers['stripe-signature'];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  }
+  catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+  }
     // Handle the event
     switch (event.type) {
       case "checkout.session.completed":
