@@ -33,7 +33,8 @@ export default {
   name: "Sign Up",
   props: {
     emailProp: String,
-    eventIdProp: String
+    eventIdProp: String,
+    priceIdProp: String
   },
   data() {
     return {
@@ -111,7 +112,7 @@ export default {
             axios
               .post("/api/payment/create-checkout-session", {
                 eventId: this.eventIdProp,
-                email: this.email
+                priceId: this.priceIdProp,
               })
               .then(res => (window.location.href = res.data.url));
           } else {

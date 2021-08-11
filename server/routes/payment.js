@@ -18,7 +18,7 @@ router.post("/create-checkout-session", async (req, res) => {
     line_items: [
       {
         // TODO: replace this with the `price` of the product you want to sell
-        price: "price_1JKpdnGvJIobDPYag3d0LgJF",
+        price: req.body.priceId,
         quantity: 1,
       },
     ],

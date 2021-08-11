@@ -122,14 +122,15 @@ export default {
           if (res.data.output) {
             axios
               .post("/api/payment/create-checkout-session", {
-                eventId: this.eventId
+                eventId: this.eventId,
+                priceId: this.eventDetails.priceId
               })
               .then(res => (window.location.href = res.data.url));
           } else {
             // Redirect to sign up
             this.$router.push({
               name: "Sign Up",
-              params: { emailProp: this.email, eventIdProp: this.eventId }
+              params: { emailProp: this.email, eventIdProp: this.eventId, priceIdProp: this.eventDetails.priceId }
             });
           }
         })
