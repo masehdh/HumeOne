@@ -14,8 +14,6 @@ const endpointSecret = process.env.NODE_ENV === "production"
   ? process.env.STRIPE_REGISTRATION_CONFIRMATION_EPS
   : process.env.STRIPE_TEST_REGISTRATION_CONFIRMATION_EPS
 
-console.log(endpointSecret)
-
 router.post("/create-checkout-session", express.json(), async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -23,7 +21,7 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       {
         price: req.body.priceId,
         quantity: 1,
-        // tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
+        tax_rates: ['txr_1JL7CIGvJIobDPYadVD6Zvts'],
       },
     ],
     mode: "payment",
@@ -44,7 +42,6 @@ router.post("/registration-confirmation-email", express.raw({ type: 'application
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
   // Handle the event
-  console.log(event)
   switch (event.type) {
     case "checkout.session.completed":
       const checkoutObject = event.data.object;
