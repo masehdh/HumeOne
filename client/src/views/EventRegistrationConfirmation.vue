@@ -1,9 +1,11 @@
 <template>
   <div class="section form-section">
-    <div class="container form-card">
+    <div class="container form-card px-3 py-4 md:px-4 md:py-5">
       <h1 class="form-header">Registration Confirmation</h1>
-      <h2 class="form-title">{{ eventDetails.name }}</h2>
-      <p>
+      <h2 class="form-title" v-if="eventDetails.name">
+        {{ eventDetails.name }}
+      </h2>
+      <p class="line-height-3 mt-3">
         Thank you for registering! You should receive a confirmation email
         shortly with additional details. If you have any questions or would like
         to cancel, please email

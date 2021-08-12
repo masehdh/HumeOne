@@ -1,5 +1,5 @@
 <template>
-  <div class="container form-card">
+  <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Preferences</h3>
     <div class="form-control">
       <span>
