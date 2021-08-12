@@ -11,6 +11,7 @@
           v-model="preferredAgeGroup"
           :options="ageOptions"
           optionLabel="ageGroup"
+          optionValue="ageGroup"
           @change="sendPreferences()"
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('preferredAgeGroup')
@@ -138,7 +139,7 @@ export default {
         }
       ],
       selectedInterestNodeKey: [],
-      availability: "",
+      availability: [],
       availabilityOptions: [
         { time: "Weekday mornings (9-12)", value: "Weekday mornings (9-12)" },
         {
@@ -164,9 +165,7 @@ export default {
     },
     preferencesPayload() {
       return {
-        preferredAgeGroup: this.preferredAgeGroup.map(
-          ({ ageGroup }) => ageGroup
-        ),
+        preferredAgeGroup: this.preferredAgeGroup,
         interests: this.selectedInterests,
         availability: this.availability
       };

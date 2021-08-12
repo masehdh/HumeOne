@@ -85,8 +85,8 @@ export default {
     },
     setPreferences(payload) {
       this.preferredAgeGroup = payload.preferredAgeGroup;
-      this.availability = payload.vailability;
-      this.interests = payload.selectedInterests;
+      this.availability = payload.availability;
+      this.interests = payload.interests;
     },
     submitRegistration() {
       this.validationMessages = {};
