@@ -96,7 +96,8 @@ const signUpValidation = (data) => {
     phoneNumber: Joi.string()
       .length(10)
       .pattern(/^[0-9]+$/)
-      .required()
+      .allow("")
+      // .required()
       .messages({
         "string.base": `This field should be a string`,
         "string.empty": `This field cannot be left empty`,
