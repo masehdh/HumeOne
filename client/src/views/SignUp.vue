@@ -9,7 +9,7 @@
         {{ msg.content }}
       </Message>
     </div>
-    <form class="max-w-100" action="#" @submit.prevent="submitRegistration">
+    <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
         :validationMessagesProp="validationMessages"

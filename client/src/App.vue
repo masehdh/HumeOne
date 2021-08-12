@@ -52,6 +52,7 @@ export default {
     max-width: 100%;
     display: flex;
     justify-content: center;
+
     #humeone-logo {
       max-height: 100%;
       transition: all 0.5s ease;
@@ -61,10 +62,6 @@ export default {
       }
     }
   }
-}
-
-.max-w-100 {
-  max-width: 100%;
 }
 
 .section {
@@ -93,12 +90,7 @@ export default {
     color: $primary-font-color;
     display: flex;
     flex-direction: column;
-    padding: 32px;
     margin-bottom: 32px;
-
-    @media (max-width: $tablet-breakpoint) {
-      padding: 16px;
-    }
 
     .form-header {
       font-size: 16px;
@@ -134,6 +126,7 @@ export default {
     .event-detail-item {
       margin-top: 16px;
       font-size: 16px;
+      line-height: 1.5;
       .event-detail-title {
         font-weight: 500;
       }
@@ -168,7 +161,7 @@ export default {
 
     #event-image {
       padding: 200px 0;
-      border-radius: 8px;
+      border-radius: 8px 8px 0px 0px;
       box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
       margin-bottom: 32px;
       background-attachment: scroll;

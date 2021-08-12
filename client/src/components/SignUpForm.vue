@@ -1,5 +1,5 @@
 <template>
-  <div class="container form-card">
+  <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Attendee Sign Up</h3>
     <div class="form-control">
       <span class="p-float-label">
@@ -199,7 +199,15 @@ export default {
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
-      genderOptions: ["Female", "Male", "Two spirit", "Transgender", "Non-binary","Agender","Genderqueer"],
+      genderOptions: [
+        "Female",
+        "Male",
+        "Two spirit",
+        "Transgender",
+        "Non-binary",
+        "Agender",
+        "Genderqueer"
+      ],
       validationMessages: this.validationMessagesProp
     };
   },
@@ -261,15 +269,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.p-inputtext {
-  max-width: 100%;
-}
-
-.p-inputtextarea {
-  width: 60%;
-  max-width: 100%;
-  @media (max-width: $mobile-breakpoint) {
-    width: 100%;
-  }
-}
 </style>

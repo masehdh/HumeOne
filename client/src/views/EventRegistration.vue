@@ -1,6 +1,6 @@
 <template>
   <div class="section form-section">
-    <div class="container form-card">
+    <div class="container form-card pb-3 md:pb-4">
       <div
         id="event-image"
         v-if="eventDetails.image"
@@ -13,37 +13,46 @@
       >
         &nbsp;
       </div>
-      <h1 class="form-header">Event Registration</h1>
-      <h2 class="form-title">{{ eventDetails.name }}</h2>
-      <div class="line-divider">&nbsp;</div>
-      <p class="event-detail-item" v-if="eventDetails.dateTime">
+      <h1 class="form-header mx-3 md:mx-4">Event Registration</h1>
+      <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
+      <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
+      <p class="event-detail-item mx-3 md:mx-4" v-if="eventDetails.dateTime">
         <span class="event-detail-title">Date & time:</span>
         {{ eventDetails.dateTime }}
       </p>
-      <p class="event-detail-item" v-if="eventDetails.location">
+      <p class="event-detail-item mx-3 md:mx-4" v-if="eventDetails.location">
         <span class="event-detail-title">Location:</span>
         {{ eventDetails.location }}
       </p>
-      <p class="event-detail-item" v-if="eventDetails.whatToBring">
+      <p class="event-detail-item mx-3 md:mx-4" v-if="eventDetails.whatToBring">
         <span class="event-detail-title">What to bring:</span>
         {{ eventDetails.whatToBring }}
       </p>
-      <p class="event-detail-item" v-if="eventDetails.whenYouArrive">
+      <p
+        class="event-detail-item mx-3 md:mx-4"
+        v-if="eventDetails.whenYouArrive"
+      >
         <span class="event-detail-title">When you arrive:</span>
         {{ eventDetails.whenYouArrive }}
       </p>
-      <p class="event-detail-item" v-if="eventDetails.whatToExpect">
+      <p
+        class="event-detail-item mx-3 md:mx-4"
+        v-if="eventDetails.whatToExpect"
+      >
         <span class="event-detail-title">What to expect:</span>
         {{ eventDetails.whatToExpect }}
       </p>
-      <p class="event-detail-item" v-if="eventDetails.cancellation">
+      <p
+        class="event-detail-item mx-3 md:mx-4"
+        v-if="eventDetails.cancellation"
+      >
         <span class="event-detail-title">Cancellation:</span>
         {{ eventDetails.cancellation }}
       </p>
     </div>
 
-    <form class="max-w-100" action="#" @submit.prevent="submitRegistration">
-      <div class="container form-card">
+    <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
+      <div class="container form-card px-3 py-4 md:px-4 md:py-5">
         <h3 class="form-section-title">Please enter your email</h3>
 
         <div class="form-control">
@@ -65,12 +74,13 @@
             <div class="validation-message">{{ message }}</div>
           </div>
         </div>
-
-        <Button
-          type="submit"
-          label="Next"
-          class="p-button-md p-button-primary submit-button"
-        />
+        <div>
+          <Button
+            type="submit"
+            label="Next"
+            class="p-button-md p-button-primary submit-button"
+          />
+        </div>
       </div>
     </form>
   </div>
@@ -130,7 +140,11 @@ export default {
             // Redirect to sign up
             this.$router.push({
               name: "Sign Up",
-              params: { emailProp: this.email, eventIdProp: this.eventId, priceIdProp: this.eventDetails.priceId }
+              params: {
+                emailProp: this.email,
+                eventIdProp: this.eventId,
+                priceIdProp: this.eventDetails.priceId
+              }
             });
           }
         })
