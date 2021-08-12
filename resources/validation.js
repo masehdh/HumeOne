@@ -139,7 +139,7 @@ const signUpValidation = (data) => {
           "Restaurant Dinner",
           "Potluck",
           "Learning Experiences",
-          "Personal Development",
+          "Personal development",
           "Skillsharing",
           "Coding",
           ""
