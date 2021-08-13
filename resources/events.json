@@ -11,10 +11,28 @@
     "map": "https://maps.app.goo.gl/4UxBnykYcxjX4be16",
     "whatToBring": "Warm jacket and personal snacks. It's looking like it will be ~18 degrees.",
     "whenYouArrive": "Give Maseh a call at 647-561-4010 if you need support.",
-    "whatToExpect": "",
+    "additionalDetails": "The nearest bus stop is at Heron and Riverside and it's about a 5 minute walk. Parking is $1 per half hour, we will likely be there until at least 9.",
     "cancellation": "If you are unable to attend, please let us know at team@humeone.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
     "reservationFee": "$5.00",
     "paymentDeadline":"August 1st, 2021",
     "maxSpots": "20"
+  },
+  {
+    "id": "prod_K292QpiFLxujzh",
+    "testId": "",
+    "testPriceId": "",
+    "priceId": "price_1JO4keGvJIobDPYaGwuLehBI",
+    "image": "picnic-and-chill-medium.jpg",
+    "name": "Picnic at Vincent Massey",
+    "dateTime": "Saturday August 21 at 4 PM",
+    "location": "Vincent Massey Park.",
+    "map": "https://goo.gl/maps/AH1ytWQtbUSvkEyX8",
+    "whatToBring": "Summer attire and a dish to share. It's looking like it will be 25-30 degrees.",
+    "whenYouArrive": "Give Maseh a call at 647-561-4010 and I'll give you directions to our picnic spot.",
+    "additionalDetails": "The nearest bus stop is at Heron and Riverside and it's about a 5 minute walk. Parking is $1 per half hour, we will likely be there until at least 9.",
+    "cancellation": "If you are unable to attend, please let us know at team@humeone.com. If there is light rain in the forecast, we'll go ahead as planned in one of the park's two covered picnic shelters. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
+    "reservationFee": "$5.00",
+    "paymentDeadline":"August 18th, 2021",
+    "maxSpots": "22"
   }
 ]

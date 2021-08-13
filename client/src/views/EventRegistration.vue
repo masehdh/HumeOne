@@ -37,10 +37,10 @@
       </p>
       <p
         class="event-detail-item mx-3 md:mx-4"
-        v-if="eventDetails.whatToExpect"
+        v-if="eventDetails.additionalDetails"
       >
-        <span class="event-detail-title">What to expect:</span>
-        {{ eventDetails.whatToExpect }}
+        <span class="event-detail-title">Additional details:</span>
+        {{ eventDetails.additionalDetails }}
       </p>
       <p
         class="event-detail-item mx-3 md:mx-4"
