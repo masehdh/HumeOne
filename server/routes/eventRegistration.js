@@ -30,10 +30,7 @@ router.post("/check-email", express.json(), async (req, res) => {
   try {
     const attendeeExists = await Attendee.findOne({ email: req.body.email })
     if (attendeeExists !== null) {
-      console.log(attendeeExists)
-      console.log("eventId: ", req.body.eventId)
       alreadyRegistered = attendeeExists.eventIds.includes(req.body.eventId)
-      console.log(alreadyRegistered)
 
       // User is signed up and already registered
       if (alreadyRegistered) return res.status(200).json({ code: 200, message: "It appears you have already registered for this event", output: { email: attendeeExists.email, alreadyRegistered: true } })

@@ -26,7 +26,7 @@ const emailValidation = (data) => {
 const signUpValidation = (data) => {
   const schema = Joi.object({
     firstName: Joi.string()
-      .pattern(/^[a-zA-z'-]+$/)
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
       .min(2)
       .max(40)
       .required()
@@ -39,7 +39,7 @@ const signUpValidation = (data) => {
         "any.required": `This field is required`,
       }),
     lastName: Joi.string()
-      .pattern(/^[a-zA-z'-]+$/)
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
       .min(2)
       .max(40)
       .required()
@@ -65,7 +65,7 @@ const signUpValidation = (data) => {
         "string.email": `The email you entered appears to be invalid`,
       }),
     city: Joi.string()
-      .pattern(/^[a-zA-z'-, ]+$/)
+      .pattern(/^[ a-zA-ZÀ-ÿ',-]+$/)
       .min(2)
       .required()
       .messages({
@@ -76,7 +76,7 @@ const signUpValidation = (data) => {
         "any.required": `This field is required`,
       }),
     gender: Joi.string()
-      .pattern(/^[a-zA-z'-]+$/)
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
       .allow("", null)
       .max(40)
       .messages({
