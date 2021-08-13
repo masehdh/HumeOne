@@ -129,26 +129,41 @@ export default {
           eventId: this.eventId
         })
         .then(res => {
-          if (res.data.output) {
-            axios
-              .post("/api/payment/create-checkout-session", {
-                eventId: this.eventId,
-                priceId: this.eventDetails.priceId
-              })
-              .then(res => (window.location.href = res.data.url));
-          } else {
-            // Redirect to sign up
-            this.$router.push({
-              name: "Sign Up",
-              params: {
-                emailProp: this.email,
-                eventIdProp: this.eventId,
-                priceIdProp: this.eventDetails.priceId
-              }
-            });
+          switch (res.data.output.alreadyRegistered) {
+            case true:
+              this.validationMessages["email"] = [res.data.message];
+              break;
+            case false:
+              axios
+                .post("/api/event-registration/create-checkout-session", {
+                  email: this.email,
+                  eventId: this.eventId,
+                  priceId: this.eventDetails.priceId
+                })
+                .then(res => (window.location.href = res.data.url));
+              break;
+            case null:
+              this.$router.push({
+                name: "Sign Up",
+                params: {
+                  emailProp: this.email,
+                  eventIdProp: this.eventId,
+                  priceIdProp: this.eventDetails.priceId
+                }
+              });
+              break;
+            default:
+              console.log(
+                "Unhandled response from /api/event-registration/create-checkout-session"
+              );
           }
         })
-        .catch(error => console.log("from error ", error.response.data));
+        .catch(error =>
+          console.log(
+            "error from /api/event-registration/check-email: ",
+            error.response.data
+          )
+        );
     }
   }
 };

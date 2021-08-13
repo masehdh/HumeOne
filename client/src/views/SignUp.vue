@@ -130,7 +130,8 @@ export default {
         .then(() => {
           if (this.eventIdProp) {
             axios
-              .post("/api/payment/create-checkout-session", {
+              .post("/api/event-registration/create-checkout-session", {
+                email: this.email,
                 eventId: this.eventIdProp,
                 priceId: this.priceIdProp
               })
