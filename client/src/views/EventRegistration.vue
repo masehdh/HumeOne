@@ -44,6 +44,13 @@
       </p>
       <p
         class="event-detail-item mx-3 md:mx-4"
+        v-if="eventDetails.reservationFee"
+      >
+        <span class="event-detail-title">Reservation Fee:</span>
+        {{ eventDetails.reservationFee }}
+      </p>
+      <p
+        class="event-detail-item mx-3 md:mx-4"
         v-if="eventDetails.cancellation"
       >
         <span class="event-detail-title">Cancellation:</span>
