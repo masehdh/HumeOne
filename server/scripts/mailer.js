@@ -44,13 +44,13 @@ const sendEventConfirmation = async (email, eventId) => {
       },
       async (error, info) => {
         if (error) {
-          return error;
+          return console.log("Mailer Error:", error);
         }
-        return "Message sent: " + info.response;
+        return console.log("Message sent: " + info.response);
       }
     );
   } catch (error) {
-    return error;
+    return console.log("Mailer Error:", error);
   }
 };
 

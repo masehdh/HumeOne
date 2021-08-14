@@ -93,7 +93,7 @@ router.post("/confirm-registration", express.raw({ type: 'application/json' }), 
       // Updated the attendee model to track that a user has signed up for the event
       try {
         await Attendee.updateOne({ email: customerEmail }, { $push: { eventIds: productId } })
-        mailer.sendEventConfirmation(customerEmail, productId);
+        await mailer.sendEventConfirmation(customerEmail, productId);
       } catch (error) {
         return res.status(400).json({ code: error.code, message: error.message, stack: error.stack });
       }
