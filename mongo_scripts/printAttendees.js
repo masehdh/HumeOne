@@ -13,6 +13,9 @@ cursor = db.attendees.find();
 // To check new results: db.attendees.find({createdAt: {$gt: ISODate("2021-08-14T03:29:23.489Z")}}).pretty()
 // You need to replace the argument in the ISO date
 
+// To attendees that are registered for events: db.attendees.find({$where: "this.eventIds.length > 0"}).pretty()
+// $where allows you to use basically any javascript, which is flexibile, but it is slower than native query operators
+
 print("[")
 while (cursor.hasNext()) {
    printjson(cursor.next());
