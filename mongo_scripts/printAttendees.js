@@ -9,6 +9,10 @@ db.auth("humeone", passwordPrompt())
 db = conn.getDB("humeone_db");
 
 cursor = db.attendees.find();
+
+// To check new results: db.attendees.find({createdAt: {$gt: ISODate("2021-08-14T03:29:23.489Z")}}).pretty()
+// You need to replace the argument in the ISO date
+
 print("[")
 while (cursor.hasNext()) {
    printjson(cursor.next());
