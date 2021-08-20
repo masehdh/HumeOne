@@ -18,6 +18,7 @@ services:
     # sets up volume conntecting local directory with data inside of mongo container (so that if we compose down, data does not get lost)
     volumes:
       - ./db_data:/data/db
+      - ./mongo_scripts:/scripts
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
