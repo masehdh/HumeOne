@@ -1,5 +1,6 @@
 const Joi = require("joi");
-const { tldSet } = require("../resources/tlds.js");
+const { tldSet } = require("./tlds");
+
 
 const emailValidation = (data) => {
   const schema = Joi.object({
@@ -22,6 +23,7 @@ const emailValidation = (data) => {
     errors: { label: "key", escapeHtml: true },
   });
 };
+
 
 const signUpValidation = (data) => {
   const schema = Joi.object({
@@ -169,6 +171,7 @@ const signUpValidation = (data) => {
     errors: { label: "key", escapeHtml: true },
   });
 };
-// exporting this way allows us to access the functions directly. See /routes/auth.js
+
+
 module.exports.emailValidation = emailValidation;
 module.exports.signUpValidation = signUpValidation;
