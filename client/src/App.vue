@@ -66,7 +66,8 @@ export default {
 
 .section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   .container {
     width: 1140px;
