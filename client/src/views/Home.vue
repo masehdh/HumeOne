@@ -12,7 +12,7 @@
       </div>
       <div class="details mx-3 fadein animation-duration-1000">
         <p class="line-height-3">
-          Humeone brings people together by organizing intimate hyper-local
+          HumeOne brings people together by organizing intimate hyper-local
           events. No endless feeds, no need to coordinate. We'll only invite you
           to events that match your interests. We don't just tell you what's
           already out there, our hosts create events designed for you and those

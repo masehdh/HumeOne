@@ -24,6 +24,12 @@
         label="Submit"
         class="p-button-md p-button-primary submit-button"
       />
+      <div
+        v-for="(message, index) of validationMessages['submit']"
+        :key="index"
+      >
+        <div class="validation-message mt-1">{{ message }}</div>
+      </div>
       <Message
         v-for="msg of serverResponses"
         :severity="msg.severity"
@@ -111,6 +117,7 @@ export default {
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = ["Please review the errors above before submitting."]
         return;
       }
       axios
