@@ -14,7 +14,7 @@
     "additionalDetails": "The nearest bus stop is at Heron and Riverside and it's about a 5 minute walk. Parking is $1 per half hour.",
     "cancellation": "If you are unable to attend, please let us know at team@humeone.com. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
     "reservationFee": "$5.00",
-    "paymentDeadline":"August 1st, 2021",
+    "paymentDeadline": "August 1st, 2021",
     "maxSpots": "20"
   },
   {
@@ -25,14 +25,14 @@
     "image": "bonfire-image.jpg",
     "name": "Bonfire at Earl Bales Park",
     "dateTime": "TBA",
-    "location": "Firepit beside the parking lot at Earl Bales Park (see https://maps.app.goo.gl/4UxBnykYcxjX4be16). Entering in Earl Bales Park on google maps will bring you to a different point in the park. The nearest bus stop is at Bathurst and Sheppard and it's about a 10 minute walk. Parking is free!",
+    "location": "Earl Bales Park",
     "map": "https://maps.app.goo.gl/4UxBnykYcxjX4be16",
     "whatToBring": "",
     "whenYouArrive": "Give Maseh a call at 647-561-4010 if you need support.",
-    "additionalDetails": "The nearest bus stop is at Heron and Riverside and it's about a 5 minute walk. Parking is $1 per half hour.",
+    "additionalDetails": "Firepit beside the parking lot at Earl Bales Park (see https://maps.app.goo.gl/4UxBnykYcxjX4be16). Entering in Earl Bales Park on google maps will bring you to a different point in the park. The nearest bus stop is at Bathurst and Sheppard and it's about a 10 minute walk. Parking is free!",
     "cancellation": "If you need to cancel, please let us know at team@humeone.com. If the event is cancelled for any reason, you will be notified at least 24 hours in advance and fully refunded.",
     "reservationFee": "$5.00 + Tax",
-    "paymentDeadline":"August 1st, 2021",
+    "paymentDeadline": "August 1st, 2021",
     "maxSpots": "20"
   },
   {
@@ -50,7 +50,7 @@
     "additionalDetails": "The nearest bus stop is at Heron and Riverside and it's about a 5 minute walk. Parking is $1 per half hour.",
     "cancellation": "If you are unable to attend, please let us know at team@humeone.com. If there is light rain in the forecast, we'll go ahead as planned in one of the park's two covered picnic shelters. If we need to cancel the event, you will be notified at least 24 hours in advance and refunded.",
     "reservationFee": "$5.00",
-    "paymentDeadline":"August 18th, 2021",
+    "paymentDeadline": "August 18th, 2021",
     "maxSpots": "22"
   },
   {
@@ -68,7 +68,7 @@
     "additionalDetails": "The reservation covers Snakes and Lattes' entry fee. Food and beverages are optional and not included in the reservation fee. Accessibility details are available at https://www.snakesandlattes.com/location/midtown/. There is street parking nearby, as well as Green P parking for $6.00 (details can be found at https://parking.greenp.com/carpark/29_75-holly-street/). The nearest subway station is Eglinton.",
     "cancellation": "If you need to cancel, please let us know at team@humeone.com. If the event is cancelled for any reason, you will be notified at least 24 hours in advance and fully refunded.",
     "reservationFee": "$15.00 + Tax",
-    "paymentDeadline":"September 8th, 2021",
+    "paymentDeadline": "September 8th, 2021",
     "maxSpots": "9"
   }
 ]
