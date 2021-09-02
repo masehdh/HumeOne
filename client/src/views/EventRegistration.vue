@@ -86,7 +86,7 @@
       </p>
     </div>
 
-    <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
+    <form class="max-w-full" action="#" @submit.prevent="submitRegistration" v-if="!hideRegistration">
       <div class="container form-card px-3 py-4 md:px-4 md:py-5">
         <h3 class="form-section-title">Please enter your email</h3>
 
@@ -118,6 +118,12 @@
         </div>
       </div>
     </form>
+
+    <div class="container form-card px-3 py-3 md:px-4 py-4" v-if="hideRegistration">
+      <h3 class="form-section-title">Event Registration Closed</h3>
+      <p class="mt-3 line-height-3">Unfortunately, reservation for this event has closed. The reservation deadline has passed or all the spots have been reserved. We apologize for the inconvenience, and hope to see you at our next event! If you have any questions, feel free to contact us at <a href="mailto:team@humeone.com">team@humeone.com</a>.</p>
+    </div>
+
   </div>
 </template>
 
@@ -155,12 +161,19 @@ export default {
   },
   computed: {
     showSpotsLeft() {
-      if (this.spotsLeft !== null && this.spotsLeft <= (this.eventDetails.maxSpots * 0.5)) {
+      if (this.spotsLeft !== null && this.spotsLeft > -1 && this.spotsLeft <= (this.eventDetails.maxSpots * 0.5)) {
         return true
       } else {
         return false
       }
     },
+    hideRegistration() {
+      if (this.spotsLeft < 1 && this.spotsLeft !== null) {
+        return true
+      } else {
+        return false
+      }
+    }
 
   },
   methods: {
