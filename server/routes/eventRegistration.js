@@ -45,6 +45,15 @@ router.post("/check-email", express.json(), async (req, res) => {
   }
 })
 
+router.post("/check-spots", express.json(), async (req, res) => {
+  try {
+    const spotsReserved = await Attendee.countDocuments({ eventIds: req.body.eventId })
+    console.log("Spots Reserved:", spotsReserved)
+    res.status(200).json({ code: 200, output: { spotsReserved: spotsReserved } })
+  } catch (error) {
+    return res.status(400).json({ code: error.code, message: error.message, stack: error.stack });
+  }
+})
 
 router.post("/create-checkout-session", express.json(), async (req, res) => {
   const session = await stripe.checkout.sessions.create({

@@ -89,7 +89,7 @@ export default {
     font-size: 14px;
     color: rgb(255, 62, 62);
   }
-  
+
   .form-card {
     background-color: #ffffff;
     border-radius: 8px;
@@ -110,18 +110,6 @@ export default {
       padding-top: 8px;
       font-size: 32px;
       font-weight: 600;
-    }
-
-    .line-divider {
-      background: linear-gradient(
-        90deg,
-        rgba(230, 92, 138, 0.9) 0%,
-        rgba(255, 204, 102, 0.9) 100%
-      );
-      margin: 8px 0px;
-      height: 1.8px;
-      width: 80px;
-      max-width: 100%;
     }
 
     .form-section-title {
