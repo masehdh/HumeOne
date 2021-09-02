@@ -17,7 +17,7 @@
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
       <p class="max-spots mx-3 md:mx-4">
         {{ eventDetails.maxSpots }} spots
-        <span class="spots-left" v-if="showSpotsLeft">&#183; 3 spots left</span>
+        <span class="spots-left" v-if="showSpotsLeft">&#183; {{this.spotsLeft}} spots left</span>
       </p>
 
       <div class="host-info mx-3 md:mx-4">
