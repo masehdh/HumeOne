@@ -1,24 +1,31 @@
-// While in mongo shell, use load("./scripts/printAttendees.js"). You will be prompted for db password
+// While in mongo shell, use load("./scripts/printAttendees.js")
 
-let conn = new Mongo("mongo:27017");
+conn = new Mongo("mongo:27017");
+db = conn.getDB("admin");
 
-let db = conn.getDB("admin");
-
-db.auth("humeone", passwordPrompt())
+db.auth("humeone", passwordPrompt());
 
 db = conn.getDB("humeone_db");
 
-cursor = db.attendees.find();
+query = {};
 
-// To check new results: db.attendees.find({createdAt: {$gt: ISODate("2021-08-14T03:29:23.489Z")}}).pretty()
+// To check new results:
+// query = {createdAt: {$gt: ISODate("2021-08-14T03:29:23.489Z")}}
 // You need to replace the argument in the ISO date
 
-// To attendees that are registered for events: db.attendees.find({$where: "this.eventIds.length > 0"}).pretty()
+// To see attendees that are registered for events:
+// query = {$where: "this.eventIds.length > 0"}
 // $where allows you to use basically any javascript, which is flexibile, but it is slower than native query operators
 
-print("[")
-while (cursor.hasNext()) {
-   printjson(cursor.next());
+projection = { _id: false, firstName: true, lastName: true, email: true, city: true };
+
+cursor = db.attendees.find(query, projection).pretty();
+
+print("[");
+
+cursor.forEach((doc) => {
+   printjson(doc)
    print(",")
-}
-print("]")
+});
+
+print("]");
