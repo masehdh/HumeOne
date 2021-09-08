@@ -89,7 +89,7 @@
               <circle cx="10" cy="10" r="10" fill="#FF6672" />
             </svg>
           </div>
-          <p class="step-number" style="color: hsl(355.29 100% 70%)">1</p>
+          <p class="step-number">1</p>
         </div>
 
         <div class="vertical-row-item">
@@ -134,10 +134,10 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="10" cy="10" r="10" fill="rgb(248, 124, 134)" />
+              <circle cx="10" cy="10" r="10" fill="#FF6672" />
             </svg>
           </div>
-          <p class="step-number" style="color: hsl(355.29 90% 73%)">2</p>
+          <p class="step-number">2</p>
         </div>
 
         <div class="vertical-row-item">
@@ -184,10 +184,10 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="10" cy="10" r="10" fill="rgb(243, 145, 153)" />
+              <circle cx="10" cy="10" r="10" fill="#FF6672" />
             </svg>
           </div>
-          <p class="step-number" style="color: hsl(355.29 80% 76%)">3</p>
+          <p class="step-number">3</p>
         </div>
 
         <div class="vertical-row-item">
@@ -234,10 +234,10 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="10" cy="10" r="10" fill="rgb(239, 164, 170)" />
+              <circle cx="10" cy="10" r="10" fill="#FF6672" />
             </svg>
           </div>
-          <p class="step-number" style="color: hsl(355.29 70% 79%)">4</p>
+          <p class="step-number">4</p>
         </div>
 
         <div class="vertical-row-item">
@@ -323,7 +323,7 @@ export default {
     font-weight: 600;
     font-size: 16px;
     box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
-    color: rgb(80,80,80);
+    color: rgb(80, 80, 80);
     transition: all 0.3s ease-out;
     &:hover {
       box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
@@ -409,6 +409,7 @@ export default {
         font-size: 24px;
         font-weight: 600;
         margin-right: 20px;
+        color: #ff6672;
       }
     }
 
