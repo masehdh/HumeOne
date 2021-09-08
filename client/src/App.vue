@@ -42,6 +42,10 @@ export default {
   background-color: $off-white;
 }
 
+.violet-bg {
+  background-color: $violet;
+}
+
 #nav {
   display: flex;
   justify-content: center;
