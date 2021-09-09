@@ -6,23 +6,23 @@
         src="../../../resources/home-page-squad.png"
       />
 
-      <div class="tagline mx-3 fadein animation-duration-1000">
+      <div class="tagline mx-3 md:mx-4 fadein animation-duration-1000">
         <h1>
           Make new friends, grow your circle
         </h1>
       </div>
 
-      <div class="details mx-3 fadein animation-duration-1000">
+      <div class="details mx-3 md:mx-4 fadein animation-duration-1000">
         <p class="line-height-3">
           HumeOne brings people together by organizing intimate social
           gatherings and events. No endless feeds or coordination required, our
-          hosts create events designed for you and those in your area. Let us
+          Hosts create events designed for you and those in your area. Let us
           know what you're looking for to start receiving invites today!
         </p>
       </div>
 
       <router-link
-        class="router-link mx-3 fadein animation-duration-1000"
+        class="router-link mx-3 md:mx-4 fadein animation-duration-1000"
         :to="{ name: 'Sign Up' }"
       >
         <div class="cta-button">
@@ -243,11 +243,31 @@
         <div class="vertical-row-item">
           <h3>Reserve Your Spot</h3>
           <p class="line-height-3">
-            Which usually involves a small fee, and get ready to make new
-            friends
+            You pay a small fee to support our Hosts for facilitating events,
+            and they make sure you have a great time
           </p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section violet-bg who-we-are-section">
+    <div class="container">
+      <h2 class="mx-3 md:mx-4">
+        Who We Are
+      </h2>
+      <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
+      <p class="line-height-3 mx-3 md:mx-4">
+        We're people like yourselves, who believe humans are better together,
+        hence our name (human + one)! We sought to create a platform that
+        incentivizes unity through fun and purposful events. Anyone can take
+        part by attending events, or even hosting them as long as they meet
+        basic qualifications. If you have questions or would like to become a
+        Host, click the button below to contact us!
+      </p>
+      <div class="contact-button mx-3 md:mx-4">
+        CONTACT US
       </div>
     </div>
   </div>
@@ -273,13 +293,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-bottom: 40px;
 
   .hero-image {
     max-width: 100%;
     width: 680px;
     height: auto;
     align-self: center;
-    margin-top: 24px;
+    margin-top: 32px;
     padding: 10px;
   }
 
@@ -296,9 +317,9 @@ export default {
     color: $primary-font-color;
     text-align: center;
     align-self: center;
-    margin-top: 28px;
-    margin-bottom: 28px;
-    font-size: 18px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    font-size: 16px;
     max-width: 726px;
   }
 
@@ -307,28 +328,28 @@ export default {
     align-self: center;
     margin-bottom: 40px;
   }
+}
 
-  .cta-button {
-    padding: 8px 16px;
-    border-radius: 50px;
-    background: rgb(255, 124, 172);
-    background: linear-gradient(
-      90deg,
-      rgba(255, 124, 172, 1) 0%,
-      rgba(255, 245, 108, 1) 100%
-    );
-    max-width: 100%;
-    width: 200px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 16px;
-    box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
-    color: rgb(80, 80, 80);
-    transition: all 0.3s ease-out;
-    &:hover {
-      box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
-      transform: scale(1.05);
-    }
+.cta-button {
+  padding: 10px 16px;
+  border-radius: 50px;
+  background: rgb(255, 124, 172);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 124, 172, 1) 0%,
+    rgba(255, 245, 108, 1) 100%
+  );
+  max-width: 100%;
+  width: 200px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+  color: #444444;
+  transition: all 0.3s ease-out;
+  &:hover {
+    box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+    transform: scale(1.05);
   }
 }
 
@@ -343,17 +364,17 @@ export default {
     background-size: contain;
     background-position: 70% center;
     padding-top: 20px;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
     margin-top: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
     @media (max-width: $mobile-breakpoint) {
       background-image: none;
+      margin-bottom: 40px;
     }
   }
 
   .row {
     display: flex;
-    margin-bottom: -2px;
     width: 600px;
     max-width: 100%;
 
@@ -424,6 +445,10 @@ export default {
         font-size: 18px;
       }
 
+      p {
+        font-size: 16px;
+      }
+
       .vertical-spacer {
         padding-bottom: 40px;
       }
@@ -434,7 +459,70 @@ export default {
     font-size: 32px;
     color: $primary-font-color;
     margin-top: 32px;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
+    @media (max-width: $mobile-breakpoint) {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.who-we-are-section {
+  padding-bottom: 100px;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 32px;
+    color: $primary-font-color;
+  }
+
+  p {
+    color: $primary-font-color;
+    font-size: 16px;
+  }
+
+  .line-divider {
+    align-self: center;
+    background: linear-gradient(
+      90deg,
+      rgba(230, 92, 138, 0.9) 0%,
+      rgba(255, 204, 102, 0.9) 100%
+    );
+    margin: 16px 0px 32px 0px;
+    height: 2.5px;
+    width: 100px;
+    max-width: 80%;
+  }
+
+  .contact-button {
+    align-self: center;
+    padding: 10px 16px;
+    margin-top: 32px;
+    border-radius: 50px;
+    background: rgb(255, 124, 172);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 124, 172, 1) 0%,
+      rgba(255, 245, 108, 1) 100%
+    );
+    max-width: 100%;
+    width: 180px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+    color: #444444;
+    transition: all 0.3s ease-out;
+    &:hover {
+      box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+      transform: scale(1.05);
+    }
   }
 }
 </style>
