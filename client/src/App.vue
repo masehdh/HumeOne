@@ -23,8 +23,8 @@ export default {
   methods: {
     goHome() {
       return this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -79,6 +79,12 @@ export default {
   }
 }
 
+.validation-message {
+  padding-top: 4px;
+  font-size: 14px;
+  color: rgb(255, 62, 62);
+}
+
 .form-section {
   background-color: $off-white;
   padding: 40px 10px;
@@ -87,12 +93,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
-  .validation-message {
-    padding-top: 4px;
-    font-size: 14px;
-    color: rgb(255, 62, 62);
-  }
 
   .form-card {
     background-color: #ffffff;

@@ -23,6 +23,8 @@ import Dropdown from 'primevue/dropdown';
 import TreeSelect from 'primevue/treeselect';
 import MultiSelect from 'primevue/multiselect';
 import Message from 'primevue/message';
+import ScrollTop from 'primevue/scrolltop';
+import Dialog from 'primevue/dialog';
 
 createApp(App)
   .use(store)
@@ -36,4 +38,6 @@ createApp(App)
   .component("TreeSelect", TreeSelect)
   .component("MultiSelect", MultiSelect)
   .component("Message", Message)
+  .component("ScrollTop", ScrollTop)
+  .component("Dialog", Dialog)
   .mount('#app')

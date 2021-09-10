@@ -6,8 +6,8 @@ const emailValidation = (data) => {
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: tldSet } })
-      .min(2)
-      .max(30)
+      .min(3)
+      .max(60)
       .required()
       .messages({
         "string.base": `This field should be a string`,
@@ -55,8 +55,8 @@ const signUpValidation = (data) => {
       }),
     email: Joi.string()
       .email({ tlds: { allow: tldSet } })
-      .min(2)
-      .max(30)
+      .min(3)
+      .max(60)
       .required()
       .messages({
         "string.base": `This field should be a string`,
@@ -172,6 +172,69 @@ const signUpValidation = (data) => {
   });
 };
 
+const contactUsValidation = (data) => {
+  const schema = Joi.object({
+    name: Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
+      .min(2)
+      .max(40)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
+      }),
+    email: Joi.string()
+      .email({ tlds: { allow: tldSet } })
+      .min(3)
+      .max(60)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.email": `The email you entered appears to be invalid`,
+      }),
+    subject: Joi.string()
+      .pattern(/[<>]/, { invert: true })
+      .min(3)
+      .max(80)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "string.pattern.invert.base": `This field cannot contain the characters < or >`,
+        "any.required": `This field is required`,
+      }),
+    message: Joi.string()
+      .pattern(/[<>]/, { invert: true })
+      .min(10)
+      .max(3000)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field cannot be left empty`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "string.pattern.invert.base": `This field cannot contain the characters < or >`,
+        "any.required": `This field is required`,
+      }),
+  });
+  return schema.validate(data, {
+    abortEarly: false,
+    errors: { label: "key", escapeHtml: true },
+  });
+};
 
 module.exports.emailValidation = emailValidation;
 module.exports.signUpValidation = signUpValidation;
+module.exports.contactUsValidation = contactUsValidation;

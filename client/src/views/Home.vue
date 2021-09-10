@@ -1,4 +1,5 @@
 <template>
+  <ScrollTop />
   <div class="section off-white-bg">
     <div class="container home-page">
       <img
@@ -260,22 +261,169 @@
       <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
       <p class="line-height-3 mx-3 md:mx-4">
         We're people like yourselves, who believe humans are better together,
-        hence our name (human + one)! We sought to create a platform that
+        hence our name (human + one). We sought to create a platform that
         incentivizes unity through fun and purposful events. Anyone can take
         part by attending events, or even hosting them as long as they meet
         basic qualifications. If you have questions or would like to become a
         Host, click the button below to contact us!
       </p>
-      <div class="contact-button mx-3 md:mx-4">
+
+      <div class="contact-button mx-3 md:mx-4" @click="showContactForm">
         CONTACT US
       </div>
     </div>
   </div>
+
+  <Dialog
+    header="Contact Us"
+    v-model:visible="displayContactForm"
+    :style="{ width: '50vw' }"
+    :breakpoints="{ '960px': '90vw' }"
+    :modal="true"
+    :dismissableMask="true"
+  >
+    <div class="field">
+      <label for="name">Name</label>
+      <InputText
+        type="text"
+        id="name"
+        v-model="name"
+        class="inputfield w-full"
+        :class="{
+          'p-invalid': validationMessages.hasOwnProperty('name')
+        }"
+      />
+
+      <div v-for="(message, index) of validationMessages['name']" :key="index">
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <InputText
+        type="text"
+        id="email"
+        v-model="email"
+        class="inputfield w-full"
+        :class="{
+          'p-invalid': validationMessages.hasOwnProperty('email')
+        }"
+      />
+
+      <div v-for="(message, index) of validationMessages['email']" :key="index">
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="subject">Subject</label>
+      <InputText
+        type="text"
+        id="subject"
+        v-model="subject"
+        class="inputfield w-full"
+        :class="{
+          'p-invalid': validationMessages.hasOwnProperty('subject')
+        }"
+      />
+
+      <div
+        v-for="(message, index) of validationMessages['subject']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <Textarea
+        type="text"
+        :autoResize="true"
+        id="message"
+        v-model="message"
+        class="inputfield w-full"
+        :class="{
+          'p-invalid': validationMessages.hasOwnProperty('message')
+        }"
+      />
+
+      <div
+        v-for="(message, index) of validationMessages['message']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+    <br />
+    <Button
+      type="submit"
+      label="Submit"
+      class="p-button-md p-button-primary submit-button"
+      @click="submitContactForm"
+    />
+  </Dialog>
 </template>
 
 <script>
+const { contactUsValidation } = require("../../../resources/validation.js");
+import axios from "axios";
+
 export default {
-  name: "Home"
+  name: "Home",
+  data() {
+    return {
+      displayContactForm: false,
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      validationMessages: {}
+    };
+  },
+  methods: {
+    showContactForm() {
+      return (this.displayContactForm = true);
+    },
+    submitContactForm() {
+      this.validationMessages = {};
+      const { error } = contactUsValidation({
+        name: this.name,
+        email: this.email,
+        subject: this.subject,
+        message: this.message
+      });
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter(val => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        return;
+      }
+
+      axios
+        .post("/api/contact-us", {
+          name: this.name,
+          email: this.email,
+          subject: this.subject,
+          message: this.message
+        })
+        .then(() => {
+          this.displayContactForm = false;
+          this.name = "";
+          this.email = "";
+          this.subject = "";
+          this.message = "";
+        })
+        .catch(error =>
+          console.log("error from /api/contact-us: ", error.response.data)
+        );
+    }
+  }
 };
 </script>
 
@@ -351,6 +499,10 @@ export default {
     box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
     transform: scale(1.05);
   }
+}
+
+.p-scrolltop.p-link {
+  background: #ff6672;
 }
 
 .how-it-works-section {
@@ -474,6 +626,7 @@ export default {
   .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
@@ -488,7 +641,6 @@ export default {
   }
 
   .line-divider {
-    align-self: center;
     background: linear-gradient(
       90deg,
       rgba(230, 92, 138, 0.9) 0%,
@@ -501,7 +653,7 @@ export default {
   }
 
   .contact-button {
-    align-self: center;
+    cursor: pointer;
     padding: 10px 16px;
     margin-top: 32px;
     border-radius: 50px;
