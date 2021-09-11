@@ -42,6 +42,9 @@ app.use("/api/event-registration", eventRegistrationRoute);
 const contactUsRoute = require("./routes/contactUs");
 app.use("/api/contact-us", express.json(), contactUsRoute);
 
+const mapRoute = require("./routes/map");
+app.use("/api/map", express.json(), mapRoute);
+
 // CATCH-ALL ROUTER FOR VUE. NECESSARY FOR SINGLE PAGE APPLICATION ROUTING. API/BACKEND ROUTES MUST BE HANDLED BEFORE THIS.
 app.use(express.static(`${__dirname}/public`));
 app.get(/.*/, (req, res) => res.sendFile(`${__dirname}/public/index.html`));

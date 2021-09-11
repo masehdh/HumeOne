@@ -3,7 +3,8 @@
     <h3 class="form-section-title">Sign Up</h3>
     <div>
       <p class="mt-3 mb-2">
-        Fill out the form below to register for events and recieve invites for events in your area that match your preferences.
+        Fill out the form below to register for events and recieve invites for
+        events in your area that match your preferences.
       </p>
     </div>
 
@@ -73,6 +74,7 @@
           forceSelection
           type="text"
           id="city"
+          field="address"
           v-model="city"
           :suggestions="filteredCityOptions"
           @complete="searchCityOptions($event)"
@@ -181,6 +183,7 @@
 
 <script>
 import cityList from "../../../resources/canadianCities.json";
+import axios from "axios";
 
 export default {
   name: "Sign Up Form",
@@ -228,14 +231,22 @@ export default {
   methods: {
     searchCityOptions(city) {
       setTimeout(() => {
-        if (city.query.trim().length < 1) {
-          this.filteredCityOptions = this.cityOptions;
+        if (city.query.trim().length <= 5) {
+          return;
         } else {
-          this.filteredCityOptions = this.cityOptions.filter(option => {
-            return option.toLowerCase().startsWith(city.query.toLowerCase());
-          });
+          axios
+            .post("/api/map/auto-complete", { input: city.query })
+            .then(
+              res =>
+                (this.filteredCityOptions = res.data.output.map(
+                  ({ place_name, center }) => {
+                    return { address: place_name, coordinates: center };
+                  }
+                ))
+            )
+            .catch(error => console.log("Error from /api/maps", error));
         }
-      }, 250);
+      }, 750);
     },
     sendSignUpInfo() {
       return this.$emit("send-sign-up-info", this.signUpInfoPayload);
