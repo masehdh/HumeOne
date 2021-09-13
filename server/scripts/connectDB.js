@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.NODE_ENV === 'production'
+    const mongoURI = process.env.DOCKER === 'TRUE'
       ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/humeone_db?authSource=admin`
       : `mongodb://localhost:27017/humeone_db`
       // : `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/humeone_db?authSource=admin`

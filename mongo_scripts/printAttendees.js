@@ -17,7 +17,7 @@ query = {};
 // query = {$where: "this.eventIds.length > 0"}
 // $where allows you to use basically any javascript, which is flexibile, but it is slower than native query operators
 
-projection = { _id: false, firstName: true, lastName: true, email: true, city: true };
+projection = { _id: false, firstName: true, lastName: true, email: true, address: true };
 
 cursor = db.attendees.find(query, projection).pretty();
 

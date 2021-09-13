@@ -25,6 +25,7 @@ import MultiSelect from 'primevue/multiselect';
 import Message from 'primevue/message';
 import ScrollTop from 'primevue/scrolltop';
 import Dialog from 'primevue/dialog';
+import InputMask from 'primevue/inputmask';
 
 createApp(App)
   .use(store)
@@ -40,4 +41,5 @@ createApp(App)
   .component("Message", Message)
   .component("ScrollTop", ScrollTop)
   .component("Dialog", Dialog)
+  .component("InputMask", InputMask)
   .mount('#app')

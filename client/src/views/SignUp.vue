@@ -68,8 +68,8 @@ export default {
       lastName: "",
       email: "",
       gender: "",
-      city: "",
-      ageGroup: "",
+      address: "",
+      birthdate: "",
       phoneNumber: "",
       attendeeInfo: "",
       preferredAgeGroup: [],
@@ -83,9 +83,9 @@ export default {
       this.firstName = payload.firstName;
       this.lastName = payload.lastName;
       this.email = payload.email;
-      this.city = payload.city;
+      this.address = payload.address;
       this.gender = payload.gender;
-      this.ageGroup = payload.ageGroup;
+      this.birthdate = new Date(payload.birthdate);
       this.attendeeInfo = payload.attendeeInfo;
       this.phoneNumber = payload.phoneNumber;
     },
@@ -101,8 +101,8 @@ export default {
         lastName: this.lastName,
         email: this.email,
         gender: this.gender,
-        ageGroup: this.ageGroup,
-        city: this.city,
+        birthdate: this.birthdate,
+        address: this.address,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo,
         preferredAgeGroup: this.preferredAgeGroup,
@@ -126,8 +126,8 @@ export default {
           lastName: this.lastName,
           email: this.email,
           gender: this.gender,
-          ageGroup: this.ageGroup,
-          city: this.city,
+          birthdate: this.birthdate,
+          address: this.address,
           phoneNumber: this.phoneNumber,
           attendeeInfo: this.attendeeInfo,
           preferredAgeGroup: this.preferredAgeGroup,

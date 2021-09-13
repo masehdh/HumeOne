@@ -1,6 +1,8 @@
 const Joi = require("joi");
 const { tldSet } = require("./tlds");
 
+let maxBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+let minBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 100))
 
 const emailValidation = (data) => {
   const schema = Joi.object({
@@ -66,17 +68,28 @@ const signUpValidation = (data) => {
         "any.required": `This field is required`,
         "string.email": `The email you entered appears to be invalid`,
       }),
-    city: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ',-]+$/)
-      .min(2)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.pattern.base": `This field cannot contain special characters`,
-        "any.required": `This field is required`,
-      }),
+    address: Joi.object({
+      address:
+        Joi.string()
+          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+          .min(2)
+          .required()
+          .messages({
+            "string.base": `This field should be a string`,
+            "string.empty": `This field cannot be left empty`,
+            "string.min": `This field should be at least {#limit} characters`,
+            "string.pattern.base": `This field cannot contain special characters`,
+            "any.required": `This field is required`,
+          }),
+      location: Joi.object({
+        type: Joi.string().required().valid("Point"),
+        coordinates: Joi.array().items(Joi.number().required())
+      })
+    }).required().messages({
+      "object.base": `This field cannot be left empty`,
+      "object.empty": `This field cannot be left empty`,
+      "any.required": `This field is required`,
+    }),
     gender: Joi.string()
       .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
       .allow("", null)
@@ -87,17 +100,20 @@ const signUpValidation = (data) => {
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
       }),
-    ageGroup: Joi.any()
-      .valid("18-24", "25-34", "35+")
+    birthdate: Joi.date()
+      .iso()
+      .max(maxBirthdate)
+      .min(minBirthdate)
       .required()
       .messages({
-        "any.only": `This field cannot be left empty`,
-        "any.empty": `This field cannot be left empty`,
-        "any.required": `This field cannot be left empty`,
+        "date.base": `This field cannot be left empty`,
+        "date.max": `You must be 18 years or older to sign up`,
+        "date.min": `Birthdate must be greater than ${minBirthdate.toLocaleDateString()}`,
+        "date.format": `This field cannot be left empty`,
       }),
     phoneNumber: Joi.string()
-      .length(10)
-      .pattern(/^[0-9]+$/)
+      .length(14)
+      .pattern(/^[-()0-9]+$/)
       .required()
       .messages({
         "string.base": `This field should be a string`,

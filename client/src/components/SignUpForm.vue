@@ -17,6 +17,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('firstName')
           }"
+          class="w-20rem"
           @blur="sendSignUpInfo()"
         />
         <label for="first-name">First Name</label>
@@ -38,6 +39,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('lastName')
           }"
+          class="w-20rem"
           @blur="sendSignUpInfo()"
         />
         <label for="last-name">Last Name</label>
@@ -59,6 +61,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('email')
           }"
+          class="w-20rem"
           @blur="sendSignUpInfo()"
         />
         <label for="email">Email</label>
@@ -70,22 +73,70 @@
 
     <div class="form-control">
       <span class="p-float-label">
+        <InputMask
+          v-model="phoneNumber"
+          mask="(999)-999-9999"
+          slotChar="X"
+          @change="sendSignUpInfo()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
+          }"
+          class="w-20rem"
+        />
+        <label for="phoneNumber">Phone Number</label>
+      </span>
+      <div
+        v-for="(message, index) of validationMessages['phoneNumber']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <span class="p-float-label">
         <AutoComplete
           forceSelection
           type="text"
-          id="city"
+          id="address"
           field="address"
-          v-model="city"
-          :suggestions="filteredCityOptions"
-          @complete="searchCityOptions($event)"
+          v-model="address"
+          :suggestions="filteredAddressOptions"
+          @complete="searchAddressOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('city')
+            'p-invalid': validationMessages.hasOwnProperty('address')
           }"
+          class="w-20rem"
           @blur="sendSignUpInfo()"
         />
-        <label for="city">City</label>
+        <label for="address">Address</label>
       </span>
-      <div v-for="(message, index) of validationMessages['city']" :key="index">
+      <div
+        v-for="(message, index) of validationMessages['address']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <span class="p-float-label">
+        <InputMask
+          v-model="birthdate"
+          mask="99/99/9999"
+          slotChar="MM/DD/YYYY"
+          @change="sendSignUpInfo()"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('birthdate')
+          }"
+          class="w-20rem"
+        />
+        <label for="birthdate">Birthdate</label>
+      </span>
+      <div
+        v-for="(message, index) of validationMessages['birthdate']"
+        :key="index"
+      >
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
@@ -101,54 +152,13 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('gender')
           }"
+          class="w-20rem"
           @blur="sendSignUpInfo()"
         />
         <label for="gender">Gender (optional)</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['gender']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="form-control">
-      <span class="p-float-label">
-        <Dropdown
-          v-model="ageGroup"
-          :options="ageOptions"
-          optionLabel="ageGroup"
-          @change="sendSignUpInfo()"
-          :class="{
-            'p-invalid': validationMessages.hasOwnProperty('ageGroup')
-          }"
-        />
-        <label for="ageGroup">Age Group</label>
-      </span>
-      <div
-        v-for="(message, index) of validationMessages['ageGroup']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="form-control">
-      <span class="p-float-label">
-        <InputText
-          type="text"
-          id="phone-number"
-          v-model="phoneNumber"
-          :class="{
-            'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
-          }"
-          @blur="sendSignUpInfo()"
-        />
-        <label for="phone-number">Phone Number</label>
-      </span>
-      <div
-        v-for="(message, index) of validationMessages['phoneNumber']"
         :key="index"
       >
         <div class="validation-message">{{ message }}</div>
@@ -168,6 +178,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
           }"
+          class="w-12"
           @blur="sendSignUpInfo()"
         />
       </span>
@@ -182,7 +193,6 @@
 </template>
 
 <script>
-import cityList from "../../../resources/canadianCities.json";
 import axios from "axios";
 
 export default {
@@ -196,15 +206,10 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
-      filteredCityOptions: [],
-      city: "",
+      filteredAddressOptions: [],
+      address: "",
       gender: "",
-      ageOptions: [
-        { ageGroup: "18-24" },
-        { ageGroup: "25-34" },
-        { ageGroup: "35+" }
-      ],
-      ageGroup: "",
+      birthdate: "",
       phoneNumber: "",
       attendeeInfo: "",
       filteredGenderOptions: [],
@@ -229,18 +234,21 @@ export default {
     if (this.emailProp) return (this.email = this.emailProp);
   },
   methods: {
-    searchCityOptions(city) {
+    searchAddressOptions(address) {
       setTimeout(() => {
-        if (city.query.trim().length <= 5) {
+        if (address.query.trim().length <= 5) {
           return;
         } else {
           axios
-            .post("/api/map/auto-complete", { input: city.query })
+            .post("/api/map/auto-complete", { input: address.query })
             .then(
               res =>
-                (this.filteredCityOptions = res.data.output.map(
+                (this.filteredAddressOptions = res.data.output.map(
                   ({ place_name, center }) => {
-                    return { address: place_name, coordinates: center };
+                    return {
+                      address: place_name,
+                      location: { type: "Point", coordinates: center }
+                    };
                   }
                 ))
             )
@@ -264,19 +272,18 @@ export default {
     }
   },
   computed: {
-    cityOptions() {
-      return cityList.map(
-        cityEntry => `${cityEntry.city}, ${cityEntry.province}`
-      );
+    yearRange() {
+      return `${new Date().getFullYear() - 115} : ${new Date().getFullYear() -
+        17}`;
     },
     signUpInfoPayload() {
       return {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        city: this.city,
+        address: this.address,
         gender: this.gender,
-        ageGroup: this.ageGroup.ageGroup,
+        birthdate: this.birthdate,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo
       };
@@ -286,4 +293,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#address {
+  width: 100% !important;
+}
 </style>

@@ -16,6 +16,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('preferredAgeGroup')
           }"
+          class="w-20rem"
         />
       </span>
       <div
@@ -41,6 +42,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
+          class="w-20rem"
         />
       </span>
       <div
@@ -67,6 +69,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('availability')
           }"
+          class="w-20rem"
         />
       </span>
       <div

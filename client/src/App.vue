@@ -138,8 +138,10 @@ export default {
         max-width: 100%;
       }
       .p-inputtextarea {
-        width: 100%;
         max-width: 100%;
+      }
+      .p-autocomplete .p-inputtext {
+        width: 100%;
       }
     }
 

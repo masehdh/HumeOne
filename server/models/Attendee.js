@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: 'Point',
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  },
+});
+
 const preferenceSchema = new mongoose.Schema({
   preferredAgeGroup: [
     {
@@ -38,15 +51,23 @@ const attendeeSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  address: {
+    address: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    location: {
+      type: pointSchema,
+      index: '2dsphere',
+      required: true,
+    },
+  },
   gender: {
     type: String,
     trim: true
   },
-  city: {
-    type: String,
-    required: true,
-  },
-  ageGroup: {
+  birthdate: {
     type: String,
     required: true,
   },
