@@ -132,7 +132,7 @@ export default {
     }
 
     .form-control {
-      margin-top: 16px;
+      margin-top: 20px;
       max-width: 100%;
       .p-inputtext {
         max-width: 100%;
@@ -143,11 +143,6 @@ export default {
       .p-autocomplete .p-inputtext {
         width: 100%;
       }
-    }
-
-    .regular-label {
-      display: block;
-      margin: 8px 0;
     }
 
     .submit-button {

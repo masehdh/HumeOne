@@ -72,7 +72,7 @@ export default {
       birthdate: "",
       phoneNumber: "",
       attendeeInfo: "",
-      preferredAgeGroup: [],
+      maxTravelDistance: 50,
       availability: [],
       interests: [],
       validationMessages: {}
@@ -90,7 +90,7 @@ export default {
       this.phoneNumber = payload.phoneNumber;
     },
     setPreferences(payload) {
-      this.preferredAgeGroup = payload.preferredAgeGroup;
+      this.maxTravelDistance = payload.maxTravelDistance;
       this.availability = payload.availability;
       this.interests = payload.interests;
     },
@@ -105,7 +105,7 @@ export default {
         address: this.address,
         phoneNumber: this.phoneNumber,
         attendeeInfo: this.attendeeInfo,
-        preferredAgeGroup: this.preferredAgeGroup,
+        maxTravelDistance: this.maxTravelDistance,
         interests: this.interests,
         availability: this.availability
       });
@@ -117,7 +117,9 @@ export default {
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
-        this.validationMessages["submit"] = ["Please review the errors above before submitting."]
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting."
+        ];
         return;
       }
       axios
@@ -130,7 +132,7 @@ export default {
           address: this.address,
           phoneNumber: this.phoneNumber,
           attendeeInfo: this.attendeeInfo,
-          preferredAgeGroup: this.preferredAgeGroup,
+          maxTravelDistance: this.maxTravelDistance,
           interests: this.interests,
           availability: this.availability
         })

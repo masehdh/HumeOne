@@ -1,5 +1,7 @@
 const Joi = require("joi");
 const { tldSet } = require("./tlds");
+const interestCategories = require("./interests.json");
+const availabilityCategories = require("./availability.json");
 
 let maxBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
 let minBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 100))
@@ -134,50 +136,20 @@ const signUpValidation = (data) => {
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field cannot contain special characters`,
       }),
-    preferredAgeGroup: Joi.array()
-      .items(Joi.any().valid("18-24", "25-34", "35+", ""))
-      .messages({
-        "any.only": `You can only choose between the three provided options`,
-      }),
+    maxTravelDistance: Joi.number().min(5).max(100).multiple(5).required().messages({
+      "number.base": `This field should be a number`,
+      "number.min": `Maximum travel distance should be greater than or equal to 5 km`,
+      "number.max": `Maximum travel distance should be less than or equal to 100 km`,
+      "number.multiple": `Maximum travel distance should be a multiple of 5`,
+      "any.required": `This field is required`,
+    }),
     interests: Joi.array()
-      .items(
-        Joi.any().valid(
-          "Sports",
-          "Basketball",
-          "Soccer",
-          "Volleyball",
-          "Nature",
-          "Hiking",
-          "Bonfire",
-          "Biking",
-          "Networking",
-          "Tech",
-          "Policy",
-          "Food",
-          "Restaurant Dinner",
-          "Potluck",
-          "Learning Experiences",
-          "Personal development",
-          "Skillsharing",
-          "Coding",
-          ""
-        )
-      )
+      .items(Joi.any().valid(...interestCategories))
       .messages({
         "any.only": `You can only choose between the provided options`,
       }),
     availability: Joi.array()
-      .items(
-        Joi.any().valid(
-          "Weekday mornings (9-12)",
-          "Weekday afternoons (12-5)",
-          "Weekday evenings (5-10)",
-          "Weekend mornings (9-12)",
-          "Weekend afternoons (12-5)",
-          "Weekend evenings (5-10)",
-          ""
-        )
-      )
+      .items(Joi.any().valid(...availabilityCategories))
       .messages({
         "any.only": `You can only choose between the provided options`,
       }),

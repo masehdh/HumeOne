@@ -167,7 +167,7 @@
 
     <div class="form-control">
       <span>
-        <label class="regular-label" for="attendee-info">
+        <label class="block mb-2" for="attendee-info">
           Anything else you would like us to know?
         </label>
         <Textarea

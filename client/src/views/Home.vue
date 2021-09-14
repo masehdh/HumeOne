@@ -93,7 +93,7 @@
           <p class="step-number">1</p>
         </div>
 
-        <div class="vertical-row-item">
+        <div class="vertical-row-item mx-3 md:mx-4">
           <h3>Sign Up For Free</h3>
           <p class="line-height-3">Let us know what you are interested in</p>
           <div class="vertical-spacer">&nbsp;</div>
@@ -141,7 +141,7 @@
           <p class="step-number">2</p>
         </div>
 
-        <div class="vertical-row-item">
+        <div class="vertical-row-item mx-3 md:mx-4">
           <h3>We'll Plan Events</h3>
           <p class="line-height-3">
             For you and others nearby with shared interests
@@ -191,7 +191,7 @@
           <p class="step-number">3</p>
         </div>
 
-        <div class="vertical-row-item">
+        <div class="vertical-row-item mx-3 md:mx-4">
           <h3>Receive Invites</h3>
           <p class="line-height-3">
             Directly to your inbox, according to your preferences
@@ -241,7 +241,7 @@
           <p class="step-number">4</p>
         </div>
 
-        <div class="vertical-row-item">
+        <div class="vertical-row-item mx-3 md:mx-4">
           <h3>Reserve Your Spot</h3>
           <p class="line-height-3">
             You pay a small fee to support our Hosts for facilitating events,
@@ -260,12 +260,11 @@
       </h2>
       <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
       <p class="line-height-3 mx-3 md:mx-4">
-        We're people like yourselves, who believe humans are better together,
-        hence our name (human + one). We sought to create a platform that
-        incentivizes unity through fun and purposful events. Anyone can take
-        part by attending events, or even hosting them as long as they meet
-        basic qualifications. If you have questions or would like to become a
-        Host, click the button below to contact us!
+        We believe humans are better together, hence our name (a portmanteau of
+        human + one). We sought to create a platform that incentivizes unity
+        through social gatherings. Anyone can take part by attending or even
+        hosting as long as they meet basic qualifications. If you have questions
+        or would like to become a Host, click the button below to contact us!
       </p>
 
       <div class="contact-button mx-3 md:mx-4" @click="showContactForm">

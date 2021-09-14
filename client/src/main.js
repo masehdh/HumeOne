@@ -26,6 +26,7 @@ import Message from 'primevue/message';
 import ScrollTop from 'primevue/scrolltop';
 import Dialog from 'primevue/dialog';
 import InputMask from 'primevue/inputmask';
+import Slider from 'primevue/slider';
 
 createApp(App)
   .use(store)
@@ -42,4 +43,5 @@ createApp(App)
   .component("ScrollTop", ScrollTop)
   .component("Dialog", Dialog)
   .component("InputMask", InputMask)
+  .component("Slider", Slider)
   .mount('#app')
