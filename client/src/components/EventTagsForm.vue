@@ -10,14 +10,10 @@
     </div>
 
     <div class="form-control">
-      <div class="align-items-center ">
-        <p class="tag-category-header mb-3 font-medium">
-          General
-        </p>
-
+      <div class="align-items-center scroll">
         <SelectButton
           v-model="selectedEventTags"
-          :options="tagOptions.filter(({ category }) => category === 'general')"
+          :options="filteredTagOptions.slice(0, maxTags)"
           :multiple="true"
           optionLabel="tag"
           optionValue="tag"
@@ -25,75 +21,14 @@
         />
       </div>
 
-      <div class="align-items-center ">
-        <p class="tag-category-header my-3 font-medium">
-          Learning and Development
-        </p>
-
-        <SelectButton
-          v-model="selectedEventTags"
-          :options="
-            tagOptions.filter(
-              ({ category }) => category === 'learning and development'
-            )
-          "
-          :multiple="true"
-          optionLabel="tag"
-          optionValue="tag"
-          @change="sendTags()"
-        />
-      </div>
-
-      <div class="align-items-center ">
-        <p class="tag-category-header my-3 font-medium">
-          Physical Activity
-        </p>
-
-        <SelectButton
-          v-model="selectedEventTags"
-          :options="
-            tagOptions.filter(
-              ({ category }) => category === 'physical activity'
-            )
-          "
-          :multiple="true"
-          optionLabel="tag"
-          optionValue="tag"
-          @change="sendTags()"
-        />
-      </div>
-
-      <div class="align-items-center ">
-        <p class="tag-category-header my-3 font-medium">
-          Arts and Culture
-        </p>
-
-        <SelectButton
-          v-model="selectedEventTags"
-          :options="
-            tagOptions.filter(({ category }) => category === 'arts and culture')
-          "
-          :multiple="true"
-          optionLabel="tag"
-          optionValue="tag"
-          @change="sendTags()"
-        />
-      </div>
-
-      <div class="align-items-center ">
-        <p class="tag-category-header my-3 font-medium">
-          Games
-        </p>
-
-        <SelectButton
-          v-model="selectedEventTags"
-          :options="tagOptions.filter(({ category }) => category === 'games')"
-          :multiple="true"
-          optionLabel="tag"
-          optionValue="tag"
-          @change="sendTags()"
-        />
-      </div>
+      <Button
+        label="Show More"
+        class="p-button-text my-1"
+        @click="maxTags += 10"
+        icon="pi pi-plus"
+        iconPos="left"
+        v-if="maxTags < filteredTagOptions.length"
+      />
 
       <div
         v-for="(message, index) of validationMessages['selectedEventTags']"
@@ -111,17 +46,24 @@ import eventTags from "../../../resources/eventTags.json";
 export default {
   name: "Event Tags Form",
   props: {
-    validationMessagesProp: Object
+    validationMessagesProp: Object,
+    interestsProp: Array
   },
   data() {
     return {
       selectedEventTags: [],
       tagOptions: eventTags,
-      filteredTagOptions: [],
-      validationMessages: this.validationMessagesProp
+      validationMessages: this.validationMessagesProp,
+      maxTags: 10
     };
   },
   computed: {
+    filteredTagOptions() {
+      return this.tagOptions.filter(
+        ({ category }) =>
+          category === "General" || this.interestsProp.includes(category)
+      );
+    },
     interestsPayload() {
       return {
         selectedEventTags: this.selectedEventTags

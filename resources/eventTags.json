@@ -1,13 +1,13 @@
 [
-  {"category": "general", "tag":"Overnight events"},
-  {"category": "general", "tag":"Meeting people my age"},
-  {"category": "general", "tag":"Food"},
-  {"category": "learning and development", "tag":"Books"},
-  {"category": "learning and development", "tag":"Tech"},
-  {"category": "physical activity", "tag":"Soccer"},
-  {"category": "physical activity", "tag":"Basketball"},
-  {"category": "physical activity", "tag":"Volleyball"},
-  {"category": "physical activity", "tag":"Spikeball"},
-  {"category": "arts and culture", "tag":"Music"},
-  {"category": "games", "tag":"Board games"}
+  {"category": "General", "tag":"Overnight events"},
+  {"category": "General", "tag":"Meeting people my age"},
+  {"category": "General", "tag":"Food"},
+  {"category": "Learning and Development", "tag":"Books"},
+  {"category": "Learning and Development", "tag":"Tech"},
+  {"category": "Physical Activities", "tag":"Soccer"},
+  {"category": "Physical Activities", "tag":"Basketball"},
+  {"category": "Physical Activities", "tag":"Volleyball"},
+  {"category": "Physical Activities", "tag":"Spikeball"},
+  {"category": "Arts and Culture", "tag":"Music"},
+  {"category": "Games", "tag":"Board games"}
 ]

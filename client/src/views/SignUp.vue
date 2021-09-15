@@ -9,6 +9,7 @@
         {{ msg.content }}
       </Message>
     </div>
+    {{ interests }}
 
     <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
@@ -25,6 +26,7 @@
       <EventTagsForm
         @send-tags="setSelectedEventTags"
         :validationMessagesProp="validationMessages"
+        :interestsProp="interests"
       />
 
       <Button
