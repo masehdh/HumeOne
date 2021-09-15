@@ -1,0 +1,13 @@
+[
+  {"category": "general", "tag":"Overnight events"},
+  {"category": "general", "tag":"Meeting people my age"},
+  {"category": "general", "tag":"Food"},
+  {"category": "learning and development", "tag":"Books"},
+  {"category": "learning and development", "tag":"Tech"},
+  {"category": "physical activity", "tag":"Soccer"},
+  {"category": "physical activity", "tag":"Basketball"},
+  {"category": "physical activity", "tag":"Volleyball"},
+  {"category": "physical activity", "tag":"Spikeball"},
+  {"category": "arts and culture", "tag":"Music"},
+  {"category": "games", "tag":"Board games"}
+]

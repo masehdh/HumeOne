@@ -13,11 +13,16 @@
       >
         &nbsp;
       </div>
+
       <h1 class="form-header mx-3 md:mx-4">Event Registration</h1>
+
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
+
       <p class="max-spots mx-3 md:mx-4">
         {{ eventDetails.maxSpots }} spots
-        <span class="spots-left" v-if="showSpotsLeft">&#183; {{spotsLeft}} spots left</span>
+        <span class="spots-left" v-if="showSpotsLeft"
+          >&#183; {{ spotsLeft }} spots left</span
+        >
       </p>
 
       <div class="host-info mx-3 md:mx-4">
@@ -28,11 +33,16 @@
             class="host-image"
           />
         </div>
+
         <div class="host-contact-details">
           <p><i class="pi pi-user"></i>Hosted by Maseh Hadaf</p>
+
           <div class="line-divider mx-2">&nbsp;</div>
+
           <a href="tel:647-561-4010"><i class="pi pi-phone"></i>647-561-4010</a>
+
           <div class="line-divider mx-2">&nbsp;</div>
+
           <a href="mailto:maseh46@gmail.com"
             ><i class="pi pi-envelope"></i>maseh46@gmail.com</a
           >
@@ -45,6 +55,7 @@
       v-if="eventDetails.description"
     >
       <h3 class="form-section-title">Event Description</h3>
+
       <p class="event-detail-item">
         {{ eventDetails.description }}
       </p>
@@ -52,41 +63,54 @@
 
     <div class="container form-card px-3 py-3 md:px-4 py-4">
       <h3 class="form-section-title">Event Details</h3>
+
       <p class="event-detail-item" v-if="eventDetails.dateTime">
         <span class="event-detail-title">Date & time:</span>
         {{ eventDetails.dateTime }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.location">
         <span class="event-detail-title">Location:</span>
         {{ eventDetails.location }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.reservationFee">
         <span class="event-detail-title">Reservation Fee:</span>
         {{ eventDetails.reservationFee }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.reservationFee">
         <span class="event-detail-title">Reservation deadline:</span>
         {{ eventDetails.paymentDeadline }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.whatToBring">
         <span class="event-detail-title">What to bring:</span>
         {{ eventDetails.whatToBring }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.whenYouArrive">
         <span class="event-detail-title">When you arrive:</span>
         {{ eventDetails.whenYouArrive }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.additionalDetails">
         <span class="event-detail-title">Additional details:</span>
         {{ eventDetails.additionalDetails }}
       </p>
+
       <p class="event-detail-item" v-if="eventDetails.cancellation">
         <span class="event-detail-title">Cancellation:</span>
         {{ eventDetails.cancellation }}
       </p>
     </div>
 
-    <form class="max-w-full" action="#" @submit.prevent="submitRegistration" v-if="!hideRegistration">
+    <form
+      class="max-w-full"
+      action="#"
+      @submit.prevent="submitRegistration"
+      v-if="!hideRegistration"
+    >
       <div class="container form-card px-3 py-4 md:px-4 md:py-5">
         <h3 class="form-section-title">Please enter your email</h3>
 
@@ -100,8 +124,10 @@
                 'p-invalid': validationMessages.hasOwnProperty('email')
               }"
             />
+
             <label for="email">Email</label>
           </span>
+
           <div
             v-for="(message, index) of validationMessages['email']"
             :key="index"
@@ -109,6 +135,7 @@
             <div class="validation-message">{{ message }}</div>
           </div>
         </div>
+
         <div>
           <Button
             type="submit"
@@ -119,11 +146,20 @@
       </div>
     </form>
 
-    <div class="container form-card px-3 py-3 md:px-4 py-4" v-if="hideRegistration">
+    <div
+      class="container form-card px-3 py-3 md:px-4 py-4"
+      v-if="hideRegistration"
+    >
       <h3 class="form-section-title">Event Registration Closed</h3>
-      <p class="mt-3 line-height-3">Unfortunately, reservation for this event has closed. The reservation deadline has passed or all the spots have been reserved. We apologize for the inconvenience, and hope to see you at our next event! If you have any questions, feel free to contact us at <a href="mailto:team@humeone.com">team@humeone.com</a>.</p>
-    </div>
 
+      <p class="mt-3 line-height-3">
+        Unfortunately, reservation for this event has closed. The reservation
+        deadline has passed or all the spots have been reserved. We apologize
+        for the inconvenience, and hope to see you at our next event! If you
+        have any questions, feel free to contact us at
+        <a href="mailto:team@humeone.com">team@humeone.com</a>.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -151,7 +187,11 @@ export default {
   created() {
     axios
       .post("/api/event-registration/check-spots", { eventId: this.eventId })
-      .then(res => (this.spotsLeft = this.eventDetails.maxSpots - res.data.output.spotsReserved))
+      .then(
+        res =>
+          (this.spotsLeft =
+            this.eventDetails.maxSpots - res.data.output.spotsReserved)
+      )
       .catch(error =>
         console.log(
           "error from /api/event-registration/check-spots: ",
@@ -161,20 +201,23 @@ export default {
   },
   computed: {
     showSpotsLeft() {
-      if (this.spotsLeft !== null && this.spotsLeft > -1 && this.spotsLeft <= (this.eventDetails.maxSpots * 0.5)) {
-        return true
+      if (
+        this.spotsLeft !== null &&
+        this.spotsLeft > -1 &&
+        this.spotsLeft <= this.eventDetails.maxSpots * 0.5
+      ) {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     hideRegistration() {
       if (this.spotsLeft < 1 && this.spotsLeft !== null) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     }
-
   },
   methods: {
     submitRegistration() {

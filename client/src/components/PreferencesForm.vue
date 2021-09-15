@@ -1,20 +1,23 @@
 <template>
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Preferences</h3>
+
     <div>
       <p class="mt-3">
         The information below will help us fine-tune what invites you will
         receive
       </p>
     </div>
+
     <div class="form-control">
       <span class="p-float-label">
         <InputText
           id="maxTravelDistance"
-          class="w-20rem"
+          class="w-20rem select-none"
           readonly
           v-model="displayTravelDistance"
         />
+
         <Slider
           class="w-20rem"
           v-model.number="maxTravelDistance"
@@ -23,10 +26,12 @@
           :min="5"
           :step="5"
         />
+
         <label for="maxTravelDistance">
           Maximum Travel Distance
         </label>
       </span>
+
       <div
         v-for="(message, index) of validationMessages['maxTravelDistance']"
         :key="index"
@@ -49,10 +54,12 @@
           }"
           class="w-20rem"
         />
+
         <label for="interests">
           Interests
         </label>
       </span>
+
       <div
         v-for="(message, index) of validationMessages['interests']"
         :key="index"
@@ -75,10 +82,12 @@
           }"
           class="w-20rem"
         />
+
         <label for="availability">
           Availability
         </label>
       </span>
+
       <div
         v-for="(message, index) of validationMessages['availability']"
         :key="index"
@@ -155,5 +164,6 @@ export default {
 #maxTravelDistance {
   border-radius: 4px 4px 0px 0px;
   border-bottom: none;
+  cursor: default;
 }
 </style>

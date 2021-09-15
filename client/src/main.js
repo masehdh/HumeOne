@@ -27,6 +27,8 @@ import ScrollTop from 'primevue/scrolltop';
 import Dialog from 'primevue/dialog';
 import InputMask from 'primevue/inputmask';
 import Slider from 'primevue/slider';
+import SelectButton from 'primevue/selectbutton';
+import Carousel from 'primevue/carousel';
 
 createApp(App)
   .use(store)
@@ -44,4 +46,6 @@ createApp(App)
   .component("Dialog", Dialog)
   .component("InputMask", InputMask)
   .component("Slider", Slider)
+  .component("SelectButton", SelectButton)
+  .component("Carousel", Carousel)
   .mount('#app')

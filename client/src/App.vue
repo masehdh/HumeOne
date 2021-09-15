@@ -165,4 +165,22 @@ export default {
     }
   }
 }
+
+.p-selectbutton
+  .p-button:focus:not(.p-button:hover):not(.p-disabled):not(.p-highlight) {
+  background-color: initial !important;
+}
+
+.p-selectbutton .p-button,
+.p-buttonset .p-button:not(:last-child) {
+  margin-right: 4px !important;
+  margin-bottom: 4px !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 0px !important;
+}
+
+.p-selectbutton .p-button .p-button-label {
+  font-weight: 400;
+  color: $primary-font-color !important;
+}
 </style>

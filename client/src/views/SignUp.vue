@@ -9,27 +9,37 @@
         {{ msg.content }}
       </Message>
     </div>
+
     <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
         :validationMessagesProp="validationMessages"
         :emailProp="emailProp"
       />
+
       <PreferencesForm
         @send-preferences="setPreferences"
         :validationMessagesProp="validationMessages"
       />
+
+      <EventTagsForm
+        @send-tags="setSelectedEventTags"
+        :validationMessagesProp="validationMessages"
+      />
+
       <Button
         type="submit"
         label="Submit"
         class="p-button-md p-button-primary submit-button"
       />
+
       <div
         v-for="(message, index) of validationMessages['submit']"
         :key="index"
       >
         <div class="validation-message mt-1">{{ message }}</div>
       </div>
+
       <Message
         v-for="msg of serverResponses"
         :severity="msg.severity"
@@ -45,10 +55,11 @@
 const { signUpValidation } = require("../../../resources/validation.js");
 import SignUpForm from "../components/SignUpForm.vue";
 import PreferencesForm from "../components/PreferencesForm.vue";
+import EventTagsForm from "../components/EventTagsForm.vue";
 import axios from "axios";
 
 export default {
-  components: { SignUpForm, PreferencesForm },
+  components: { SignUpForm, PreferencesForm, EventTagsForm },
   name: "Sign Up",
   props: {
     emailProp: String,
@@ -75,6 +86,7 @@ export default {
       maxTravelDistance: 50,
       availability: [],
       interests: [],
+      selectedEventTags: [],
       validationMessages: {}
     };
   },
@@ -93,6 +105,9 @@ export default {
       this.maxTravelDistance = payload.maxTravelDistance;
       this.availability = payload.availability;
       this.interests = payload.interests;
+    },
+    setSelectedEventTags(payload) {
+      this.selectedEventTags = payload.selectedEventTags;
     },
     submitRegistration() {
       this.validationMessages = {};
