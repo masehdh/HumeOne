@@ -8,7 +8,7 @@
           backgroundImage:
             'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' +
             require('../../../resources/' + eventDetails.image) +
-            ')',
+            ')'
         }"
       >
         &nbsp;
@@ -39,6 +39,12 @@
 
           <div class="line-divider mx-2">&nbsp;</div>
 
+          <a :href="'tel:' + eventDetails.hostNumber"
+            ><i class="pi pi-phone"></i>{{ eventDetails.hostNumber }}</a
+          >
+
+          <div class="line-divider mx-2">&nbsp;</div>
+
           <a :href="'mailto:' + eventDetails.hostEmail"
             ><i class="pi pi-envelope"></i>{{ eventDetails.hostEmail }}</a
           >
@@ -57,10 +63,7 @@
       </p>
     </div>
 
-    <div
-      class="container form-card"
-      v-if="eventDetails.location"
-    >
+    <div class="container form-card" v-if="eventDetails.location">
       <iframe
         width="100%"
         height="300"
@@ -72,7 +75,10 @@
       </iframe>
       <h3 class="form-section-title mt-4 mx-3 md:mx-4">Event Location</h3>
 
-      <p class="event-detail-item mx-3 mb-3 md:mx-4 mb-4" v-if="eventDetails.location">
+      <p
+        class="event-detail-item mx-3 mb-3 md:mx-4 mb-4"
+        v-if="eventDetails.location"
+      >
         {{ eventDetails.location }}
       </p>
     </div>
@@ -131,7 +137,7 @@
               id="email"
               v-model="email"
               :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email'),
+                'p-invalid': validationMessages.hasOwnProperty('email')
               }"
             />
 
@@ -183,12 +189,12 @@ export default {
   data() {
     return {
       eventDetails:
-        eventList.find((event) => event.id === this.$route.query.eventId) || {},
+        eventList.find(event => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId,
       email: "",
       validationMessages: {},
       eventList: eventList,
-      spotsLeft: null,
+      spotsLeft: null
     };
   },
   mounted() {
@@ -198,11 +204,11 @@ export default {
     axios
       .post("/api/event-registration/check-spots", { eventId: this.eventId })
       .then(
-        (res) =>
+        res =>
           (this.spotsLeft =
             this.eventDetails.maxSpots - res.data.output.spotsReserved)
       )
-      .catch((error) =>
+      .catch(error =>
         console.log(
           "error from /api/event-registration/check-spots: ",
           error.response.data
@@ -233,18 +239,18 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   methods: {
     submitRegistration() {
       this.validationMessages = {};
       const { error } = emailValidation({
-        email: this.email,
+        email: this.email
       });
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter((val) => val.path[0] === path[0])
+            .filter(val => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
@@ -255,9 +261,9 @@ export default {
       axios
         .post("/api/event-registration/check-email", {
           email: this.email,
-          eventId: this.eventId,
+          eventId: this.eventId
         })
-        .then((res) => {
+        .then(res => {
           switch (res.data.output.alreadyRegistered) {
             case true:
               this.validationMessages["email"] = [res.data.message];
@@ -267,9 +273,9 @@ export default {
                 .post("/api/event-registration/create-checkout-session", {
                   email: this.email,
                   eventId: this.eventId,
-                  priceId: this.eventDetails.priceId,
+                  priceId: this.eventDetails.priceId
                 })
-                .then((res) => (window.location.href = res.data.url));
+                .then(res => (window.location.href = res.data.url));
               break;
             case null:
               this.$router.push({
@@ -277,8 +283,8 @@ export default {
                 params: {
                   emailProp: this.email,
                   eventIdProp: this.eventId,
-                  priceIdProp: this.eventDetails.priceId,
-                },
+                  priceIdProp: this.eventDetails.priceId
+                }
               });
               break;
             default:
@@ -287,14 +293,14 @@ export default {
               );
           }
         })
-        .catch((error) =>
+        .catch(error =>
           console.log(
             "error from /api/event-registration/check-email: ",
             error.response.data
           )
         );
-    },
-  },
+    }
+  }
 };
 </script>
 
