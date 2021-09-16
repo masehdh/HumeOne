@@ -83,7 +83,7 @@
           }"
           class="w-20rem"
         />
-        <label for="phoneNumber">Phone Number</label>
+        <label for="phoneNumber">Phone Number (Optional)</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['phoneNumber']"
@@ -102,6 +102,8 @@
           field="address"
           v-model="address"
           :suggestions="filteredAddressOptions"
+          :minLength="5"
+          :delay="500"
           @complete="searchAddressOptions($event)"
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('address')
@@ -148,6 +150,8 @@
           id="gender"
           v-model="gender"
           :suggestions="filteredGenderOptions"
+          :minLength="1"
+          :delay="0"
           @complete="searchGenderOptions($event)"
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('gender')
@@ -155,7 +159,7 @@
           class="w-20rem"
           @blur="sendSignUpInfo()"
         />
-        <label for="gender">Gender (optional)</label>
+        <label for="gender">Gender (Optional)</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['gender']"
@@ -174,7 +178,7 @@
           id="attendee-info"
           v-model="attendeeInfo"
           :autoResize="true"
-          placeholder="E.g. Allergies, transportation, etc."
+          placeholder="Allergies, transportation, concerns..."
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
           }"
@@ -235,40 +239,28 @@ export default {
   },
   methods: {
     searchAddressOptions(address) {
-      setTimeout(() => {
-        if (address.query.trim().length <= 5) {
-          return;
-        } else {
-          axios
-            .post("/api/map/auto-complete", { input: address.query })
-            .then(
-              res =>
-                (this.filteredAddressOptions = res.data.output.map(
-                  ({ place_name, center }) => {
-                    return {
-                      address: place_name,
-                      location: { type: "Point", coordinates: center }
-                    };
-                  }
-                ))
-            )
-            .catch(error => console.log("Error from /api/maps", error));
-        }
-      }, 750);
+      axios
+        .post("/api/map/auto-complete", { input: address.query })
+        .then(
+          res =>
+            (this.filteredAddressOptions = res.data.output.map(
+              ({ place_name, center }) => {
+                return {
+                  address: place_name,
+                  location: { type: "Point", coordinates: center }
+                };
+              }
+            ))
+        )
+        .catch(error => console.log("Error from /api/maps", error));
     },
     sendSignUpInfo() {
       return this.$emit("send-sign-up-info", this.signUpInfoPayload);
     },
     searchGenderOptions(event) {
-      setTimeout(() => {
-        if (event.query.trim().length < 1) {
-          this.filteredGenderOptions = this.genderOptions;
-        } else {
-          this.filteredGenderOptions = this.genderOptions.filter(option => {
-            return option.toLowerCase().startsWith(event.query.toLowerCase());
-          });
-        }
-      }, 250);
+      return (this.filteredGenderOptions = this.genderOptions.filter(option => {
+        return option.toLowerCase().startsWith(event.query.toLowerCase());
+      }));
     }
   },
   computed: {

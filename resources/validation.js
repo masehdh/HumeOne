@@ -2,6 +2,8 @@ const Joi = require("joi");
 const { tldSet } = require("./tlds");
 const interestCategories = require("./interests.json");
 const availabilityCategories = require("./availability.json");
+let eventTagCategories = require("./eventTags.json")
+eventTagCategories = eventTagCategories.map(({ tag }) => tag)
 
 let maxBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
 let minBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 100))
@@ -15,7 +17,7 @@ const emailValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "any.required": `This field is required`,
@@ -38,7 +40,7 @@ const signUpValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
@@ -51,7 +53,7 @@ const signUpValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
@@ -64,7 +66,7 @@ const signUpValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "any.required": `This field is required`,
@@ -78,7 +80,7 @@ const signUpValidation = (data) => {
           .required()
           .messages({
             "string.base": `This field should be a string`,
-            "string.empty": `This field cannot be left empty`,
+            "string.empty": `This field is required`,
             "string.min": `This field should be at least {#limit} characters`,
             "string.pattern.base": `This field cannot contain special characters`,
             "any.required": `This field is required`,
@@ -88,8 +90,8 @@ const signUpValidation = (data) => {
         coordinates: Joi.array().items(Joi.number().required())
       })
     }).required().messages({
-      "object.base": `This field cannot be left empty`,
-      "object.empty": `This field cannot be left empty`,
+      "object.base": `This field is required`,
+      "object.empty": `This field is required`,
       "any.required": `This field is required`,
     }),
     gender: Joi.string()
@@ -108,21 +110,19 @@ const signUpValidation = (data) => {
       .min(minBirthdate)
       .required()
       .messages({
-        "date.base": `This field cannot be left empty`,
+        "date.base": `This field is required`,
         "date.max": `You must be 18 years or older to sign up`,
         "date.min": `Birthdate must be greater than ${minBirthdate.toLocaleDateString()}`,
-        "date.format": `This field cannot be left empty`,
+        "date.format": `This field is required`,
       }),
     phoneNumber: Joi.string()
       .length(14)
+      .allow("")
       .pattern(/^[-()0-9]+$/)
-      .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
         "string.pattern.base": `This field can only contain numbers`,
         "string.length": `Phone number should be 10-digits long`,
       }),
@@ -136,7 +136,7 @@ const signUpValidation = (data) => {
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field cannot contain special characters`,
       }),
-    maxTravelDistance: Joi.number().min(5).max(100).multiple(5).required().messages({
+    maxTravelDistance: Joi.number().min(5000).max(100000).multiple(5000).required().messages({
       "number.base": `This field should be a number`,
       "number.min": `Maximum travel distance should be greater than or equal to 5 km`,
       "number.max": `Maximum travel distance should be less than or equal to 100 km`,
@@ -145,11 +145,24 @@ const signUpValidation = (data) => {
     }),
     interests: Joi.array()
       .items(Joi.any().valid(...interestCategories))
+      .min(1)
+      .required()
       .messages({
         "any.only": `You can only choose between the provided options`,
+        "array.min": `This field is required`,
+        "any.required": `This field is required`,
       }),
     availability: Joi.array()
       .items(Joi.any().valid(...availabilityCategories))
+      .min(1)
+      .required()
+      .messages({
+        "any.only": `You can only choose between the provided options`,
+        "array.min": `This field is required`,
+        "any.required": `This field is required`,
+      }),
+    selectedEventTags: Joi.array()
+      .items(Joi.any().valid(...eventTagCategories))
       .messages({
         "any.only": `You can only choose between the provided options`,
       }),
@@ -169,7 +182,7 @@ const contactUsValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
@@ -182,7 +195,7 @@ const contactUsValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "any.required": `This field is required`,
@@ -195,7 +208,7 @@ const contactUsValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
@@ -209,7 +222,7 @@ const contactUsValidation = (data) => {
       .required()
       .messages({
         "string.base": `This field should be a string`,
-        "string.empty": `This field cannot be left empty`,
+        "string.empty": `This field is required`,
         "string.min": `This field should be at least {#limit} characters`,
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,

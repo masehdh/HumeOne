@@ -8,25 +8,26 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { error } = signUpValidation(req.body);
-  if (error) return res.status(400).json({message: error.details[0].message});
+  if (error) return res.status(400).json({ message: error.details[0].message });
 
   const emailExists = await Attendee.findOne({ email: req.body.email })
-  if (emailExists) return res.status(400).json({message: "This email has already been registered"})
+  if (emailExists) return res.status(400).json({ message: "This email has already been registered" })
 
   const attendee = new Attendee({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    gender: req.body.gender,
-    birthdate: req.body.birthdate,
-    address: req.body.address,
     phoneNumber: req.body.phoneNumber,
+    address: req.body.address,
+    birthdate: req.body.birthdate,
+    gender: req.body.gender,
     attendeeInfo: req.body.attendeeInfo,
     preferences: {
-      preferredAgeGroup: req.body.preferredAgeGroup,
+      maxTravelDistance: req.body.maxTravelDistance,
       interests: req.body.interests,
       availability: req.body.availability,
     },
+    selectedEventTags: req.body.selectedEventTags
   });
 
   try {

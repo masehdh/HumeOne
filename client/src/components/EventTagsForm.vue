@@ -1,6 +1,6 @@
 <template>
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
-    <h3 class="form-section-title">Event Tags</h3>
+    <h3 class="form-section-title">Event Tags (Optional)</h3>
 
     <div>
       <p class="mt-3">
@@ -17,13 +17,12 @@
           :multiple="true"
           optionLabel="tag"
           optionValue="tag"
-          @change="sendTags()"
         />
       </div>
 
       <Button
         label="Show More"
-        class="p-button-text my-1"
+        class="p-button-text my-1 block"
         @click="maxTags += 10"
         icon="pi pi-plus"
         iconPos="left"
@@ -63,21 +62,14 @@ export default {
         ({ category }) =>
           category === "General" || this.interestsProp.includes(category)
       );
-    },
-    interestsPayload() {
-      return {
-        selectedEventTags: this.selectedEventTags
-      };
     }
   },
   watch: {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
-    }
-  },
-  methods: {
-    sendTags() {
-      return this.$emit("send-tags", this.interestsPayload);
+    },
+    selectedEventTags: function() {
+      this.$emit("send-tags", { selectedEventTags: this.selectedEventTags });
     }
   }
 };

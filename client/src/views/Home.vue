@@ -262,8 +262,8 @@
       <p class="line-height-3 mx-3 md:mx-4">
         We believe humans are better together, hence our name (a portmanteau of
         human + one). We sought to create a platform that incentivizes unity
-        through social gatherings. Anyone can take part by attending or even
-        hosting as long as they meet basic qualifications. If you have questions
+        through social gatherings. Anyone can take part by attending or hosting
+        events as long as they meet basic qualifications. If you have questions
         or would like to become a Host, click the button below to contact us!
       </p>
 

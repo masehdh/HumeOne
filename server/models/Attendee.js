@@ -11,31 +11,15 @@ const pointSchema = new mongoose.Schema({
     type: [Number],
     required: true
   },
-});
+}, { _id: false });
 
 const preferenceSchema = new mongoose.Schema({
-  preferredAgeGroup: [
-    {
-      type: String,
-    }
-  ],
-  interests: [
-    {
-      type: String,
-    }
-  ],
-  availability: [
-    {
-      type: String,
-    }
-  ],
-})
+  maxTravelDistance: { type: Number },
+  interests: [{ type: String }],
+  availability: [{ type: String }],
+}, { _id: false })
 
 const attendeeSchema = new mongoose.Schema({
-  eventIds: [{
-    type: String,
-    required: false
-  }],
   firstName: {
     type: String,
     required: true,
@@ -47,6 +31,11 @@ const attendeeSchema = new mongoose.Schema({
     trim: true
   },
   email: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  phoneNumber: {
     type: String,
     required: true,
     trim: true
@@ -63,17 +52,12 @@ const attendeeSchema = new mongoose.Schema({
       required: true,
     },
   },
-  gender: {
-    type: String,
-    trim: true
-  },
   birthdate: {
     type: String,
     required: true,
   },
-  phoneNumber: {
+  gender: {
     type: String,
-    required: true,
     trim: true
   },
   attendeeInfo: {
@@ -83,7 +67,13 @@ const attendeeSchema = new mongoose.Schema({
   },
   preferences: {
     type: preferenceSchema,
-  }
+    required: true
+  },
+  selectedEventTags: [{ type: String }],
+  eventIds: [{
+    type: String,
+    required: false
+  }]
 }, { timestamps: true }
 );
 

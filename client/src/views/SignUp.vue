@@ -9,7 +9,6 @@
         {{ msg.content }}
       </Message>
     </div>
-    {{ interests }}
 
     <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
@@ -104,7 +103,7 @@ export default {
       this.phoneNumber = payload.phoneNumber;
     },
     setPreferences(payload) {
-      this.maxTravelDistance = payload.maxTravelDistance;
+      this.maxTravelDistance = payload.maxTravelDistance * 1000;
       this.availability = payload.availability;
       this.interests = payload.interests;
     },
@@ -124,7 +123,8 @@ export default {
         attendeeInfo: this.attendeeInfo,
         maxTravelDistance: this.maxTravelDistance,
         interests: this.interests,
-        availability: this.availability
+        availability: this.availability,
+        selectedEventTags: this.selectedEventTags
       });
       if (error) {
         error.details.forEach(({ path }) => {
@@ -151,7 +151,8 @@ export default {
           attendeeInfo: this.attendeeInfo,
           maxTravelDistance: this.maxTravelDistance,
           interests: this.interests,
-          availability: this.availability
+          availability: this.availability,
+          selectedEventTags: this.selectedEventTags
         })
         .then(() => {
           if (this.eventIdProp) {
