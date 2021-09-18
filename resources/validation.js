@@ -110,10 +110,10 @@ const signUpValidation = (data) => {
       .min(minBirthdate)
       .required()
       .messages({
-        "date.base": `This field is required`,
+        "date.base": `Please enter a valid date`,
         "date.max": `You must be 18 years or older to sign up`,
         "date.min": `Birthdate must be greater than ${minBirthdate.toLocaleDateString()}`,
-        "date.format": `This field is required`,
+        "date.format": `Please enter a valid date`,
       }),
     phoneNumber: Joi.string()
       .length(14)
