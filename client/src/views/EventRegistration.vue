@@ -8,7 +8,7 @@
           backgroundImage:
             'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' +
             require('../../../resources/' + eventDetails.image) +
-            ')'
+            ')',
         }"
       >
         &nbsp;
@@ -97,7 +97,7 @@
 
       <p class="event-detail-item" v-if="eventDetails.reservationFee">
         <span class="event-detail-title">Reservation deadline:</span>
-        {{ eventDetails.paymentDeadline }}
+        Before {{ eventDetails.paymentDeadline }}
       </p>
 
       <p class="event-detail-item" v-if="eventDetails.whatToBring">
@@ -137,7 +137,7 @@
               id="email"
               v-model="email"
               :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email')
+                'p-invalid': validationMessages.hasOwnProperty('email'),
               }"
             />
 
@@ -189,12 +189,12 @@ export default {
   data() {
     return {
       eventDetails:
-        eventList.find(event => event.id === this.$route.query.eventId) || {},
+        eventList.find((event) => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId,
       email: "",
       validationMessages: {},
       eventList: eventList,
-      spotsLeft: null
+      spotsLeft: null,
     };
   },
   mounted() {
@@ -204,11 +204,11 @@ export default {
     axios
       .post("/api/event-registration/check-spots", { eventId: this.eventId })
       .then(
-        res =>
+        (res) =>
           (this.spotsLeft =
             this.eventDetails.maxSpots - res.data.output.spotsReserved)
       )
-      .catch(error =>
+      .catch((error) =>
         console.log(
           "error from /api/event-registration/check-spots: ",
           error.response.data
@@ -234,23 +234,26 @@ export default {
       }
     },
     hideRegistration() {
-      if (this.spotsLeft < 1 && this.spotsLeft !== null) {
+      if (
+        (this.spotsLeft < 1 && this.spotsLeft !== null) ||
+        Date.now() > new Date(this.eventDetails.paymentDeadline)
+      ) {
         return true;
       } else {
         return false;
       }
-    }
+    },
   },
   methods: {
     submitRegistration() {
       this.validationMessages = {};
       const { error } = emailValidation({
-        email: this.email
+        email: this.email,
       });
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter(val => val.path[0] === path[0])
+            .filter((val) => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
@@ -261,9 +264,9 @@ export default {
       axios
         .post("/api/event-registration/check-email", {
           email: this.email,
-          eventId: this.eventId
+          eventId: this.eventId,
         })
-        .then(res => {
+        .then((res) => {
           switch (res.data.output.alreadyRegistered) {
             case true:
               this.validationMessages["email"] = [res.data.message];
@@ -273,9 +276,15 @@ export default {
                 .post("/api/event-registration/create-checkout-session", {
                   email: this.email,
                   eventId: this.eventId,
-                  priceId: this.eventDetails.priceId
                 })
-                .then(res => (window.location.href = res.data.url));
+                .then((res) => {
+                  if (res.data.output.registrationClosed) {
+                    return (this.validationMessages["email"] = [
+                      res.data.message,
+                    ]);
+                  }
+                  window.location.href = res.data.url;
+                });
               break;
             case null:
               this.$router.push({
@@ -283,8 +292,8 @@ export default {
                 params: {
                   emailProp: this.email,
                   eventIdProp: this.eventId,
-                  priceIdProp: this.eventDetails.priceId
-                }
+                  priceIdProp: this.eventDetails.priceId,
+                },
               });
               break;
             default:
@@ -293,14 +302,14 @@ export default {
               );
           }
         })
-        .catch(error =>
+        .catch((error) =>
           console.log(
             "error from /api/event-registration/check-email: ",
             error.response.data
           )
         );
-    }
-  }
+    },
+  },
 };
 </script>
 
