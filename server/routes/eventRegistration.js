@@ -23,52 +23,6 @@ const endpointSecret =
 // ROUTING
 const router = express.Router();
 
-// Route to check if the user has signed up, and whether they have already registered for this event
-router.post("/check-email", express.json(), async (req, res) => {
-  const { error } = emailValidation({ email: req.body.email });
-  if (error)
-    return res
-      .status(400)
-      .json({ code: 400, message: error.details[0].message, stack: null });
-
-  try {
-    const attendeeExists = await Attendee.findOne({ email: req.body.email });
-    if (attendeeExists !== null) {
-      alreadyRegistered = attendeeExists.eventIds.includes(req.body.eventId);
-
-      // User is signed up and already registered
-      if (alreadyRegistered)
-        return res
-          .status(200)
-          .json({
-            code: 200,
-            message: "It appears you have already registered for this event",
-            output: { email: attendeeExists.email, alreadyRegistered: true },
-          });
-      // User is signed up but has not yet registered
-      return res
-        .status(200)
-        .json({
-          code: 200,
-          message: "Attendee with this email exists",
-          output: { email: attendeeExists.email, alreadyRegistered: false },
-        });
-    } else {
-      // User has not signed up, and needs to do so before registering
-      return res
-        .status(200)
-        .json({
-          code: 200,
-          message: "Attendee with this email does not exist",
-          output: { alreadyRegistered: null },
-        });
-    }
-  } catch (error) {
-    return res
-      .status(400)
-      .json({ code: error.code, message: error.message, stack: error.stack });
-  }
-});
 
 router.post("/check-spots", express.json(), async (req, res) => {
   try {
@@ -85,9 +39,36 @@ router.post("/check-spots", express.json(), async (req, res) => {
   }
 });
 
+
 router.post("/create-checkout-session", express.json(), async (req, res) => {
+  // Get event details
   const event = eventList.find((event) => event.id === req.body.eventId);
 
+  // Validate email
+  const { error } = emailValidation({ email: req.body.email });
+  if (error)
+    return res
+      .status(400)
+      .json({ code: 400, message: error.details[0].message, stack: null });
+
+  // Make sure user has signed up
+  try {
+    var attendeeExists = await Attendee.findOne({ email: req.body.email });
+
+    if (attendeeExists === null) return res.status(200).json({ code: 200, message: "Attendee with this email does not exist", output: { notSignedUp: true } });
+
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ code: error.code, message: error.message, stack: error.stack });
+  }
+
+  // Make sure user has not already registered
+  const alreadyRegistered = attendeeExists.eventIds.includes(req.body.eventId);
+
+  if (alreadyRegistered) return res.status(200).json({ code: 200, message: "It appears you have already registered for this event", output: { email: attendeeExists.email, alreadyRegistered: true } });
+
+  // Check that spots are available
   const spotsReserved = await Attendee.countDocuments({
     eventIds: req.body.eventId,
   });
@@ -102,6 +83,8 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
         output: { registrationClosed: true },
       });
   }
+
+  // Check that the payment deadline has not passed
   if (Date.now() > new Date(event.paymentDeadline)) {
     return res
       .status(200)
@@ -113,12 +96,43 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       });
   }
 
+  // Check if event is free
+  if (Number(event.reservationFee) === 0) {
+    try {
+      // Track that the attendee has registered
+      await Attendee.updateOne(
+        { email: req.body.email },
+        { $push: { eventIds: req.body.eventId } }
+      );
+
+      // Send confirmation email
+      await mailer.sendEventConfirmation(req.body.email, req.body.eventId)
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ code: error.code, message: error.message, stack: error.stack });
+    }
+
+    // Send response to redirect to confirmation page
+    return res
+      .status(200)
+      .json({
+        code: 200,
+        output: { freeEvent: true },
+      });
+  }
+
+  // Create stripe session
+  const priceId = process.env.NODE_ENV === "production"
+    ? event.priceId :
+    event.testPriceId
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     customer_email: req.body.email,
     line_items: [
       {
-        price: event.priceId,
+        price: priceId,
         quantity: 1,
         tax_rates: ["txr_1JL7CIGvJIobDPYadVD6Zvts"],
       },

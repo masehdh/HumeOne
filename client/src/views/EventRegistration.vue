@@ -8,7 +8,7 @@
           backgroundImage:
             'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' +
             require('../../../resources/' + eventDetails.image) +
-            ')',
+            ')'
         }"
       >
         &nbsp;
@@ -92,10 +92,10 @@
 
       <p class="event-detail-item" v-if="eventDetails.reservationFee">
         <span class="event-detail-title">Reservation Fee:</span>
-        {{ eventDetails.reservationFee }}
+        ${{ eventDetails.reservationFee }} (plus tax)
       </p>
 
-      <p class="event-detail-item" v-if="eventDetails.reservationFee">
+      <p class="event-detail-item" v-if="eventDetails.paymentDeadline">
         <span class="event-detail-title">Reservation deadline:</span>
         Before {{ eventDetails.paymentDeadline }}
       </p>
@@ -137,7 +137,7 @@
               id="email"
               v-model="email"
               :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email'),
+                'p-invalid': validationMessages.hasOwnProperty('email')
               }"
             />
 
@@ -189,12 +189,12 @@ export default {
   data() {
     return {
       eventDetails:
-        eventList.find((event) => event.id === this.$route.query.eventId) || {},
+        eventList.find(event => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId,
       email: "",
       validationMessages: {},
       eventList: eventList,
-      spotsLeft: null,
+      spotsLeft: null
     };
   },
   mounted() {
@@ -204,11 +204,11 @@ export default {
     axios
       .post("/api/event-registration/check-spots", { eventId: this.eventId })
       .then(
-        (res) =>
+        res =>
           (this.spotsLeft =
             this.eventDetails.maxSpots - res.data.output.spotsReserved)
       )
-      .catch((error) =>
+      .catch(error =>
         console.log(
           "error from /api/event-registration/check-spots: ",
           error.response.data
@@ -242,18 +242,21 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   methods: {
     submitRegistration() {
+      // Validate inputs
       this.validationMessages = {};
+
       const { error } = emailValidation({
-        email: this.email,
+        email: this.email
       });
+
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter((val) => val.path[0] === path[0])
+            .filter(val => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
@@ -261,55 +264,53 @@ export default {
         return;
       }
 
+      // Make api request
       axios
-        .post("/api/event-registration/check-email", {
+        .post("/api/event-registration/create-checkout-session", {
           email: this.email,
-          eventId: this.eventId,
+          eventId: this.eventId
         })
-        .then((res) => {
-          switch (res.data.output.alreadyRegistered) {
-            case true:
-              this.validationMessages["email"] = [res.data.message];
-              break;
-            case false:
-              axios
-                .post("/api/event-registration/create-checkout-session", {
-                  email: this.email,
-                  eventId: this.eventId,
-                })
-                .then((res) => {
-                  if (res.data.output.registrationClosed) {
-                    return (this.validationMessages["email"] = [
-                      res.data.message,
-                    ]);
-                  }
-                  window.location.href = res.data.url;
-                });
-              break;
-            case null:
-              this.$router.push({
-                name: "Sign Up",
-                params: {
-                  emailProp: this.email,
-                  eventIdProp: this.eventId,
-                  priceIdProp: this.eventDetails.priceId,
-                },
-              });
-              break;
-            default:
-              console.log(
-                "Unhandled response from /api/event-registration/create-checkout-session"
-              );
+        .then(res => {
+          // If the user is not signed up, send them to the sign up page
+          if (res.data.output.notSignedUp) {
+            return this.$router.push({
+              name: "Sign Up",
+              params: {
+                emailProp: this.email,
+                eventIdProp: this.eventId,
+                priceIdProp: this.eventDetails.priceId
+              }
+            });
           }
+
+          // If the user already registered for the event or registration has closed, display a validation message
+          if (
+            res.data.output.alreadyRegistered ||
+            res.data.output.registrationClosed
+          ) {
+            return (this.validationMessages["email"] = [res.data.message]);
+          }
+
+          // If the event is free, redirect to payment confirmation
+          if (res.data.output.freeEvent) {
+            return this.$router.push({
+              name: "Event Registration Confirmation",
+              query: {
+                eventId: this.eventId
+              }
+            });
+          }
+          // If the session was created successfully, redirect to payment page
+          window.location.href = res.data.url;
         })
-        .catch((error) =>
+        .catch(error =>
           console.log(
             "error from /api/event-registration/check-email: ",
             error.response.data
           )
         );
-    },
-  },
+    }
+  }
 };
 </script>
 
