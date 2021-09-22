@@ -16,9 +16,8 @@
       <div class="details mx-3 md:mx-4 fadein animation-duration-1000">
         <p class="line-height-3">
           HumeOne brings people together by organizing intimate social
-          gatherings and events. No endless feeds or coordination required, our
-          Hosts create events designed for you and those in your area. Let us
-          know what you're looking for to start receiving invites today!
+          gatherings and events. Let us know what you're looking for to start
+          receiving invites today!
         </p>
       </div>
 
@@ -261,10 +260,11 @@
       <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
       <p class="line-height-3 mx-3 md:mx-4">
         We believe humans are better together, hence our name (a portmanteau of
-        human + one). We sought to create a platform that incentivizes unity
-        through social gatherings. Anyone can take part by attending or hosting
-        events as long as they meet basic qualifications. If you have questions
-        or would like to become a Host, click the button below to contact us!
+        human + one). We are creating a platform that builds authentic human
+        connection through social gatherings. Anyone can take part by attending
+        or hosting events as long as they meet basic qualifications. If you have
+        questions or would like to become a Host, click the button below to
+        contact us!
       </p>
 
       <div class="contact-button mx-3 md:mx-4" @click="showContactForm">
@@ -478,7 +478,7 @@ export default {
 }
 
 .cta-button {
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: 50px;
   background: rgb(255, 124, 172);
   background: linear-gradient(
@@ -487,7 +487,7 @@ export default {
     rgba(255, 245, 108, 1) 100%
   );
   max-width: 100%;
-  width: 200px;
+  width: 220px;
   text-align: center;
   font-weight: 600;
   font-size: 16px;

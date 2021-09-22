@@ -2,7 +2,7 @@
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Sign Up</h3>
     <div>
-      <p class="mt-3 mb-2">
+      <p class="mt-3 mb-2 line-height-3">
         Fill out the form below to register for events and recieve invites for
         events in your area that match your preferences.
       </p>

@@ -21,9 +21,7 @@ const start = () =>
 
 // SEND NEWSLETTER
 const sendEventConfirmation = async (email, eventId) => {
-  const event = process.env.NODE_ENV === "production"
-    ? eventList.find(event => event.id === eventId) :
-    eventList.find(event => event.testId === eventId)
+  const event = eventList.find(event => event.id === eventId)
 
   const attendee = await Attendee.findOne({ email: email })
 

@@ -3,7 +3,7 @@
     <h3 class="form-section-title">Event Tags (Optional)</h3>
 
     <div>
-      <p class="mt-3">
+      <p class="mt-3 line-height-3">
         Click the tags below to let our hosts know what kinds of events you want
         them to plan for you
       </p>

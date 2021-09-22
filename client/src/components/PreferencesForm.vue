@@ -3,7 +3,7 @@
     <h3 class="form-section-title">Preferences</h3>
 
     <div>
-      <p class="mt-3">
+      <p class="mt-3 line-height-3">
         The information below will help us fine-tune what invites you will
         receive
       </p>

@@ -64,8 +64,7 @@ export default {
   name: "Sign Up",
   props: {
     emailProp: String,
-    eventIdProp: String,
-    priceIdProp: String
+    eventIdProp: String
   },
   data() {
     return {
@@ -159,10 +158,28 @@ export default {
             axios
               .post("/api/event-registration/create-checkout-session", {
                 email: this.email,
-                eventId: this.eventIdProp,
-                priceId: this.priceIdProp
+                eventId: this.eventIdProp
               })
-              .then(res => (window.location.href = res.data.url));
+              .then(res => {
+                // If the event is free, redirect to registration confirmation
+                if (res.data.output.freeEvent) {
+                  return this.$router.push({
+                    name: "Event Registration Confirmation",
+                    query: {
+                      eventId: this.eventIdProp
+                    }
+                  });
+                }
+
+                // Redirect to stripe page
+                window.location.href = res.data.url;
+              })
+              .catch(error =>
+                console.log(
+                  "error from /api/event-registration/create-checkout-session: ",
+                  error.response.data
+                )
+              );
           } else {
             this.$router.push({
               name: "Sign Up Confirmation"

@@ -90,7 +90,7 @@
         {{ eventDetails.dateTime }}
       </p>
 
-      <p class="event-detail-item" v-if="eventDetails.reservationFee">
+      <p class="event-detail-item" v-if="eventDetails.reservationFee > 0">
         <span class="event-detail-title">Reservation Fee:</span>
         ${{ eventDetails.reservationFee }} (plus tax)
       </p>
@@ -128,7 +128,7 @@
       v-if="!hideRegistration"
     >
       <div class="container form-card px-3 py-4 md:px-4 md:py-5">
-        <h3 class="form-section-title">Please enter your email</h3>
+        <h3 class="form-section-title">Register for this event</h3>
 
         <div class="form-control">
           <span class="p-float-label">
@@ -176,6 +176,28 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
     </div>
+
+    <div
+      class="container form-card px-3 py-3 md:px-4 py-4"
+      v-if="attendees.length > 0"
+    >
+      <h3 class="form-section-title">Attendees ({{ attendees.length }})</h3>
+
+      <div class="flex flex-row mt-4">
+        <div v-for="(attendee, index) in attendees.slice(0, 8)" :key="index">
+          <div class="mr-4 text-center">
+            <Avatar
+              icon="pi pi-user"
+              class="mb-3"
+              size="large"
+              shape="circle"
+            />
+
+            <p class="">{{ attendee }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -192,9 +214,9 @@ export default {
         eventList.find(event => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId,
       email: "",
-      validationMessages: {},
-      eventList: eventList,
-      spotsLeft: null
+      attendees: [],
+      spotsLeft: null,
+      validationMessages: {}
     };
   },
   mounted() {
@@ -203,11 +225,12 @@ export default {
   created() {
     axios
       .post("/api/event-registration/check-spots", { eventId: this.eventId })
-      .then(
-        res =>
-          (this.spotsLeft =
-            this.eventDetails.maxSpots - res.data.output.spotsReserved)
-      )
+      .then(res => {
+        this.spotsLeft =
+          this.eventDetails.maxSpots - res.data.output.spotsReserved;
+
+        this.attendees = res.data.output.registeredAttendees;
+      })
       .catch(error =>
         console.log(
           "error from /api/event-registration/check-spots: ",
@@ -277,8 +300,7 @@ export default {
               name: "Sign Up",
               params: {
                 emailProp: this.email,
-                eventIdProp: this.eventId,
-                priceIdProp: this.eventDetails.priceId
+                eventIdProp: this.eventId
               }
             });
           }
@@ -300,6 +322,7 @@ export default {
               }
             });
           }
+
           // If the session was created successfully, redirect to payment page
           window.location.href = res.data.url;
         })

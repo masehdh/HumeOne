@@ -29,6 +29,7 @@ import InputMask from 'primevue/inputmask';
 import Slider from 'primevue/slider';
 import SelectButton from 'primevue/selectbutton';
 import ScrollPanel from 'primevue/scrollpanel';
+import Avatar from 'primevue/avatar';
 
 createApp(App)
   .use(store)
@@ -48,4 +49,5 @@ createApp(App)
   .component("Slider", Slider)
   .component("SelectButton", SelectButton)
   .component("ScrollPanel", ScrollPanel)
+  .component("Avatar", Avatar)
   .mount('#app')

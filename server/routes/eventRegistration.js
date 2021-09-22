@@ -26,12 +26,17 @@ const router = express.Router();
 
 router.post("/check-spots", express.json(), async (req, res) => {
   try {
-    const spotsReserved = await Attendee.countDocuments({
+    let registeredAttendees = await Attendee.find({
       eventIds: req.body.eventId,
-    });
+    })
+
+    registeredAttendees = registeredAttendees.map(({ firstName, lastName }) => {
+      return `${firstName.charAt(0).toUpperCase()}${firstName.slice(1)} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1)}`
+    })
+
     res
       .status(200)
-      .json({ code: 200, output: { spotsReserved: spotsReserved } });
+      .json({ code: 200, output: { spotsReserved: registeredAttendees.length, registeredAttendees: registeredAttendees } });
   } catch (error) {
     return res
       .status(400)
@@ -127,6 +132,10 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
     ? event.priceId :
     event.testPriceId
 
+  const taxRate = process.env.NODE_ENV === "production"
+    ? "txr_1JL7CIGvJIobDPYadVD6Zvts" :
+    "txr_1JL7KtGvJIobDPYalPLiHIRM"
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     customer_email: req.body.email,
@@ -134,14 +143,14 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       {
         price: priceId,
         quantity: 1,
-        tax_rates: ["txr_1JL7CIGvJIobDPYadVD6Zvts"],
+        tax_rates: [taxRate],
       },
     ],
     mode: "payment",
     success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}`,
     cancel_url: `http://${process.env.DOMAIN}/event-registration?eventId=${req.body.eventId}`,
   });
-  res.status(200).json({ url: session.url });
+  res.status(200).json({ url: session.url, output: {} });
 });
 
 router.post(
@@ -157,6 +166,7 @@ router.post(
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);
     }
+
     // Handle the event
     switch (event.type) {
       case "checkout.session.completed":
