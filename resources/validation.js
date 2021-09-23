@@ -72,8 +72,32 @@ const signUpValidation = (data) => {
         "any.required": `This field is required`,
         "string.email": `The email you entered appears to be invalid`,
       }),
-    address: Joi.object({
-      address:
+    area: Joi.object({
+      name:
+        Joi.string()
+          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+          .min(2)
+          .required()
+          .messages({
+            "string.base": `This field should be a string`,
+            "string.empty": `This field is required`,
+            "string.min": `This field should be at least {#limit} characters`,
+            "string.pattern.base": `This field cannot contain special characters`,
+            "any.required": `This field is required`,
+          }),
+      region:
+        Joi.string()
+          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+          .min(2)
+          .required()
+          .messages({
+            "string.base": `This field should be a string`,
+            "string.empty": `This field is required`,
+            "string.min": `This field should be at least {#limit} characters`,
+            "string.pattern.base": `This field cannot contain special characters`,
+            "any.required": `This field is required`,
+          }),
+      country:
         Joi.string()
           .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
           .min(2)
@@ -114,27 +138,6 @@ const signUpValidation = (data) => {
         "date.max": `You must be 18 years or older to sign up`,
         "date.min": `Birthdate must be greater than ${minBirthdate.toLocaleDateString()}`,
         "date.format": `Please enter a valid date`,
-      }),
-    phoneNumber: Joi.string()
-      .length(14)
-      .allow("")
-      .pattern(/^[-()0-9]+$/)
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain numbers`,
-        "string.length": `Phone number should be 10-digits long`,
-      }),
-    attendeeInfo: Joi.string()
-      .max(140)
-      .allow("", null)
-      .pattern(/^[a-zA-Z0-9.,!?:'"/-\s+]+$/)
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field cannot contain special characters`,
       }),
     maxTravelDistance: Joi.number().min(5000).max(100000).multiple(5000).required().messages({
       "number.base": `This field should be a number`,

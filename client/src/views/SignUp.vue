@@ -79,10 +79,8 @@ export default {
       lastName: "",
       email: "",
       gender: "",
-      address: "",
+      area: "",
       birthdate: "",
-      phoneNumber: "",
-      attendeeInfo: "",
       maxTravelDistance: 50,
       availability: [],
       interests: [],
@@ -95,11 +93,9 @@ export default {
       this.firstName = payload.firstName;
       this.lastName = payload.lastName;
       this.email = payload.email;
-      this.address = payload.address;
+      this.area = payload.area;
       this.gender = payload.gender;
       this.birthdate = new Date(payload.birthdate);
-      this.attendeeInfo = payload.attendeeInfo;
-      this.phoneNumber = payload.phoneNumber;
     },
     setPreferences(payload) {
       this.maxTravelDistance = payload.maxTravelDistance * 1000;
@@ -117,9 +113,7 @@ export default {
         email: this.email,
         gender: this.gender,
         birthdate: this.birthdate,
-        address: this.address,
-        phoneNumber: this.phoneNumber,
-        attendeeInfo: this.attendeeInfo,
+        area: this.area,
         maxTravelDistance: this.maxTravelDistance,
         interests: this.interests,
         availability: this.availability,
@@ -145,9 +139,7 @@ export default {
           email: this.email,
           gender: this.gender,
           birthdate: this.birthdate,
-          address: this.address,
-          phoneNumber: this.phoneNumber,
-          attendeeInfo: this.attendeeInfo,
+          area: this.area,
           maxTravelDistance: this.maxTravelDistance,
           interests: this.interests,
           availability: this.availability,
