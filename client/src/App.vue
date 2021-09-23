@@ -101,7 +101,7 @@ export default {
     color: $primary-font-color;
     display: flex;
     flex-direction: column;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 
     .form-header {
       font-size: 16px;

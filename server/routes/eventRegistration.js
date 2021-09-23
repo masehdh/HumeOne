@@ -31,7 +31,7 @@ router.post("/check-spots", express.json(), async (req, res) => {
     })
 
     registeredAttendees = registeredAttendees.map(({ firstName, lastName }) => {
-      return `${firstName.charAt(0).toUpperCase()}${firstName.slice(1)} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1)}`
+      return { firstName: `${firstName.charAt(0).toUpperCase()}${firstName.slice(1)}`, lastName: `${lastName.charAt(0).toUpperCase()}${lastName.slice(1)}` }
     })
 
     res

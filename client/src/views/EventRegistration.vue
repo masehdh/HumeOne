@@ -18,14 +18,31 @@
 
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
 
-      <p class="max-spots mx-3 md:mx-4">
-        {{ eventDetails.maxSpots }} spots
-        <span class="spots-left" v-if="showSpotsLeft"
-          >&#183; {{ spotsLeft }} spots left</span
-        >
-      </p>
+      <div class="event-info flex flex-column md:flex-row px-3 md:px-4">
+        <p class="max-spots mr-3 mt-2 ">
+          <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} spots
+          <span class="spots-left" v-if="showSpotsLeft"
+            >&#183; {{ spotsLeft }} spots left</span
+          >
+        </p>
 
-      <div class="host-info mx-3 md:mx-4">
+        <p class="max-spots mr-3 mt-2" v-if="eventDetails.dateTime">
+          <i class="pi pi-clock mr-2"></i>{{ eventDetails.dateTime }}
+        </p>
+
+        <p class="max-spots mt-2 " v-if="eventDetails.reservationFee > 0">
+          <i class="pi pi-wallet mr-2"></i>${{ eventDetails.reservationFee }}
+          (plus tax)
+        </p>
+
+        <p class="max-spots mt-2" v-else>
+          <i class="pi pi-wallet mr-2 "></i>FREE
+        </p>
+      </div>
+    </div>
+
+    <div class="container form-card px-3 py-3 md:px-4 py-4">
+      <div class="host-info">
         <div>
           <img
             :src="hostImageSrc"
@@ -84,16 +101,6 @@
     </div>
     <div class="container form-card px-3 py-3 md:px-4 py-4">
       <h3 class="form-section-title">Event Details</h3>
-
-      <p class="event-detail-item" v-if="eventDetails.dateTime">
-        <span class="event-detail-title">Date & time:</span>
-        {{ eventDetails.dateTime }}
-      </p>
-
-      <p class="event-detail-item" v-if="eventDetails.reservationFee > 0">
-        <span class="event-detail-title">Reservation Fee:</span>
-        ${{ eventDetails.reservationFee }} (plus tax)
-      </p>
 
       <p class="event-detail-item" v-if="eventDetails.paymentDeadline">
         <span class="event-detail-title">Reservation deadline:</span>
@@ -183,9 +190,11 @@
     >
       <h3 class="form-section-title">Attendees ({{ attendees.length }})</h3>
 
-      <div class="flex flex-row mt-4">
-        <div v-for="(attendee, index) in attendees.slice(0, 8)" :key="index">
-          <div class="mr-4 text-center">
+      <div
+        class="flex flex-row flex-wrap justify-content-around sm:justify-content-start mt-1"
+      >
+        <div v-for="(attendee, index) in attendees.slice(0, 6)" :key="index">
+          <div class="avatar-item w-8rem text-center mr-3 mt-4">
             <Avatar
               icon="pi pi-user"
               class="mb-3"
@@ -193,11 +202,41 @@
               shape="circle"
             />
 
-            <p class="">{{ attendee }}</p>
+            <p class="line-height-3">{{ attendee.firstName }}</p>
+            <p class="line-height-3">{{ attendee.lastName }}</p>
           </div>
+        </div>
+
+        <div
+          class="show-all-button w-8rem text-center mr-3 mt-4"
+          v-if="attendees.length > 6"
+          @click="showAllAttendees"
+        >
+          <Avatar icon="pi pi-plus" class="mb-3" size="large" shape="circle" />
+
+          <p class="line-height-3 font-medium">See All</p>
         </div>
       </div>
     </div>
+
+    <Dialog
+      header="Attendees"
+      v-model:visible="displayAllAttendees"
+      :style="{ width: '50vw' }"
+      :breakpoints="{ '960px': '90vw' }"
+      :modal="true"
+      :dismissableMask="true"
+    >
+      <div v-for="(attendee, index) in attendees" :key="index">
+        <div class="flex flex-row align-items-baseline mb-3 max-w-full">
+          <Avatar icon="pi pi-user" class="mb-3" size="large" shape="circle" />
+
+          <p class="line-height-3 ml-3">
+            {{ attendee.firstName }} {{ attendee.lastName }}
+          </p>
+        </div>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -216,6 +255,7 @@ export default {
       email: "",
       attendees: [],
       spotsLeft: null,
+      displayAllAttendees: false,
       validationMessages: {}
     };
   },
@@ -268,6 +308,9 @@ export default {
     }
   },
   methods: {
+    showAllAttendees() {
+      return (this.displayAllAttendees = true);
+    },
     submitRegistration() {
       // Validate inputs
       this.validationMessages = {};
@@ -350,14 +393,15 @@ export default {
   }
 }
 
-.max-spots {
+.event-info p {
   font-size: 14px;
-  .spots-left {
-    color: hsl(0, 75%, 55%);
-  }
   @media (max-width: $mobile-breakpoint) {
     text-align: center;
   }
+}
+
+.spots-left {
+  color: hsl(0, 75%, 55%);
 }
 
 .line-divider {
@@ -385,11 +429,9 @@ i.pi {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 16px;
   @media (max-width: $mobile-breakpoint) {
     flex-direction: column;
     align-self: center;
-    margin-top: 16px;
   }
 
   .host-image {
@@ -427,5 +469,13 @@ i.pi {
       }
     }
   }
+}
+
+.show-all-button {
+  cursor: pointer !important;
+}
+
+.avatar-item p {
+  word-wrap: break-word;
 }
 </style>
