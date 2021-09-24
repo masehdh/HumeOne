@@ -8,6 +8,7 @@
       </p>
     </div>
 
+    <!-- First Name Field -->
     <div class="form-control">
       <span class="p-float-label">
         <InputText
@@ -30,6 +31,7 @@
       </div>
     </div>
 
+    <!-- Last Name Field -->
     <div class="form-control">
       <span class="p-float-label">
         <InputText
@@ -52,6 +54,7 @@
       </div>
     </div>
 
+    <!-- Email Field -->
     <div class="form-control">
       <span class="p-float-label">
         <InputText
@@ -71,56 +74,36 @@
       </div>
     </div>
 
-    <div class="form-control">
-      <span class="p-float-label">
-        <InputMask
-          v-model="phoneNumber"
-          mask="(999)-999-9999"
-          slotChar="X"
-          @change="sendSignUpInfo()"
-          :class="{
-            'p-invalid': validationMessages.hasOwnProperty('phoneNumber')
-          }"
-          class="w-20rem"
-        />
-        <label for="phoneNumber">Phone Number (Optional)</label>
-      </span>
-      <div
-        v-for="(message, index) of validationMessages['phoneNumber']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
+    <!-- City Field -->
     <div class="form-control">
       <span class="p-float-label">
         <AutoComplete
           forceSelection
           type="text"
-          id="address"
-          field="address"
-          v-model="address"
-          :suggestions="filteredAddressOptions"
-          :minLength="5"
+          id="city"
+          :field="area => `${area.name}, ${area.region}, ${area.country}`"
+          v-model="area"
+          :suggestions="filteredCityOptions"
+          :minLength="3"
           :delay="500"
-          @complete="searchAddressOptions($event)"
+          @complete="searchCityOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('address')
+            'p-invalid': validationMessages.hasOwnProperty('area')
           }"
           class="w-20rem"
           @blur="sendSignUpInfo()"
         />
-        <label for="address">Address</label>
+        <label for="city">City</label>
       </span>
       <div
-        v-for="(message, index) of validationMessages['address']"
+        v-for="(message, index) of validationMessages['area']"
         :key="index"
       >
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
 
+    <!-- Birthdate Field -->
     <div class="form-control">
       <span class="p-float-label">
         <InputMask
@@ -133,7 +116,7 @@
           }"
           class="w-20rem"
         />
-        <label for="birthdate">Birthdate</label>
+        <label for="birthdate">Birth Date</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['birthdate']"
@@ -143,6 +126,7 @@
       </div>
     </div>
 
+    <!-- Gender Field -->
     <div class="form-control">
       <span class="p-float-label">
         <AutoComplete
@@ -168,31 +152,6 @@
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
-
-    <div class="form-control">
-      <span>
-        <label class="block mb-2" for="attendee-info">
-          Anything else you would like us to know?
-        </label>
-        <Textarea
-          id="attendee-info"
-          v-model="attendeeInfo"
-          :autoResize="true"
-          placeholder="Allergies, transportation, concerns..."
-          :class="{
-            'p-invalid': validationMessages.hasOwnProperty('attendeeInfo')
-          }"
-          class="w-12"
-          @blur="sendSignUpInfo()"
-        />
-      </span>
-      <div
-        v-for="(message, index) of validationMessages['attendeeInfo']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -210,12 +169,10 @@ export default {
       firstName: "",
       lastName: "",
       email: "",
-      filteredAddressOptions: [],
-      address: "",
+      filteredCityOptions: [],
+      area: "",
       gender: "",
       birthdate: "",
-      phoneNumber: "",
-      attendeeInfo: "",
       filteredGenderOptions: [],
       genderOptions: [
         "Female",
@@ -237,17 +194,35 @@ export default {
   created() {
     if (this.emailProp) return (this.email = this.emailProp);
   },
+  computed: {
+    yearRange() {
+      return `${new Date().getFullYear() - 115} : ${new Date().getFullYear() -
+        17}`;
+    },
+    signUpInfoPayload() {
+      return {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        area: this.area,
+        gender: this.gender,
+        birthdate: this.birthdate
+      };
+    }
+  },
   methods: {
-    searchAddressOptions(address) {
+    searchCityOptions(city) {
       axios
-        .post("/api/map/auto-complete", { input: address.query })
+        .post("/api/map/auto-complete", { input: city.query })
         .then(
           res =>
-            (this.filteredAddressOptions = res.data.output.map(
-              ({ place_name, center }) => {
+            (this.filteredCityOptions = res.data.output.map(
+              ({ name, region, country, coordinates }) => {
                 return {
-                  address: place_name,
-                  location: { type: "Point", coordinates: center }
+                  name: name,
+                  region: region,
+                  country: country,
+                  location: { type: "Point", coordinates: coordinates }
                 };
               }
             ))
@@ -262,30 +237,12 @@ export default {
         return option.toLowerCase().startsWith(event.query.toLowerCase());
       }));
     }
-  },
-  computed: {
-    yearRange() {
-      return `${new Date().getFullYear() - 115} : ${new Date().getFullYear() -
-        17}`;
-    },
-    signUpInfoPayload() {
-      return {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        address: this.address,
-        gender: this.gender,
-        birthdate: this.birthdate,
-        phoneNumber: this.phoneNumber,
-        attendeeInfo: this.attendeeInfo
-      };
-    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-#address {
+#city {
   width: 100% !important;
 }
 </style>

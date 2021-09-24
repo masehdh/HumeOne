@@ -35,12 +35,18 @@ const attendeeSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  phoneNumber: {
-    type: String,
-    trim: true
-  },
-  address: {
-    address: {
+  area: {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    region: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    country: {
       type: String,
       required: true,
       trim: true,
@@ -57,11 +63,6 @@ const attendeeSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    trim: true
-  },
-  attendeeInfo: {
-    type: String,
-    required: false,
     trim: true
   },
   preferences: {

@@ -17,11 +17,9 @@ router.post("/", async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    phoneNumber: req.body.phoneNumber,
-    address: req.body.address,
+    area: req.body.area,
     birthdate: req.body.birthdate,
     gender: req.body.gender,
-    attendeeInfo: req.body.attendeeInfo,
     preferences: {
       maxTravelDistance: req.body.maxTravelDistance,
       interests: req.body.interests,
@@ -39,17 +37,6 @@ router.post("/", async (req, res) => {
         message: "attendee saved successfully",
         output: savedAttendee,
       });
-  } catch (error) {
-    return res
-      .status(400)
-      .json({ code: error.code, message: error.message, stack: error.stack });
-  }
-});
-
-router.post("/send", async (req, res) => {
-  try {
-    await mailer.send();
-    res.status(201).json({ code: 200, message: "email sent", output: "" });
   } catch (error) {
     return res
       .status(400)
