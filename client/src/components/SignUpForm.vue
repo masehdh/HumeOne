@@ -108,15 +108,15 @@
       <span class="p-float-label">
         <InputMask
           v-model="birthdate"
-          mask="9999"
-          slotChar=" "
+          mask="99/99/9999"
+          slotChar="MM/DD/YYYY"
           @change="sendSignUpInfo()"
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('birthdate')
           }"
           class="w-20rem"
         />
-        <label for="birthdate">Birth Year</label>
+        <label for="birthdate">Birth Date</label>
       </span>
       <div
         v-for="(message, index) of validationMessages['birthdate']"
