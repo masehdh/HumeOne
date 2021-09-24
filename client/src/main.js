@@ -31,6 +31,7 @@ import SelectButton from 'primevue/selectbutton';
 import ScrollPanel from 'primevue/scrollpanel';
 import Avatar from 'primevue/avatar';
 import VueGtag from "vue-gtag-next";
+import Hotjar from 'vue-hotjar'
 
 createApp(App)
   .use(store)
@@ -40,8 +41,12 @@ createApp(App)
     property: {
       id: "G-YPL6L2BFCP",
       router,
-      enabled: true, //tracks without the need for a cookie banner
+      enabled: process.env.VUE_APP_ANALYTICS ? true : false, //tracks without the need for a cookie banner
     }
+  })
+  .use (Hotjar, {
+    id: '2618134', // Hotjar Site ID
+    isProduction: process.env.VUE_APP_ANALYTICS ? true : false
   })
   .component("InputText", InputText)
   .component("Textarea", Textarea)
@@ -58,5 +63,4 @@ createApp(App)
   .component("SelectButton", SelectButton)
   .component("ScrollPanel", ScrollPanel)
   .component("Avatar", Avatar)
-  .component("Steps", Steps)
   .mount('#app')
