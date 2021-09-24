@@ -30,12 +30,19 @@ import Slider from 'primevue/slider';
 import SelectButton from 'primevue/selectbutton';
 import ScrollPanel from 'primevue/scrollpanel';
 import Avatar from 'primevue/avatar';
-import Steps from 'primevue/steps';
+import VueGtag from "vue-gtag-next";
 
 createApp(App)
   .use(store)
   .use(router)
   .use(PrimeVue)
+  .use(VueGtag, {
+    property: {
+      id: "G-YPL6L2BFCP",
+      router,
+      enabled: true, //tracks without the need for a cookie banner
+    }
+  })
   .component("InputText", InputText)
   .component("Textarea", Textarea)
   .component("Button", Button)

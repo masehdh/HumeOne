@@ -19,7 +19,8 @@
     "joi": "^17.4.1",
     "mongoose": "^5.13.3",
     "nodemailer": "^6.6.3",
-    "stripe": "^8.167.0"
+    "stripe": "^8.167.0",
+    "vue-gtag-next": "^1.14.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
