@@ -81,7 +81,7 @@ export default {
       gender: "",
       area: "",
       birthdate: "",
-      maxTravelDistance: 50,
+      maxTravelDistance: 50000,
       availability: [],
       interests: [],
       selectedEventTags: [],
