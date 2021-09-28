@@ -9,6 +9,20 @@
       </p>
     </div>
 
+    <!-- Filter -->
+    <div class="form-control md:mr-3 p-input-filled">
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          id="tag-filter"
+          v-model="tagFilter"
+          class="w-full"
+        />
+        <label for="tag-filter">Search tags</label>
+      </span>
+    </div>
+
+    <!-- List of tags -->
     <div class="form-control">
       <div class="align-items-center scroll">
         <SelectButton
@@ -51,6 +65,7 @@ export default {
   data() {
     return {
       selectedEventTags: [],
+      tagFilter: "",
       tagOptions: eventTags,
       validationMessages: this.validationMessagesProp,
       maxTags: 10
@@ -58,10 +73,17 @@ export default {
   },
   computed: {
     filteredTagOptions() {
-      return this.tagOptions.filter(
-        ({ category }) =>
-          category === "General" || this.interestsProp.includes(category)
-      );
+      return this.tagOptions.filter(({ category, tag }) => {
+        if (this.tagFilter.length > 0) {
+          return tag.toLowerCase().includes(this.tagFilter.toLowerCase());
+        } else {
+          return (
+            category === "General" ||
+            this.interestsProp.includes(category) ||
+            this.selectedEventTags.includes(tag)
+          );
+        }
+      });
     }
   },
   watch: {
@@ -76,4 +98,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#tag-filter {
+  padding: 1.4rem 0.8rem 0.5rem 1rem !important;
+  background-color: rgba(0, 0, 0, 0.03);
+  background-image: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  &:hover,
+  &:focus {
+    border-bottom: 2px solid rgba(63, 81, 181, 0.92);
+  }
+}
 </style>
