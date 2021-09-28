@@ -35,7 +35,7 @@ import SelectButton from 'primevue/selectbutton';
 import ScrollPanel from 'primevue/scrollpanel';
 import Avatar from 'primevue/avatar';
 import Tooltip from 'primevue/tooltip';
-
+import Checkbox from 'primevue/checkbox';
 
 
 createApp(App)
@@ -69,4 +69,5 @@ createApp(App)
   .component("SelectButton", SelectButton)
   .component("ScrollPanel", ScrollPanel)
   .component("Avatar", Avatar)
+  .component("Checkbox", Checkbox)
   .mount('#app')

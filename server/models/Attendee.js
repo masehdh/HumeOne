@@ -38,28 +38,23 @@ const attendeeSchema = new mongoose.Schema({
   area: {
     name: {
       type: String,
-      required: true,
       trim: true,
     },
     region: {
       type: String,
-      required: true,
       trim: true,
     },
     country: {
       type: String,
-      required: true,
       trim: true,
     },
     location: {
       type: pointSchema,
       index: '2dsphere',
-      required: true,
     },
   },
   birthdate: {
     type: String,
-    required: true,
   },
   gender: {
     type: String,
@@ -67,6 +62,10 @@ const attendeeSchema = new mongoose.Schema({
   },
   preferences: {
     type: preferenceSchema,
+  },
+  subscribed: {
+    type: Boolean,
+    default: true,
     required: true
   },
   selectedEventTags: [{ type: String }],

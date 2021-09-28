@@ -2,9 +2,8 @@
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Sign Up</h3>
     <div>
-      <p class="mt-3 mb-2 line-height-3">
-        Fill out the form below to register for events and recieve invites for
-        events in your area that match your preferences.
+      <p class="mt-3 line-height-3">
+        Complete the form below to start receiving invites
       </p>
     </div>
 
@@ -20,7 +19,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('firstName')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
             @blur="sendSignUpInfo()"
           />
           <label for="first-name">First Name</label>
@@ -44,7 +43,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('lastName')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
             @blur="sendSignUpInfo()"
           />
           <label for="last-name">Last Name</label>
@@ -69,7 +68,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('email')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
             @blur="sendSignUpInfo()"
           />
           <label for="email">Email</label>
@@ -99,7 +98,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('area')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
             @blur="sendSignUpInfo()"
           />
           <label for="city">City</label>
@@ -126,7 +125,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('birthdate')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
           />
           <label for="birthdate">Birth Date</label>
         </span>
@@ -153,7 +152,7 @@
             :class="{
               'p-invalid': validationMessages.hasOwnProperty('gender')
             }"
-            class="w-20rem p-inputtext-sm"
+            class="w-20rem "
             @blur="sendSignUpInfo()"
           />
           <label for="gender">Gender (Optional)</label>
@@ -175,8 +174,7 @@ import axios from "axios";
 export default {
   name: "Sign Up Form",
   props: {
-    validationMessagesProp: Object,
-    emailProp: String
+    validationMessagesProp: Object
   },
   data() {
     return {
@@ -204,9 +202,6 @@ export default {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
     }
-  },
-  created() {
-    if (this.emailProp) return (this.email = this.emailProp);
   },
   computed: {
     signUpInfoPayload() {

@@ -128,63 +128,6 @@
       </p>
     </div>
 
-    <form
-      class="max-w-full"
-      action="#"
-      @submit.prevent="submitRegistration"
-      v-if="!hideRegistration"
-    >
-      <div class="container form-card px-3 py-4 md:px-4 md:py-5">
-        <h3 class="form-section-title">Register for this event</h3>
-
-        <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="email"
-              v-model="email"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email')
-              }"
-              class="w-20rem p-inputtext-sm"
-            />
-
-            <label for="email">Email</label>
-          </span>
-
-          <div
-            v-for="(message, index) of validationMessages['email']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div>
-
-        <div>
-          <Button
-            type="submit"
-            label="Next"
-            class="p-button-md p-button-primary submit-button"
-          />
-        </div>
-      </div>
-    </form>
-
-    <div
-      class="container form-card px-3 py-3 md:px-4 py-4"
-      v-if="hideRegistration"
-    >
-      <h3 class="form-section-title">Event Registration Closed</h3>
-
-      <p class="mt-3 line-height-3">
-        Unfortunately, reservation for this event has closed. The reservation
-        deadline has passed or all the spots have been reserved. We apologize
-        for the inconvenience, and hope to see you at our next event! If you
-        have any questions, feel free to contact us at
-        <a href="mailto:team@humeone.com">team@humeone.com</a>.
-      </p>
-    </div>
-
     <div
       class="container form-card px-3 py-3 md:px-4 py-4"
       v-if="attendees.length > 0"
@@ -238,15 +181,89 @@
         </div>
       </div>
     </Dialog>
+
+    <form
+      class="max-w-full"
+      action="#"
+      @submit.prevent=""
+      v-if="!hideRegistration"
+    >
+      <div class="container form-card px-3 py-4 md:px-4 md:py-5">
+        <h3 class="form-section-title">Register for this event</h3>
+        <keep-alive>
+          <component
+            :is="currentComponent"
+            :validationMessagesProp="validationMessages"
+            @send-email="setEmail"
+            @send-additional-info="setAdditionalInfo"
+            @back="currentComponent = 'RegistrationEmailField'"
+            @submitRegistration="submitRegistration"
+            @submitSignUp="submitSignUp"
+          ></component>
+        </keep-alive>
+        <!-- <div class="form-control">
+          <span class="p-float-label">
+            <InputText
+              type="text"
+              id="email"
+              v-model="email"
+              :class="{
+                'p-invalid': validationMessages.hasOwnProperty('email')
+              }"
+              class="w-20rem "
+            />
+
+            <label for="email">Email</label>
+          </span>
+
+          <div
+            v-for="(message, index) of validationMessages['email']"
+            :key="index"
+          >
+            <div class="validation-message">{{ message }}</div>
+          </div>
+        </div> -->
+
+        <!-- <div>
+          <Button
+            type="submit"
+            label="Next"
+            class="p-button-md p-button-primary submit-button"
+          />
+        </div> -->
+      </div>
+    </form>
+
+    <div
+      class="container form-card px-3 py-3 md:px-4 py-4"
+      v-if="hideRegistration"
+    >
+      <h3 class="form-section-title">Event Registration Closed</h3>
+
+      <p class="mt-3 line-height-3">
+        Unfortunately, reservation for this event has closed. The reservation
+        deadline has passed or all the spots have been reserved. We apologize
+        for the inconvenience, and hope to see you at our next event! If you
+        have any questions, feel free to contact us at
+        <a href="mailto:team@humeone.com">team@humeone.com</a>.
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-const { emailValidation } = require("../../../resources/validation.js");
+const {
+  emailValidation,
+  registrationValidation
+} = require("../../../resources/validation.js");
 import eventList from "../../../resources/events.json";
+import RegistrationEmailField from "../components/RegistrationEmailField.vue";
+import RegistrationAdditionalFields from "../components/RegistrationAdditionalFields.vue";
+
 import axios from "axios";
 
 export default {
+  components: { RegistrationEmailField, RegistrationAdditionalFields },
   name: "Event Registration",
   data() {
     return {
@@ -254,10 +271,14 @@ export default {
         eventList.find(event => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId,
       email: "",
+      firstName: "",
+      lastName: "",
+      over18: false,
       attendees: [],
       spotsLeft: null,
       displayAllAttendees: false,
-      validationMessages: {}
+      validationMessages: {},
+      currentComponent: "RegistrationEmailField"
     };
   },
   mounted() {
@@ -312,6 +333,52 @@ export default {
     showAllAttendees() {
       return (this.displayAllAttendees = true);
     },
+    setEmail(payload) {
+      this.email = payload.email;
+    },
+    setAdditionalInfo(payload) {
+      this.firstName = payload.firstName;
+      this.lastName = payload.lastName;
+      this.over18 = payload.over18;
+    },
+    submitSignUp() {
+      // Validate inputs
+      this.validationMessages = {};
+
+      const { error } = registrationValidation({
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        over18: this.over18
+      });
+
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter(val => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        return;
+      }
+
+      // Make API request
+      axios
+        .post("/api/event-registration/register-user", {
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          over18: this.over18
+        })
+        .then(() => this.submitRegistration())
+        .catch(error =>
+          console.log(
+            "error from /api/event-registration/check-email: ",
+            error.response.data
+          )
+        );
+    },
     submitRegistration() {
       // Validate inputs
       this.validationMessages = {};
@@ -338,15 +405,9 @@ export default {
           eventId: this.eventId
         })
         .then(res => {
-          // If the user is not signed up, send them to the sign up page
+          // If the user has never signed up, show additional component
           if (res.data.output.notSignedUp) {
-            return this.$router.push({
-              name: "Sign Up",
-              params: {
-                emailProp: this.email,
-                eventIdProp: this.eventId
-              }
-            });
+            return (this.currentComponent = "RegistrationAdditionalFields");
           }
 
           // If the user already registered for the event or registration has closed, display a validation message

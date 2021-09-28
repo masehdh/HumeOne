@@ -287,7 +287,7 @@
         type="text"
         id="name"
         v-model="name"
-        class="inputfield w-full p-inputtext-sm"
+        class="inputfield w-full "
         :class="{
           'p-invalid': validationMessages.hasOwnProperty('name')
         }"
@@ -304,7 +304,7 @@
         type="text"
         id="email"
         v-model="email"
-        class="inputfield w-full p-inputtext-sm"
+        class="inputfield w-full "
         :class="{
           'p-invalid': validationMessages.hasOwnProperty('email')
         }"
@@ -321,7 +321,7 @@
         type="text"
         id="subject"
         v-model="subject"
-        class="inputfield w-full p-inputtext-sm"
+        class="inputfield w-full "
         :class="{
           'p-invalid': validationMessages.hasOwnProperty('subject')
         }"

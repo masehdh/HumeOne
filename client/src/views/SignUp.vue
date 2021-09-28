@@ -1,20 +1,9 @@
 <template>
   <div class="section form-section">
-    <div v-if="emailProp">
-      <Message
-        v-for="msg of messages"
-        :severity="msg.severity"
-        :key="msg.content"
-      >
-        {{ msg.content }}
-      </Message>
-    </div>
-
     <form class="max-w-full" action="#" @submit.prevent="submitRegistration">
       <SignUpForm
         @send-sign-up-info="setSignUpInfo"
         :validationMessagesProp="validationMessages"
-        :emailProp="emailProp"
       />
 
       <PreferencesForm
@@ -62,18 +51,8 @@ import axios from "axios";
 export default {
   components: { SignUpForm, PreferencesForm, EventTagsForm },
   name: "Sign Up",
-  props: {
-    emailProp: String,
-    eventIdProp: String
-  },
   data() {
     return {
-      messages: [
-        {
-          severity: "warn",
-          content: "Before registering for this event, please sign up"
-        }
-      ],
       serverResponses: [],
       firstName: "",
       lastName: "",
@@ -146,37 +125,9 @@ export default {
           selectedEventTags: this.selectedEventTags
         })
         .then(() => {
-          if (this.eventIdProp) {
-            axios
-              .post("/api/event-registration/create-checkout-session", {
-                email: this.email,
-                eventId: this.eventIdProp
-              })
-              .then(res => {
-                // If the event is free, redirect to registration confirmation
-                if (res.data.output.freeEvent) {
-                  return this.$router.push({
-                    name: "Event Registration Confirmation",
-                    query: {
-                      eventId: this.eventIdProp
-                    }
-                  });
-                }
-
-                // Redirect to stripe page
-                window.location.href = res.data.url;
-              })
-              .catch(error =>
-                console.log(
-                  "error from /api/event-registration/create-checkout-session: ",
-                  error.response.data
-                )
-              );
-          } else {
-            this.$router.push({
-              name: "Sign Up Confirmation"
-            });
-          }
+          this.$router.push({
+            name: "Sign Up Confirmation"
+          });
         })
         .catch(error =>
           this.serverResponses.push({
