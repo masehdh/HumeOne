@@ -4,7 +4,7 @@
 
     <div>
       <p class="mt-3 line-height-3">
-        The information below will help us fine-tune what invites you will
+        The following information will help us fine-tune what invites you will
         receive
       </p>
     </div>
@@ -13,7 +13,7 @@
       <span class="p-float-label">
         <InputText
           id="maxTravelDistance"
-          class="w-20rem select-none p-inputtext-sm"
+          class="w-20rem select-none"
           readonly
           v-model="displayTravelDistance"
         />
@@ -52,7 +52,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
-          class="w-20rem p-inputtext-sm"
+          class="w-20rem "
         />
 
         <label for="interests">

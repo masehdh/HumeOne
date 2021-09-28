@@ -13,7 +13,7 @@ const STRIPE_KEY =
 
 const stripe = require("stripe")(STRIPE_KEY);
 
-const { emailValidation } = require("../../resources/validation.js");
+const { emailValidation, registrationValidation } = require("../../resources/validation.js");
 
 const endpointSecret =
   process.env.NODE_ENV === "production"
@@ -44,6 +44,35 @@ router.post("/check-spots", express.json(), async (req, res) => {
   }
 });
 
+router.post("/register-user", express.json(), async (req, res) => {
+  const { error } = registrationValidation(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
+  const emailExists = await Attendee.findOne({ email: req.body.email })
+  if (emailExists) return res.status(400).json({ message: "This email has already been registered" })
+
+  const attendee = new Attendee({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    subscribed: false,
+  });
+
+  try {
+    const savedAttendee = await attendee.save();
+    res
+      .status(201)
+      .json({
+        code: 201,
+        message: "attendee saved successfully",
+        output: savedAttendee,
+      });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ code: error.code, message: error.message, stack: error.stack });
+  }
+})
 
 router.post("/create-checkout-session", express.json(), async (req, res) => {
   // Get event details
@@ -56,15 +85,22 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       .status(400)
       .json({ code: 400, message: error.details[0].message, stack: null });
 
-  // Make sure user has not already registered
-  const alreadyRegistered = attendeeExists.eventIds.includes(req.body.eventId);
+  // Check if user is not signed up
+  const signedUp = await Attendee.findOne({ email: req.body.email })
 
-  if (alreadyRegistered) return res.status(200).json({ code: 200, message: "It appears you have already registered for this event", output: { email: attendeeExists.email, alreadyRegistered: true } });
+  if (!signedUp) return res.status(200).json({ code: 200, message: "", output: { notSignedUp: true } });
+
+  // Make sure user has not already registered
+  let registeredAttendees = await Attendee.find({
+    eventIds: req.body.eventId,
+  })
+
+  const alreadyRegistered = registeredAttendees.map(({ email }) => email).includes(req.body.email);
+
+  if (alreadyRegistered) return res.status(200).json({ code: 200, message: "It appears you have already registered for this event", output: { email: req.body.email, alreadyRegistered: alreadyRegistered } });
 
   // Check that spots are available
-  const spotsReserved = await Attendee.countDocuments({
-    eventIds: req.body.eventId,
-  });
+  const spotsReserved = registeredAttendees.length;
 
   if (spotsReserved >= event.maxSpots) {
     return res
@@ -175,18 +211,13 @@ router.post(
 
         // Updated the attendee model to track that a user has signed up for the event
         try {
-          // Check the user has signed up
-          var attendeeExists = await Attendee.findOne({ email: req.body.email });
+          // Update DB to track that they have attended this event
+          await Attendee.updateOne(
+            { email: customerEmail },
+            { $push: { eventIds: productId } }
+          );
 
-          // If they have, tracked that they registered for the event in Attendees.eventIds
-          if (attendeeExists !== null) {
-            await Attendee.updateOne(
-              { email: customerEmail },
-              { $push: { eventIds: productId } }
-            );
-          }
-
-          // Send email confirmation regardless
+          // Send email confirmation
           await mailer.sendEventConfirmation(customerEmail, productId);
         } catch (error) {
           return res

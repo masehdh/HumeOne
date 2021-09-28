@@ -30,6 +30,56 @@ const emailValidation = (data) => {
   });
 };
 
+const registrationValidation = (data) => {
+  const schema = Joi.object({
+    firstName: Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
+      .min(2)
+      .max(40)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
+      }),
+    lastName: Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
+      .min(2)
+      .max(40)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "string.pattern.base": `This field can only contain letters`,
+        "any.required": `This field is required`,
+      }),
+    email: Joi.string()
+      .email({ tlds: { allow: tldSet } })
+      .min(3)
+      .max(60)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.max": `This field should be under {#limit} characters`,
+        "any.required": `This field is required`,
+        "string.email": `The email you entered appears to be invalid`,
+      }),
+    over18: Joi.boolean().valid(true).required().messages({
+      "any.only": `You must be 18 years old or over to register for events`,
+    })
+  });
+  return schema.validate(data, {
+    abortEarly: false,
+    errors: { label: "key", escapeHtml: true },
+  });
+};
 
 const signUpValidation = (data) => {
   const schema = Joi.object({
@@ -240,5 +290,6 @@ const contactUsValidation = (data) => {
 };
 
 module.exports.emailValidation = emailValidation;
+module.exports.registrationValidation = registrationValidation;
 module.exports.signUpValidation = signUpValidation;
 module.exports.contactUsValidation = contactUsValidation;

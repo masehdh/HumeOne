@@ -192,4 +192,8 @@ export default {
     background-color: rgba(54, 60, 66, 0.95) !important;
   }
 }
+
+.p-inputtext {
+  padding: 0.8rem 0.8rem !important;
+}
 </style>
