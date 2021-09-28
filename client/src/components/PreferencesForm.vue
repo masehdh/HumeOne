@@ -13,7 +13,7 @@
       <span class="p-float-label">
         <InputText
           id="maxTravelDistance"
-          class="w-20rem select-none"
+          class="w-20rem select-none p-inputtext-sm"
           readonly
           v-model="displayTravelDistance"
         />
@@ -52,7 +52,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
-          class="w-20rem"
+          class="w-20rem p-inputtext-sm"
         />
 
         <label for="interests">
