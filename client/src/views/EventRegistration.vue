@@ -337,17 +337,6 @@ export default {
           eventId: this.eventId
         })
         .then(res => {
-          // If the user is not signed up, send them to the sign up page
-          if (res.data.output.notSignedUp) {
-            return this.$router.push({
-              name: "Sign Up",
-              params: {
-                emailProp: this.email,
-                eventIdProp: this.eventId
-              }
-            });
-          }
-
           // If the user already registered for the event or registration has closed, display a validation message
           if (
             res.data.output.alreadyRegistered ||

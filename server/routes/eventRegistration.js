@@ -56,18 +56,6 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       .status(400)
       .json({ code: 400, message: error.details[0].message, stack: null });
 
-  // Make sure user has signed up
-  try {
-    var attendeeExists = await Attendee.findOne({ email: req.body.email });
-
-    if (attendeeExists === null) return res.status(200).json({ code: 200, message: "Attendee with this email does not exist", output: { notSignedUp: true } });
-
-  } catch (error) {
-    return res
-      .status(400)
-      .json({ code: error.code, message: error.message, stack: error.stack });
-  }
-
   // Make sure user has not already registered
   const alreadyRegistered = attendeeExists.eventIds.includes(req.body.eventId);
 
@@ -153,6 +141,7 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
   res.status(200).json({ url: session.url, output: {} });
 });
 
+// Stripe webhook after successful payment
 router.post(
   "/confirm-registration",
   express.raw({ type: "application/json" }),
@@ -186,10 +175,18 @@ router.post(
 
         // Updated the attendee model to track that a user has signed up for the event
         try {
-          await Attendee.updateOne(
-            { email: customerEmail },
-            { $push: { eventIds: productId } }
-          );
+          // Check the user has signed up
+          var attendeeExists = await Attendee.findOne({ email: req.body.email });
+
+          // If they have, tracked that they registered for the event in Attendees.eventIds
+          if (attendeeExists !== null) {
+            await Attendee.updateOne(
+              { email: customerEmail },
+              { $push: { eventIds: productId } }
+            );
+          }
+
+          // Send email confirmation regardless
           await mailer.sendEventConfirmation(customerEmail, productId);
         } catch (error) {
           return res
@@ -200,8 +197,6 @@ router.post(
               stack: error.stack,
             });
         }
-
-        // send a confirmation email
         break;
       default:
         // Unexpected event type

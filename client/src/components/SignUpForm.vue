@@ -3,8 +3,7 @@
     <h3 class="form-section-title">Sign Up</h3>
     <div>
       <p class="mt-3 mb-2 line-height-3">
-        Fill out the form below to register for events and recieve invites for
-        events in your area that match your preferences.
+        Complete the form below to start receiving invites
       </p>
     </div>
 
@@ -85,7 +84,7 @@
           v-model="area"
           :suggestions="filteredCityOptions"
           :minLength="3"
-          :delay="500"
+          :delay="300"
           @complete="searchCityOptions($event)"
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('area')
@@ -158,8 +157,7 @@ import axios from "axios";
 export default {
   name: "Sign Up Form",
   props: {
-    validationMessagesProp: Object,
-    emailProp: String
+    validationMessagesProp: Object
   },
   data() {
     return {
@@ -187,9 +185,6 @@ export default {
     validationMessagesProp: function(newVal) {
       return (this.validationMessages = newVal);
     }
-  },
-  created() {
-    if (this.emailProp) return (this.email = this.emailProp);
   },
   computed: {
     signUpInfoPayload() {
