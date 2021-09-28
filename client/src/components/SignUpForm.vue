@@ -95,10 +95,7 @@
         />
         <label for="city">City</label>
       </span>
-      <div
-        v-for="(message, index) of validationMessages['area']"
-        :key="index"
-      >
+      <div v-for="(message, index) of validationMessages['area']" :key="index">
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
@@ -195,10 +192,6 @@ export default {
     if (this.emailProp) return (this.email = this.emailProp);
   },
   computed: {
-    yearRange() {
-      return `${new Date().getFullYear() - 115} : ${new Date().getFullYear() -
-        17}`;
-    },
     signUpInfoPayload() {
       return {
         firstName: this.firstName,
