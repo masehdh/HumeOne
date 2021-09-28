@@ -146,6 +146,7 @@
               :class="{
                 'p-invalid': validationMessages.hasOwnProperty('email')
               }"
+              class="w-20rem p-inputtext-sm"
             />
 
             <label for="email">Email</label>

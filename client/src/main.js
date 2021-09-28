@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// ANALYTICS
+import Hotjar from 'vue-hotjar'
+import VueGtag from "vue-gtag-next";
+
 // PRIMEVUE
 import PrimeVue from "primevue/config";
 
@@ -30,8 +34,9 @@ import Slider from 'primevue/slider';
 import SelectButton from 'primevue/selectbutton';
 import ScrollPanel from 'primevue/scrollpanel';
 import Avatar from 'primevue/avatar';
-import VueGtag from "vue-gtag-next";
-import Hotjar from 'vue-hotjar'
+import Tooltip from 'primevue/tooltip';
+
+
 
 createApp(App)
   .use(store)
@@ -44,10 +49,11 @@ createApp(App)
       enabled: process.env.VUE_APP_ANALYTICS ? true : false, //tracks without the need for a cookie banner
     }
   })
-  .use (Hotjar, {
+  .use(Hotjar, {
     id: '2618134', // Hotjar Site ID
     isProduction: process.env.VUE_APP_ANALYTICS ? true : false
   })
+  .directive('tooltip', Tooltip)
   .component("InputText", InputText)
   .component("Textarea", Textarea)
   .component("Button", Button)
