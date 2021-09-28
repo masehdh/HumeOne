@@ -183,4 +183,13 @@ export default {
   font-weight: 400;
   color: $primary-font-color !important;
 }
+
+.p-tooltip {
+  width: 20rem !important;
+  max-width: 20rem !important;
+  margin-top: -0.2rem;
+  .p-tooltip-text {
+    background-color: rgba(54, 60, 66, 0.95) !important;
+  }
+}
 </style>
