@@ -201,36 +201,6 @@
             @submitSignUp="submitSignUp"
           ></component>
         </keep-alive>
-        <!-- <div class="form-control">
-          <span class="p-float-label">
-            <InputText
-              type="text"
-              id="email"
-              v-model="email"
-              :class="{
-                'p-invalid': validationMessages.hasOwnProperty('email')
-              }"
-              class="w-20rem "
-            />
-
-            <label for="email">Email</label>
-          </span>
-
-          <div
-            v-for="(message, index) of validationMessages['email']"
-            :key="index"
-          >
-            <div class="validation-message">{{ message }}</div>
-          </div>
-        </div> -->
-
-        <!-- <div>
-          <Button
-            type="submit"
-            label="Next"
-            class="p-button-md p-button-primary submit-button"
-          />
-        </div> -->
       </div>
     </form>
 

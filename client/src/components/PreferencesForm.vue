@@ -1,12 +1,35 @@
 <template>
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
-    <h3 class="form-section-title">Preferences</h3>
+    <h3 class="form-section-title">Profile &amp; Preferences</h3>
 
     <div>
       <p class="mt-3 line-height-3">
         The following information will help us fine-tune what invites you will
         receive
       </p>
+    </div>
+
+    <!-- Birthdate Field -->
+    <div class="form-control md:mr-3">
+      <span class="p-float-label">
+        <InputMask
+          v-model="birthdate"
+          v-tooltip.bottom.focus="'Helps us connect you with others your age'"
+          mask="99/99/9999"
+          slotChar="MM/DD/YYYY"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('birthdate'),
+          }"
+          class="w-20rem "
+        />
+        <label for="birthdate">Birth Date</label>
+      </span>
+      <div
+        v-for="(message, index) of validationMessages['birthdate']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
     </div>
 
     <div class="form-control">
@@ -21,7 +44,6 @@
         <Slider
           class="w-20rem"
           v-model.number="maxTravelDistance"
-          @change="sendPreferences()"
           :max="100"
           :min="5"
           :step="5"
@@ -48,9 +70,8 @@
           :options="interestOptions"
           optionLabel="interest"
           optionValue="interest"
-          @change="sendPreferences()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('interests')
+            'p-invalid': validationMessages.hasOwnProperty('interests'),
           }"
           class="w-20rem "
         />
@@ -76,9 +97,8 @@
           :options="availabilityOptions"
           optionLabel="availability"
           optionValue="availability"
-          @change="sendPreferences()"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('availability')
+            'p-invalid': validationMessages.hasOwnProperty('availability'),
           }"
           class="w-20rem"
         />
@@ -95,54 +115,246 @@
         <div class="validation-message">{{ message }}</div>
       </div>
     </div>
+
+    <!-- Gender Field -->
+    <div class="form-control">
+      <span class="p-float-label">
+        <AutoComplete
+          type="text"
+          id="gender"
+          v-model="gender"
+          v-tooltip.bottom.focus="
+            'Helps us facilitate certain events (e.g. women\'s soccer)'
+          "
+          :suggestions="filteredGenderOptions"
+          :minLength="1"
+          :delay="0"
+          @complete="searchGenderOptions($event)"
+          :class="{
+            'p-invalid': validationMessages.hasOwnProperty('gender'),
+          }"
+          class="w-20rem "
+        />
+        <label for="gender">Gender (Optional)</label>
+      </span>
+      <div
+        v-for="(message, index) of validationMessages['gender']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
   </div>
+  <div class="container form-card px-3 py-4 md:px-4 md:py-5">
+    <h3 class="form-section-title">Event Tags (Optional)</h3>
+
+    <div>
+      <p class="mt-3 line-height-3">
+        Click the tags below to let our hosts know what kinds of events you want
+        to see
+      </p>
+    </div>
+
+    <!-- Filter -->
+    <div class="form-control md:mr-3 p-input-filled">
+      <span class="p-float-label">
+        <InputText
+          type="text"
+          id="tag-filter"
+          v-model="tagFilter"
+          class="w-full"
+        />
+        <label for="tag-filter">Search tags</label>
+      </span>
+      <small
+        id="reset-filter"
+        v-if="tagFilter.length > 0"
+        @click="tagFilter = ''"
+        >Reset filter</small
+      >
+    </div>
+
+    <!-- List of tags -->
+    <div class="form-control">
+      <div class="align-items-center scroll">
+        <SelectButton
+          v-model="selectedEventTags"
+          :options="filteredTagOptions"
+          :multiple="true"
+          optionLabel="tag"
+          optionValue="tag"
+        />
+      </div>
+
+      <Button
+        label="Show More"
+        class="p-button-text my-1 block"
+        @click="incrementTags"
+        icon="pi pi-plus"
+        iconPos="left"
+        v-if="maxTags <= filteredTagOptions.length && tagFilter.length < 1"
+      />
+
+      <div
+        v-for="(message, index) of validationMessages['selectedEventTags']"
+        :key="index"
+      >
+        <div class="validation-message">{{ message }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2">
+    <Button
+      label="Submit"
+      class="p-button-md p-button-primary submit-button"
+      @click="submitPreferences"
+    />
+  </div>
+  <Message
+    v-for="msg of serverResponses"
+    :severity="msg.severity"
+    :key="msg.content"
+  >
+    {{ msg.content }}
+  </Message>
 </template>
 
 <script>
 import interestCategories from "../../../resources/interests.json";
 import availabilityCategories from "../../../resources/availability.json";
+import eventTags from "../../../resources/eventTags.json";
+import axios from "axios";
+import { preferencesValidation } from "../../../resources/validation";
 
 export default {
   name: "Preferences Form",
   props: {
-    validationMessagesProp: Object
+    emailProp: String,
   },
   data() {
     return {
+      serverResponses: [],
       availability: [],
       interests: [],
       maxTravelDistance: 50,
-      interestOptions: interestCategories.map(interest => {
+      interestOptions: interestCategories.map((interest) => {
         return { interest: interest };
       }),
-      availabilityOptions: availabilityCategories.map(availability => {
+      availabilityOptions: availabilityCategories.map((availability) => {
         return { availability: availability };
       }),
-      validationMessages: this.validationMessagesProp
+      gender: "",
+      birthdate: "",
+      filteredGenderOptions: [],
+      genderOptions: [
+        "Female",
+        "Male",
+        "Two spirit",
+        "Transgender",
+        "Non-binary",
+        "Agender",
+        "Genderqueer",
+      ],
+      selectedEventTags: [],
+      tagFilter: "",
+      tagOptions: eventTags,
+      maxTags: 10,
+      validationMessages: {},
     };
   },
   computed: {
     displayTravelDistance() {
       return `${this.maxTravelDistance} km`;
     },
-    preferencesPayload() {
-      return {
-        maxTravelDistance: this.maxTravelDistance,
-        interests: this.interests,
-        availability: this.availability
-      };
-    }
-  },
-  watch: {
-    validationMessagesProp: function(newVal) {
-      return (this.validationMessages = newVal);
-    }
+    filteredTagOptions() {
+      if (this.tagFilter.length > 0) {
+        return this.tagOptions
+          .filter(({ tag }) => {
+            return tag.toLowerCase().includes(this.tagFilter.toLowerCase());
+          })
+          .slice(0, 10);
+      }
+
+      const filteredTags = this.tagOptions.filter(({ category }) => {
+        return category === "General" || this.interests.includes(category);
+      });
+
+      const selectedTags = this.tagOptions.filter(({ tag }) => {
+        return this.selectedEventTags.includes(tag);
+      });
+
+      const remainingTags = filteredTags.filter(({ tag }) => {
+        return !this.selectedEventTags.includes(tag);
+      });
+
+      return selectedTags.concat(
+        remainingTags.slice(
+          0,
+          selectedTags.length >= this.maxTags
+            ? 0
+            : this.maxTags - selectedTags.length
+        )
+      );
+    },
   },
   methods: {
-    sendPreferences() {
-      return this.$emit("send-preferences", this.preferencesPayload);
-    }
-  }
+    incrementTags() {
+      return this.selectedEventTags.length < this.maxTags
+        ? (this.maxTags += 10)
+        : (this.maxTags = this.selectedEventTags.length + 10);
+    },
+    submitPreferences() {
+      this.validationMessages = {};
+      const { error } = preferencesValidation({
+        gender: this.gender,
+        birthdate: new Date(this.birthdate),
+        interests: this.interests,
+        maxTravelDistance: this.maxTravelDistance * 1000,
+        availability: this.availability,
+        selectedEventTags: this.selectedEventTags,
+      });
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter((val) => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        return;
+      }
+      axios
+        .put("/api/sign-up/preferences", {
+          email: this.emailProp,
+          preferences: {
+            gender: this.gender,
+            birthdate: new Date(this.birthdate),
+            interests: this.interests,
+            maxTravelDistance: this.maxTravelDistance * 1000,
+            availability: this.availability,
+            selectedEventTags: this.selectedEventTags,
+          },
+        })
+        .then(() => {
+          this.$router.push({
+            name: "Sign Up Confirmation",
+          });
+        })
+        .catch((error) =>
+          this.serverResponses.push({
+            severity: "error",
+            content: error.response.data.message,
+          })
+        );
+    },
+    searchGenderOptions(event) {
+      return (this.filteredGenderOptions = this.genderOptions.filter(
+        (option) => {
+          return option.toLowerCase().startsWith(event.query.toLowerCase());
+        }
+      ));
+    },
+  },
 };
 </script>
 
@@ -165,5 +377,23 @@ export default {
   border-radius: 4px 4px 0px 0px;
   border-bottom: none;
   cursor: default;
+}
+
+#tag-filter {
+  padding: 1.4rem 0.8rem 0.5rem 1rem !important;
+  background-color: rgba(0, 0, 0, 0.03);
+  background-image: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  &:hover,
+  &:focus {
+    border-bottom: 2px solid rgba(63, 81, 181, 0.92);
+  }
+}
+
+#reset-filter {
+  color: rgba(63, 81, 181, 0.92);
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

@@ -168,6 +168,18 @@ const signUpValidation = (data) => {
       "object.empty": `This field is required`,
       "any.required": `This field is required`,
     }),
+    over18: Joi.boolean().valid(true).required().messages({
+      "any.only": `You must be 18 years old or over to sign up`,
+    })
+  });
+  return schema.validate(data, {
+    abortEarly: false,
+    errors: { label: "key", escapeHtml: true },
+  });
+};
+
+const preferencesValidation = (data) => {
+  const schema = Joi.object({
     gender: Joi.string()
       .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
       .allow("", null)
@@ -214,7 +226,7 @@ const signUpValidation = (data) => {
         "array.min": `This field is required`,
         "any.required": `This field is required`,
       }),
-    selectedEventTags: Joi.array()
+      selectedEventTags: Joi.array()
       .items(Joi.any().valid(...eventTagCategories))
       .messages({
         "any.only": `You can only choose between the provided options`,
@@ -292,4 +304,5 @@ const contactUsValidation = (data) => {
 module.exports.emailValidation = emailValidation;
 module.exports.registrationValidation = registrationValidation;
 module.exports.signUpValidation = signUpValidation;
+module.exports.preferencesValidation = preferencesValidation;
 module.exports.contactUsValidation = contactUsValidation;
