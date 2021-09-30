@@ -140,9 +140,6 @@ export default {
       .p-inputtextarea {
         max-width: 100%;
       }
-      .p-autocomplete .p-inputtext {
-        width: 100%;
-      }
     }
 
     .submit-button {
@@ -186,7 +183,7 @@ export default {
 
 .p-tooltip {
   width: 20rem !important;
-  max-width: 20rem !important;
+  max-width: 100% !important;
   margin-top: -0.2rem;
   .p-tooltip-text {
     background-color: rgba(54, 60, 66, 0.95) !important;
@@ -195,5 +192,18 @@ export default {
 
 .p-inputtext {
   padding: 0.8rem 0.8rem !important;
+}
+
+.p-autocomplete {
+  max-width: 100%;
+
+  .p-inputtext {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.p-autocomplete-panel {
+  max-width: 100%;
 }
 </style>
