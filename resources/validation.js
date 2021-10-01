@@ -5,8 +5,9 @@ const availabilityCategories = require("./availability.json");
 let eventTagCategories = require("./eventTags.json")
 eventTagCategories = eventTagCategories.map(({ tag }) => tag)
 
-let maxBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
-let minBirthdate = new Date(new Date().setFullYear(new Date().getFullYear() - 100))
+const currentYear = new Date().getFullYear()
+const minBirthYear = currentYear - 120
+const maxBirthYear = currentYear - 18
 
 const emailValidation = (data) => {
   const schema = Joi.object({
@@ -190,43 +191,35 @@ const preferencesValidation = (data) => {
         "string.max": `This field should be under {#limit} characters`,
         "string.pattern.base": `This field can only contain letters`,
       }),
-    birthdate: Joi.date()
-      .iso()
-      .max(maxBirthdate)
-      .min(minBirthdate)
-      .required()
+    birthYear: Joi.number()
+      .min(minBirthYear)
+      .max(maxBirthYear)
       .messages({
-        "date.base": `Please enter a valid date`,
-        "date.max": `You must be 18 years or older to sign up`,
-        "date.min": `Birthdate must be greater than ${minBirthdate.toLocaleDateString()}`,
-        "date.format": `Please enter a valid date`,
+        "number.base": `This field can only contain numbers`,
+        "number.min": `Please review the age you entered as it appears too large`,
+        "number.max": `You must be 18 years or older to sign up`,
       }),
-    maxTravelDistance: Joi.number().min(5000).max(100000).multiple(5000).required().messages({
-      "number.base": `This field should be a number`,
-      "number.min": `Maximum travel distance should be greater than or equal to 5 km`,
-      "number.max": `Maximum travel distance should be less than or equal to 100 km`,
-      "number.multiple": `Maximum travel distance should be a multiple of 5`,
-      "any.required": `This field is required`,
-    }),
+    maxTravelDistance: Joi.number()
+      .min(5000)
+      .max(100000)
+      .multiple(5000)
+      .messages({
+        "number.base": `This field should be a number`,
+        "number.min": `Maximum travel distance should be greater than or equal to 5 km`,
+        "number.max": `Maximum travel distance should be less than or equal to 100 km`,
+        "number.multiple": `Maximum travel distance should be a multiple of 5`,
+      }),
     interests: Joi.array()
       .items(Joi.any().valid(...interestCategories))
-      .min(1)
-      .required()
       .messages({
         "any.only": `You can only choose between the provided options`,
-        "array.min": `This field is required`,
-        "any.required": `This field is required`,
       }),
     availability: Joi.array()
       .items(Joi.any().valid(...availabilityCategories))
-      .min(1)
-      .required()
       .messages({
         "any.only": `You can only choose between the provided options`,
-        "array.min": `This field is required`,
-        "any.required": `This field is required`,
       }),
-      selectedEventTags: Joi.array()
+    selectedEventTags: Joi.array()
       .items(Joi.any().valid(...eventTagCategories))
       .messages({
         "any.only": `You can only choose between the provided options`,

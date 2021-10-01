@@ -31,6 +31,12 @@
       @click="$emit('submit-registration')"
     />
   </div>
+  <div
+    v-for="(message, index) of validationMessagesProp['submit']"
+    :key="index"
+  >
+    <div class="validation-message">{{ message }}</div>
+  </div>
 </template>
 
 <script>

@@ -77,6 +77,12 @@
       class="p-button-md p-button-primary submit-button mt-0"
       @click="$emit('submit-sign-up')"
     />
+    <div
+      v-for="(message, index) of validationMessagesProp['submit']"
+      :key="index"
+    >
+      <div class="validation-message">{{ message }}</div>
+    </div>
   </div>
 </template>
 

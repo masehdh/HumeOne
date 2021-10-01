@@ -330,6 +330,9 @@ export default {
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
         return;
       }
 
@@ -344,7 +347,7 @@ export default {
         .then(() => this.submitRegistration())
         .catch(error =>
           console.log(
-            "error from /api/event-registration/check-email: ",
+            "error from /api/event-registration/register-user: ",
             error.response.data
           )
         );
@@ -365,6 +368,9 @@ export default {
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
         return;
       }
 
@@ -403,7 +409,7 @@ export default {
         })
         .catch(error =>
           console.log(
-            "error from /api/event-registration/check-email: ",
+            "error from /api/event-registration/create-checkout-session: ",
             error.response.data
           )
         );
