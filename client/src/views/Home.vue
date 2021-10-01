@@ -478,7 +478,8 @@ export default {
 }
 
 .cta-button {
-  padding: 10px 14px;
+  padding: 10px 20px;
+  width: fit-content;
   border-radius: 50px;
   background: rgb(255, 124, 172);
   background: linear-gradient(
@@ -487,7 +488,6 @@ export default {
     rgba(255, 245, 108, 1) 100%
   );
   max-width: 100%;
-  width: 220px;
   text-align: center;
   font-weight: 600;
   font-size: 16px;
@@ -653,7 +653,8 @@ export default {
 
   .contact-button {
     cursor: pointer;
-    padding: 10px 16px;
+    padding: 10px 20px;
+    width: fit-content;
     margin-top: 32px;
     border-radius: 50px;
     background: rgb(255, 124, 172);
@@ -663,7 +664,6 @@ export default {
       rgba(255, 245, 108, 1) 100%
     );
     max-width: 100%;
-    width: 180px;
     text-align: center;
     font-weight: 600;
     font-size: 16px;
