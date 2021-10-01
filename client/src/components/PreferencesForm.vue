@@ -1,6 +1,8 @@
 <template>
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
-    <h3 class="form-section-title">Profile &amp; Preferences</h3>
+    <h3 class="form-section-title">
+      Profile &amp; Preferences (Optional)
+    </h3>
 
     <div>
       <p class="mt-3 line-height-3">
@@ -9,23 +11,25 @@
       </p>
     </div>
 
-    <!-- Birthdate Field -->
+    <!-- age Field -->
     <div class="form-control md:mr-3">
       <span class="p-float-label">
         <InputMask
-          v-model="birthdate"
+          v-model="age"
           v-tooltip.bottom.focus="'Helps us connect you with others your age'"
-          mask="99/99/9999"
-          slotChar="MM/DD/YYYY"
+          mask="9?99"
+          slotChar=""
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('birthdate'),
+            'p-invalid': validationMessages.hasOwnProperty('birthYear')
           }"
           class="w-20rem "
         />
-        <label for="birthdate">Birth Date</label>
+
+        <label for="age">Age</label>
       </span>
+
       <div
-        v-for="(message, index) of validationMessages['birthdate']"
+        v-for="(message, index) of validationMessages['birthYear']"
         :key="index"
       >
         <div class="validation-message">{{ message }}</div>
@@ -71,7 +75,7 @@
           optionLabel="interest"
           optionValue="interest"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('interests'),
+            'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
           class="w-20rem "
         />
@@ -98,7 +102,7 @@
           optionLabel="availability"
           optionValue="availability"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('availability'),
+            'p-invalid': validationMessages.hasOwnProperty('availability')
           }"
           class="w-20rem"
         />
@@ -131,12 +135,14 @@
           :delay="0"
           @complete="searchGenderOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('gender'),
+            'p-invalid': validationMessages.hasOwnProperty('gender')
           }"
           class="w-20rem "
         />
-        <label for="gender">Gender (Optional)</label>
+
+        <label for="gender">Gender</label>
       </span>
+
       <div
         v-for="(message, index) of validationMessages['gender']"
         :key="index"
@@ -145,6 +151,7 @@
       </div>
     </div>
   </div>
+
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Event Tags (Optional)</h3>
 
@@ -166,6 +173,7 @@
         />
         <label for="tag-filter">Search tags</label>
       </span>
+
       <small
         id="reset-filter"
         v-if="tagFilter.length > 0"
@@ -203,6 +211,7 @@
       </div>
     </div>
   </div>
+
   <div class="mt-2">
     <Button
       label="Submit"
@@ -210,6 +219,11 @@
       @click="submitPreferences"
     />
   </div>
+
+  <div v-for="(message, index) of validationMessages['submit']" :key="index">
+    <div class="validation-message">{{ message }}</div>
+  </div>
+
   <Message
     v-for="msg of serverResponses"
     :severity="msg.severity"
@@ -229,7 +243,7 @@ import { preferencesValidation } from "../../../resources/validation";
 export default {
   name: "Preferences Form",
   props: {
-    emailProp: String,
+    emailProp: String
   },
   data() {
     return {
@@ -237,14 +251,14 @@ export default {
       availability: [],
       interests: [],
       maxTravelDistance: 50,
-      interestOptions: interestCategories.map((interest) => {
+      interestOptions: interestCategories.map(interest => {
         return { interest: interest };
       }),
-      availabilityOptions: availabilityCategories.map((availability) => {
+      availabilityOptions: availabilityCategories.map(availability => {
         return { availability: availability };
       }),
       gender: "",
-      birthdate: "",
+      age: "",
       filteredGenderOptions: [],
       genderOptions: [
         "Female",
@@ -253,13 +267,13 @@ export default {
         "Transgender",
         "Non-binary",
         "Agender",
-        "Genderqueer",
+        "Genderqueer"
       ],
       selectedEventTags: [],
       tagFilter: "",
       tagOptions: eventTags,
       maxTags: 10,
-      validationMessages: {},
+      validationMessages: {}
     };
   },
   computed: {
@@ -296,6 +310,21 @@ export default {
         )
       );
     },
+    birthYear() {
+      const val = new Date().getFullYear() - Number(this.age);
+      if (Number(this.age)) return val;
+      return undefined;
+    },
+    preferencesPayload() {
+      return {
+        gender: this.gender,
+        birthYear: this.birthYear,
+        interests: this.interests,
+        maxTravelDistance: this.maxTravelDistance * 1000,
+        availability: this.availability,
+        selectedEventTags: this.selectedEventTags
+      };
+    }
   },
   methods: {
     incrementTags() {
@@ -305,56 +334,43 @@ export default {
     },
     submitPreferences() {
       this.validationMessages = {};
-      const { error } = preferencesValidation({
-        gender: this.gender,
-        birthdate: new Date(this.birthdate),
-        interests: this.interests,
-        maxTravelDistance: this.maxTravelDistance * 1000,
-        availability: this.availability,
-        selectedEventTags: this.selectedEventTags,
-      });
+      const { error } = preferencesValidation(this.preferencesPayload);
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter((val) => val.path[0] === path[0])
+            .filter(val => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
         return;
       }
       axios
         .put("/api/sign-up/preferences", {
           email: this.emailProp,
-          preferences: {
-            gender: this.gender,
-            birthdate: new Date(this.birthdate),
-            interests: this.interests,
-            maxTravelDistance: this.maxTravelDistance * 1000,
-            availability: this.availability,
-            selectedEventTags: this.selectedEventTags,
-          },
+          preferences: this.preferencesPayload
         })
         .then(() => {
           this.$router.push({
-            name: "Sign Up Confirmation",
+            name: "Sign Up Confirmation"
           });
         })
-        .catch((error) =>
+        .catch(error =>
           this.serverResponses.push({
             severity: "error",
-            content: error.response.data.message,
+            content: error.response.data.message
           })
         );
     },
     searchGenderOptions(event) {
-      return (this.filteredGenderOptions = this.genderOptions.filter(
-        (option) => {
-          return option.toLowerCase().startsWith(event.query.toLowerCase());
-        }
-      ));
-    },
-  },
+      return (this.filteredGenderOptions = this.genderOptions.filter(option => {
+        return option.toLowerCase().startsWith(event.query.toLowerCase());
+      }));
+    }
+  }
 };
 </script>
 
@@ -395,5 +411,11 @@ export default {
   &:hover {
     cursor: pointer;
   }
+}
+
+.optional-text {
+  opacity: 0.6;
+  font-size: 16px;
+  font-weight: 500;
 }
 </style>

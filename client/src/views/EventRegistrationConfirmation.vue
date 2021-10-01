@@ -11,6 +11,9 @@
         to cancel, please email
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
+      <div class="home-btn mt-3" @click="goHome()">
+        Return to Home
+      </div>
     </div>
   </div>
 </template>
@@ -26,9 +29,36 @@ export default {
         eventList.find(event => event.id === this.$route.query.eventId) || {},
       eventId: this.$route.query.eventId
     };
+  },
+  methods: {
+    goHome() {
+      this.$router.push({ name: "Home" });
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
+.home-btn {
+  padding: 8px 16px;
+  width: fit-content;
+  border-radius: 4px;
+  background: rgb(255, 124, 172);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 124, 172, 1) 0%,
+    rgba(255, 245, 108, 1) 100%
+  );
+  max-width: 100%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+  color: #444444;
+  transition: all 0.3s ease-out;
+  &:hover {
+    box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+    cursor: pointer;
+  }
+}
 </style>

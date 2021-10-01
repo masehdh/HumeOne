@@ -1,11 +1,13 @@
 <template>
   <div class="container form-card px-3 py-4 md:px-4 md:py-5">
     <h3 class="form-section-title">Sign Up</h3>
+
     <div>
       <p class="mt-3 line-height-3">
         Complete the form below to start receiving invites
       </p>
     </div>
+
     <!-- First Name Field -->
     <div class="form-control">
       <span class="p-float-label">
@@ -15,10 +17,11 @@
           v-model="firstName"
           v-tooltip.bottom.focus="'Your name will be displayed publicly'"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('firstName'),
+            'p-invalid': validationMessages.hasOwnProperty('firstName')
           }"
           class="w-20rem "
         />
+
         <label for="first-name">First Name</label>
       </span>
       <div
@@ -38,10 +41,11 @@
           v-model="lastName"
           v-tooltip.bottom.focus="'Your name will be displayed publicly'"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('lastName'),
+            'p-invalid': validationMessages.hasOwnProperty('lastName')
           }"
           class="w-20rem "
         />
+
         <label for="last-name">Last Name</label>
       </span>
       <div
@@ -60,13 +64,15 @@
           id="email"
           v-model="email"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('email'),
+            'p-invalid': validationMessages.hasOwnProperty('email')
           }"
           class="w-20rem "
           @input="$emit('send-email', email)"
         />
+
         <label for="email">Email</label>
       </span>
+
       <div v-for="(message, index) of validationMessages['email']" :key="index">
         <div class="validation-message">{{ message }}</div>
       </div>
@@ -79,7 +85,7 @@
           forceSelection
           type="text"
           id="city"
-          :field="(area) => `${area.name}, ${area.region}, ${area.country}`"
+          :field="area => `${area.name}, ${area.region}, ${area.country}`"
           v-model="area"
           v-tooltip.bottom.focus="'Helps us plan events in your area'"
           :suggestions="filteredCityOptions"
@@ -87,12 +93,14 @@
           :delay="300"
           @complete="searchCityOptions($event)"
           :class="{
-            'p-invalid': validationMessages.hasOwnProperty('area'),
+            'p-invalid': validationMessages.hasOwnProperty('area')
           }"
           class="w-20rem "
         />
+
         <label for="city">City</label>
       </span>
+
       <div v-for="(message, index) of validationMessages['area']" :key="index">
         <div class="validation-message">{{ message }}</div>
       </div>
@@ -119,6 +127,11 @@
         @click="submitSignUp"
       />
     </div>
+
+    <div v-for="(message, index) of validationMessages['submit']" :key="index">
+      <div class="validation-message">{{ message }}</div>
+    </div>
+
     <Message
       v-for="msg of serverResponses"
       :severity="msg.severity"
@@ -145,7 +158,7 @@ export default {
       over18: false,
       filteredCityOptions: [],
       area: "",
-      validationMessages: {},
+      validationMessages: {}
     };
   },
   methods: {
@@ -153,19 +166,19 @@ export default {
       axios
         .post("/api/map/auto-complete", { input: city.query })
         .then(
-          (res) =>
+          res =>
             (this.filteredCityOptions = res.data.output.map(
               ({ name, region, country, coordinates }) => {
                 return {
                   name: name,
                   region: region,
                   country: country,
-                  location: { type: "Point", coordinates: coordinates },
+                  location: { type: "Point", coordinates: coordinates }
                 };
               }
             ))
         )
-        .catch((error) => console.log("Error from /api/maps", error));
+        .catch(error => console.log("Error from /api/maps", error));
     },
     submitSignUp() {
       this.validationMessages = {};
@@ -174,16 +187,19 @@ export default {
         lastName: this.lastName,
         email: this.email,
         area: this.area,
-        over18: this.over18,
+        over18: this.over18
       });
       if (error) {
         error.details.forEach(({ path }) => {
           let messages = error.details
-            .filter((val) => val.path[0] === path[0])
+            .filter(val => val.path[0] === path[0])
             .map(({ message }) => message);
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
         return;
       }
       axios
@@ -192,19 +208,19 @@ export default {
           lastName: this.lastName,
           email: this.email,
           area: this.area,
-          over18: this.over18,
+          over18: this.over18
         })
         .then(() => {
           this.$emit("next-step", "PreferencesForm");
         })
-        .catch((error) =>
+        .catch(error =>
           this.serverResponses.push({
             severity: "error",
-            content: error.response.data.message,
+            content: error.response.data.message
           })
         );
-    },
-  },
+    }
+  }
 };
 </script>
 

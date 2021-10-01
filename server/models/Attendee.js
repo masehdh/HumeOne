@@ -53,8 +53,8 @@ const attendeeSchema = new mongoose.Schema({
       index: '2dsphere',
     },
   },
-  birthdate: {
-    type: String,
+  birthYear: {
+    type: Number,
   },
   gender: {
     type: String,
