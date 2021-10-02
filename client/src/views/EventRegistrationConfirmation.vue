@@ -12,7 +12,7 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
       <div class="home-btn mt-3" @click="goHome()">
-        Return to Home
+        Back to Home
       </div>
     </div>
   </div>
@@ -59,6 +59,28 @@ export default {
   &:hover {
     box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
     cursor: pointer;
+    transform: scale(1);
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:before {
+    border-radius: inherit;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 245, 108, 1) 0%,
+      rgba(255, 124, 172, 1) 100%
+    );
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.45s ease;
   }
 }
 </style>

@@ -10,21 +10,41 @@ const minBirthYear = currentYear - 120
 const maxBirthYear = currentYear - 18
 
 const emailValidation = (data) => {
-  const schema = Joi.object({
-    email: Joi.string()
-      .email({ tlds: { allow: tldSet } })
-      .min(3)
-      .max(60)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
-        "string.email": `The email you entered appears to be invalid`,
+  const schema = Joi.alternatives().conditional(Joi.object({ vaccineRequired: true }).unknown(), {
+    then: Joi.object({
+      email: Joi.string()
+        .email({ tlds: { allow: tldSet } })
+        .min(3)
+        .max(60)
+        .required()
+        .messages({
+          "string.base": `This field should be a string`,
+          "string.empty": `This field is required`,
+          "string.min": `This field should be at least {#limit} characters`,
+          "string.max": `This field should be under {#limit} characters`,
+          "any.required": `This field is required`,
+          "string.email": `The email you entered appears to be invalid`,
+        }),
+      vaccineCertification: Joi.boolean().valid(true).required().messages({
+        "any.only": `To comply with public health guidelines, you must be fully vaccinated to attend this event`,
       }),
-  });
+    }).unknown(),
+    otherwise: Joi.object({
+      email: Joi.string()
+        .email({ tlds: { allow: tldSet } })
+        .min(3)
+        .max(60)
+        .required()
+        .messages({
+          "string.base": `This field should be a string`,
+          "string.empty": `This field is required`,
+          "string.min": `This field should be at least {#limit} characters`,
+          "string.max": `This field should be under {#limit} characters`,
+          "any.required": `This field is required`,
+          "string.email": `The email you entered appears to be invalid`,
+        }),
+    }).unknown()
+  })
   return schema.validate(data, {
     abortEarly: false,
     errors: { label: "key", escapeHtml: true },

@@ -107,7 +107,7 @@ export default {
       font-size: 16px;
       text-transform: uppercase;
       font-weight: 500;
-      color: #e67e73;
+      color: $brand-red;
     }
 
     .form-title {
@@ -117,13 +117,15 @@ export default {
     }
 
     .form-section-title {
-      font-weight: 400;
+      font-weight: 500;
       font-size: 24px;
       max-width: 100%;
     }
 
     .event-detail-item {
-      margin-top: 16px;
+      &:not(:first-child) {
+        margin-top: 16px;
+      }
       font-size: 16px;
       line-height: 1.5;
       .event-detail-title {

@@ -10,7 +10,7 @@
         :class="{
           'p-invalid': validationMessagesProp.hasOwnProperty('firstName')
         }"
-        class="w-20rem "
+        class="w-20rem"
         @input="sendAdditionalInfo()"
       />
       <label for="first-name">First Name</label>
@@ -34,7 +34,7 @@
         :class="{
           'p-invalid': validationMessagesProp.hasOwnProperty('lastName')
         }"
-        class="w-20rem "
+        class="w-20rem"
         @input="sendAdditionalInfo()"
       />
       <label for="last-name">Last Name</label>

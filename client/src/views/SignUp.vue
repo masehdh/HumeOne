@@ -23,16 +23,17 @@ export default {
   data() {
     return {
       email: "",
-      currentComponent: "SignUpForm",
+      currentComponent: "SignUpForm"
     };
   },
   methods: {
     setComponent(value) {
       this.currentComponent = value;
       window.scrollTo(0, 0);
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

@@ -5,12 +5,13 @@
         type="text"
         id="email"
         v-model="email"
+        ref="emailInput"
         @input="sendEmail()"
         @keyup.enter="$emit('submit-registration')"
         :class="{
           'p-invalid': validationMessagesProp.hasOwnProperty('email')
         }"
-        class="w-20rem "
+        class="w-20rem"
       />
 
       <label for="email">Email</label>
@@ -24,6 +25,28 @@
     </div>
   </div>
 
+  <!-- Vaccine Field -->
+  <div class="form-control" v-if="vaccineRequiredProp">
+    <div class="field-checkbox mb-0">
+      <Checkbox
+        v-model="vaccineCertification"
+        id="vaccine-certification"
+        :binary="true"
+        @change="sendEmail()"
+      />
+      <label for="vaccine-certification"
+        >I confirm that I am fully vaccinated (this information will not be
+        stored)</label
+      >
+    </div>
+    <div
+      v-for="(message, index) of validationMessagesProp['vaccineCertification']"
+      :key="index"
+    >
+      <div class="validation-message">{{ message }}</div>
+    </div>
+  </div>
+
   <div>
     <Button
       label="Next"
@@ -31,6 +54,7 @@
       @click="$emit('submit-registration')"
     />
   </div>
+
   <div
     v-for="(message, index) of validationMessagesProp['submit']"
     :key="index"
@@ -42,16 +66,24 @@
 <script>
 export default {
   name: "Registration Email Field",
-  props: { validationMessagesProp: Object },
+  props: { validationMessagesProp: Object, vaccineRequiredProp: Boolean },
   emits: ["send-email", "submit-registration"],
   data() {
     return {
-      email: ""
+      email: "",
+      vaccineCertification: false
     };
   },
   methods: {
     sendEmail() {
-      this.$emit("send-email", { email: this.email });
+      this.$emit("send-email", {
+        email: this.email,
+        vaccineCertification: this.vaccineCertification
+      });
+    },
+    focusEmail() {
+      // $el allows us to focus on root elements of custom components (i.e. input element of InputText component)
+      this.$refs.emailInput.$el.focus();
     }
   }
 };

@@ -22,7 +22,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('birthYear')
           }"
-          class="w-20rem "
+          class="w-20rem"
         />
 
         <label for="age">Age</label>
@@ -77,7 +77,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('interests')
           }"
-          class="w-20rem "
+          class="w-20rem"
         />
 
         <label for="interests">
@@ -137,7 +137,7 @@
           :class="{
             'p-invalid': validationMessages.hasOwnProperty('gender')
           }"
-          class="w-20rem "
+          class="w-20rem"
         />
 
         <label for="gender">Gender</label>
@@ -157,8 +157,7 @@
 
     <div>
       <p class="mt-3 line-height-3">
-        Click the tags below to let our hosts know what kinds of events you want
-        to see
+        Click the tags below to let our hosts know what events want planned
       </p>
     </div>
 

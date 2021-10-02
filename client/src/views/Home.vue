@@ -21,11 +21,8 @@
         </p>
       </div>
 
-      <router-link
-        class="router-link mx-3 md:mx-4 fadein animation-duration-1000"
-        :to="{ name: 'Sign Up' }"
-      >
-        <div class="cta-button">
+      <router-link class="router-link mx-3 md:mx-4" :to="{ name: 'Sign Up' }">
+        <div class="cta-button fadein animation-duration-1000">
           SIGN UP FOR FREE
         </div>
       </router-link>
@@ -94,7 +91,7 @@
 
         <div class="vertical-row-item mx-3 md:mx-4">
           <h3>Sign Up For Free</h3>
-          <p class="line-height-3">Let us know what you are interested in</p>
+          <p class="line-height-3">Let us know what you are interested in.</p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
       </div>
@@ -143,7 +140,7 @@
         <div class="vertical-row-item mx-3 md:mx-4">
           <h3>We'll Plan Events</h3>
           <p class="line-height-3">
-            For you and others nearby with shared interests
+            For you and others nearby with shared interests.
           </p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
@@ -193,7 +190,7 @@
         <div class="vertical-row-item mx-3 md:mx-4">
           <h3>Receive Invites</h3>
           <p class="line-height-3">
-            Directly to your inbox, according to your preferences
+            Directly to your inbox, according to your preferences.
           </p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
@@ -244,7 +241,7 @@
           <h3>Reserve Your Spot</h3>
           <p class="line-height-3">
             You pay a small fee to support our Hosts for facilitating events,
-            and they make sure you have a great time
+            and they make sure you have a great time.
           </p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
@@ -252,12 +249,32 @@
     </div>
   </div>
 
-  <div class="section violet-bg who-we-are-section">
+  <div class="section who-we-are-section off-white-bg pt-6">
     <div class="container">
       <h2 class="mx-3 md:mx-4">
         Who We Are
       </h2>
+
       <div class="line-divider mx-3 md:mx-4">&nbsp;</div>
+
+      <div class="mb-4 max-w-full">
+        <div class="host-image">
+          <img
+            src="../../../resources/shareef-portrait.jpg"
+            alt="Portrait of a host"
+          />
+          <div class="img-overlay">&nbsp;</div>
+        </div>
+
+        <div class="host-image">
+          <img
+            src="../../../resources/maseh-host-portrait.jpg"
+            alt="Portrait of a host"
+          />
+          <div class="img-overlay">&nbsp;</div>
+        </div>
+      </div>
+
       <p class="line-height-3 mx-3 md:mx-4">
         We believe humans are better together, hence our name (a portmanteau of
         human + one). We are creating a platform that builds authentic human
@@ -501,7 +518,7 @@ export default {
 }
 
 .p-scrolltop.p-link {
-  background: #ff6672;
+  background: $brand-red;
 }
 
 .how-it-works-section {
@@ -581,7 +598,7 @@ export default {
         font-size: 24px;
         font-weight: 600;
         margin-right: 20px;
-        color: #ff6672;
+        color: $brand-red;
       }
     }
 
@@ -651,6 +668,42 @@ export default {
     max-width: 80%;
   }
 
+  .host-image {
+    display: inline-flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+    border-radius: 100%;
+    width: 150px;
+    max-width: 150px;
+    aspect-ratio: 1 / 1;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    &:not(:first-child) {
+      margin-left: -20px;
+    }
+    @media (max-width: $mobile-breakpoint) {
+      width: 35%;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    .img-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      background-color: black;
+      opacity: 0.15;
+      transition: all 0.3s ease;
+      &:hover {
+        opacity: 0;
+      }
+    }
+  }
+
   .contact-button {
     cursor: pointer;
     padding: 10px 20px;
@@ -673,6 +726,27 @@ export default {
     &:hover {
       box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
       transform: scale(1.05);
+      &:before {
+        opacity: 1;
+      }
+    }
+
+    &:before {
+      border-radius: inherit;
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 245, 108, 1) 0%,
+        rgba(255, 124, 172, 1) 100%
+      );
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.45s ease;
     }
   }
 }

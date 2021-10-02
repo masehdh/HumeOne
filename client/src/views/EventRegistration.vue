@@ -19,29 +19,36 @@
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
 
       <div class="event-info flex flex-column md:flex-row px-3 md:px-4">
-        <p class="max-spots mr-3 mt-2 ">
+        <p class="max-spots mr-3 mt-2 font-medium">
           <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} spots
           <span class="spots-left" v-if="showSpotsLeft"
             >&#183; {{ spotsLeft }} spots left</span
           >
         </p>
 
-        <p class="max-spots mr-3 mt-2" v-if="eventDetails.dateTime">
+        <p class="max-spots mr-3 mt-2 font-medium" v-if="eventDetails.dateTime">
           <i class="pi pi-clock mr-2"></i>{{ eventDetails.dateTime }}
         </p>
 
-        <p class="max-spots mt-2 " v-if="eventDetails.reservationFee > 0">
+        <p
+          class="max-spots mt-2 font-medium"
+          v-if="eventDetails.reservationFee > 0"
+        >
           <i class="pi pi-wallet mr-2"></i>${{ eventDetails.reservationFee }}
           (plus tax)
         </p>
 
-        <p class="max-spots mt-2" v-else>
-          <i class="pi pi-wallet mr-2 "></i>FREE
+        <p class="max-spots mt-2 font-medium" v-else>
+          <i class="pi pi-wallet mr-2"></i>FREE
         </p>
+      </div>
+
+      <div class="register-btn mt-3 md:mx-4" @click="scrollToBottom()">
+        REGISTER
       </div>
     </div>
 
-    <div class="container form-card px-3 py-3 md:px-4 py-4">
+    <div class="container form-card px-3 py-3 md:px-4 md:py-4">
       <div class="host-info">
         <div>
           <img
@@ -51,16 +58,23 @@
           />
         </div>
 
-        <div class="host-contact-details">
-          <p><i class="pi pi-user"></i>Hosted by {{ eventDetails.hostName }}</p>
+        <div class="host-contact-details font-medium">
+          <p>
+            <i class="pi pi-user"></i>Hosted by
+            <span class="underline">{{ eventDetails.hostName }}</span>
+          </p>
 
-          <div class="line-divider mx-2">&nbsp;</div>
+          <span class="mx-3 hidden md:inline">|</span>
 
-          <a :href="'tel:' + eventDetails.hostNumber"
+          <a
+            v-if="eventDetails.hostNumber"
+            :href="'tel:' + eventDetails.hostNumber"
             ><i class="pi pi-phone"></i>{{ eventDetails.hostNumber }}</a
           >
 
-          <div class="line-divider mx-2">&nbsp;</div>
+          <span class="mx-3 hidden md:inline" v-if="eventDetails.hostNumber"
+            >|</span
+          >
 
           <a :href="'mailto:' + eventDetails.hostEmail"
             ><i class="pi pi-envelope"></i>{{ eventDetails.hostEmail }}</a
@@ -70,7 +84,7 @@
     </div>
 
     <div
-      class="container form-card px-3 py-3 md:px-4 py-4"
+      class="container form-card px-3 py-3 md:px-4 md:py-4"
       v-if="eventDetails.description"
     >
       <h3 class="form-section-title">Event Description</h3>
@@ -80,7 +94,7 @@
       </p>
     </div>
 
-    <div class="container form-card" v-if="eventDetails.location">
+    <div class="container form-card" v-if="eventDetails.map">
       <iframe
         width="100%"
         height="300"
@@ -93,43 +107,51 @@
       <h3 class="form-section-title mt-4 mx-3 md:mx-4">Event Location</h3>
 
       <p
-        class="event-detail-item mx-3 mb-3 md:mx-4 mb-4"
-        v-if="eventDetails.location"
+        class="event-detail-item mx-3 mb-3 md:mx-4 md:mb-4"
+        v-if="eventDetails.map"
       >
-        {{ eventDetails.location }}
+        {{ eventDetails.map }}
       </p>
     </div>
-    <div class="container form-card px-3 py-3 md:px-4 py-4">
-      <h3 class="form-section-title">Event Details</h3>
+    <div class="container form-card">
+      <div
+        class="flex flex-row justify-content-between align-items-center cursor-pointer px-3 py-3 md:px-4 md:py-4"
+        @click="showDetails = !showDetails"
+      >
+        <h3 class="form-section-title select-none">Event Details</h3>
+        <i class="pi pi-chevron-right text-2xl" v-if="!showDetails"></i>
+        <i class="pi pi-chevron-down text-2xl" v-else></i>
+      </div>
+      <div v-show="showDetails" class="px-3 pb-3 md:px-4 md:pb-4">
+        <p class="event-detail-item" v-if="eventDetails.paymentDeadline">
+          <span class="event-detail-title">Reservation deadline:</span>
+          Before {{ eventDetails.paymentDeadline }}
+        </p>
 
-      <p class="event-detail-item" v-if="eventDetails.paymentDeadline">
-        <span class="event-detail-title">Reservation deadline:</span>
-        Before {{ eventDetails.paymentDeadline }}
-      </p>
+        <p class="event-detail-item" v-if="eventDetails.whatToBring">
+          <span class="event-detail-title">What to bring:</span>
+          {{ eventDetails.whatToBring }}
+        </p>
 
-      <p class="event-detail-item" v-if="eventDetails.whatToBring">
-        <span class="event-detail-title">What to bring:</span>
-        {{ eventDetails.whatToBring }}
-      </p>
+        <p class="event-detail-item" v-if="eventDetails.whenYouArrive">
+          <span class="event-detail-title">When you arrive:</span>
+          {{ eventDetails.whenYouArrive }}
+        </p>
 
-      <p class="event-detail-item" v-if="eventDetails.whenYouArrive">
-        <span class="event-detail-title">When you arrive:</span>
-        {{ eventDetails.whenYouArrive }}
-      </p>
+        <p class="event-detail-item" v-if="eventDetails.additionalDetails">
+          <span class="event-detail-title">Additional details:</span>
+          {{ eventDetails.additionalDetails }}
+        </p>
 
-      <p class="event-detail-item" v-if="eventDetails.additionalDetails">
-        <span class="event-detail-title">Additional details:</span>
-        {{ eventDetails.additionalDetails }}
-      </p>
-
-      <p class="event-detail-item" v-if="eventDetails.cancellation">
-        <span class="event-detail-title">Cancellation:</span>
-        {{ eventDetails.cancellation }}
-      </p>
+        <p class="event-detail-item" v-if="eventDetails.cancellation">
+          <span class="event-detail-title">Cancellation:</span>
+          {{ eventDetails.cancellation }}
+        </p>
+      </div>
     </div>
 
     <div
-      class="container form-card px-3 py-3 md:px-4 py-4"
+      class="container form-card px-3 py-3 md:px-4 md:py-4"
       v-if="attendees.length > 0"
     >
       <h3 class="form-section-title">Attendees ({{ attendees.length }})</h3>
@@ -194,6 +216,8 @@
           <component
             :is="currentComponent"
             :validationMessagesProp="validationMessages"
+            :vaccineRequiredProp="eventDetails.vaccineRequired"
+            ref="registrationForm"
             @send-email="setEmail"
             @send-additional-info="setAdditionalInfo"
             @back="currentComponent = 'RegistrationEmailField'"
@@ -205,7 +229,7 @@
     </form>
 
     <div
-      class="container form-card px-3 py-3 md:px-4 py-4"
+      class="container form-card px-3 py-3 md:px-4 md:py-4"
       v-if="hideRegistration"
     >
       <h3 class="form-section-title">Event Registration Closed</h3>
@@ -244,11 +268,13 @@ export default {
       firstName: "",
       lastName: "",
       over18: false,
+      vaccineCertification: false,
       attendees: [],
       spotsLeft: null,
       displayAllAttendees: false,
       validationMessages: {},
-      currentComponent: "RegistrationEmailField"
+      currentComponent: "RegistrationEmailField",
+      showDetails: false
     };
   },
   mounted() {
@@ -272,7 +298,7 @@ export default {
   },
   computed: {
     mapsURL() {
-      return `https://www.google.com/maps/embed/v1/place?key=AIzaSyA5RqZZ9AOCln9QeeR2_Obd22-PGEXqpA0&q=${this.eventDetails.location}&maptype=satellite`;
+      return `https://www.google.com/maps/embed/v1/place?key=AIzaSyA5RqZZ9AOCln9QeeR2_Obd22-PGEXqpA0&q=${this.eventDetails.map}&maptype=satellite`;
     },
     hostImageSrc() {
       return require(`../../../resources/${this.eventDetails.hostImage}`);
@@ -303,13 +329,83 @@ export default {
     showAllAttendees() {
       return (this.displayAllAttendees = true);
     },
+    scrollToBottom() {
+      window.scrollTo(0, document.body.scrollHeight);
+      this.$refs.registrationForm.focusEmail();
+    },
     setEmail(payload) {
       this.email = payload.email;
+      this.vaccineCertification = payload.vaccineCertification;
     },
     setAdditionalInfo(payload) {
       this.firstName = payload.firstName;
       this.lastName = payload.lastName;
       this.over18 = payload.over18;
+    },
+    submitRegistration() {
+      // Validate inputs
+      this.validationMessages = {};
+
+      const { error } = emailValidation({
+        email: this.email,
+        vaccineCertification: this.vaccineCertification,
+        vaccineRequired: this.eventDetails.vaccineRequired
+      });
+
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter(val => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
+        return;
+      }
+
+      // Make api request
+      axios
+        .post("/api/event-registration/create-checkout-session", {
+          email: this.email,
+          vaccineCertification: this.vaccineCertification,
+          eventId: this.eventId
+        })
+        .then(res => {
+          // If the user has never signed up, show additional component
+          if (res.data.output.notSignedUp) {
+            return (this.currentComponent = "RegistrationAdditionalFields");
+          }
+
+          // If the user already registered for the event or registration has closed, display a validation message
+          if (
+            res.data.output.alreadyRegistered ||
+            res.data.output.registrationClosed
+          ) {
+            return (this.validationMessages["email"] = [res.data.message]);
+          }
+
+          // If the event is free, redirect to payment confirmation
+          if (res.data.output.freeEvent) {
+            return this.$router.push({
+              name: "Event Registration Confirmation",
+              query: {
+                eventId: this.eventId
+              }
+            });
+          }
+
+          // If the session was created successfully, redirect to payment page
+          window.location.href = res.data.url;
+        })
+        .catch(error =>
+          console.log(
+            "error from /api/event-registration/create-checkout-session: ",
+            error.response.data
+          )
+        );
     },
     submitSignUp() {
       // Validate inputs
@@ -351,68 +447,6 @@ export default {
             error.response.data
           )
         );
-    },
-    submitRegistration() {
-      // Validate inputs
-      this.validationMessages = {};
-
-      const { error } = emailValidation({
-        email: this.email
-      });
-
-      if (error) {
-        error.details.forEach(({ path }) => {
-          let messages = error.details
-            .filter(val => val.path[0] === path[0])
-            .map(({ message }) => message);
-          messages = [...new Set(messages)];
-          return (this.validationMessages[path[0]] = messages);
-        });
-        this.validationMessages["submit"] = [
-          "Please review the errors above before submitting"
-        ];
-        return;
-      }
-
-      // Make api request
-      axios
-        .post("/api/event-registration/create-checkout-session", {
-          email: this.email,
-          eventId: this.eventId
-        })
-        .then(res => {
-          // If the user has never signed up, show additional component
-          if (res.data.output.notSignedUp) {
-            return (this.currentComponent = "RegistrationAdditionalFields");
-          }
-
-          // If the user already registered for the event or registration has closed, display a validation message
-          if (
-            res.data.output.alreadyRegistered ||
-            res.data.output.registrationClosed
-          ) {
-            return (this.validationMessages["email"] = [res.data.message]);
-          }
-
-          // If the event is free, redirect to payment confirmation
-          if (res.data.output.freeEvent) {
-            return this.$router.push({
-              name: "Event Registration Confirmation",
-              query: {
-                eventId: this.eventId
-              }
-            });
-          }
-
-          // If the session was created successfully, redirect to payment page
-          window.location.href = res.data.url;
-        })
-        .catch(error =>
-          console.log(
-            "error from /api/event-registration/create-checkout-session: ",
-            error.response.data
-          )
-        );
     }
   }
 };
@@ -440,21 +474,6 @@ export default {
 
 .spots-left {
   color: hsl(0, 75%, 55%);
-}
-
-.line-divider {
-  background: linear-gradient(
-    90deg,
-    rgba(230, 92, 138, 0.9) 0%,
-    rgba(255, 204, 102, 0.9) 100%
-  );
-  margin: 8px 0px;
-  height: 1.8px;
-  width: 8px;
-  max-width: 100%;
-  @media (max-width: $mobile-breakpoint) {
-    display: none;
-  }
 }
 
 i.pi {
@@ -500,7 +519,7 @@ i.pi {
       display: flex;
       align-items: center;
       &:hover {
-        font-weight: 500;
+        color: black;
       }
       @media (max-width: $mobile-breakpoint) {
         margin-top: 8px;
@@ -515,5 +534,55 @@ i.pi {
 
 .avatar-item p {
   word-wrap: break-word;
+}
+
+.register-btn {
+  padding: 8px 16px;
+  width: fit-content;
+  border-radius: 4px;
+  background: rgb(255, 124, 172);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 124, 172, 1) 0%,
+    rgba(255, 245, 108, 1) 100%
+  );
+  max-width: 100%;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+  color: #444444;
+  transition: all 0.3s ease-out;
+  &:hover {
+    box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+    cursor: pointer;
+    transform: scale(1);
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &:before {
+    border-radius: inherit;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 245, 108, 1) 0%,
+      rgba(255, 124, 172, 1) 100%
+    );
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.45s ease;
+  }
 }
 </style>

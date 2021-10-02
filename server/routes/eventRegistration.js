@@ -79,7 +79,7 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
   const event = eventList.find((event) => event.id === req.body.eventId);
 
   // Validate email
-  const { error } = emailValidation({ email: req.body.email });
+  const { error } = emailValidation({ email: req.body.email, vaccineCertification: req.body.vaccineCertification, vaccineRequired: event.vaccineRequired });
   if (error)
     return res
       .status(400)
