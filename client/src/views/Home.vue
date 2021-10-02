@@ -273,6 +273,14 @@
           />
           <div class="img-overlay">&nbsp;</div>
         </div>
+
+        <div class="host-image">
+          <img
+            src="../../../resources/anika-host-portrait.jpg"
+            alt="Portrait of a host"
+          />
+          <div class="img-overlay">&nbsp;</div>
+        </div>
       </div>
 
       <p class="line-height-3 mx-3 md:mx-4">
@@ -696,7 +704,7 @@ export default {
       right: 0;
       top: 0;
       background-color: black;
-      opacity: 0.15;
+      opacity: 0.12;
       transition: all 0.3s ease;
       &:hover {
         opacity: 0;
