@@ -683,14 +683,18 @@ export default {
     position: relative;
     border-radius: 100%;
     width: 150px;
-    max-width: 150px;
+    height: 150px;
     aspect-ratio: 1 / 1;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     &:not(:first-child) {
       margin-left: -20px;
     }
     @media (max-width: $mobile-breakpoint) {
-      width: 35%;
+      width: 27vw;
+      height: 27vw;
+      &:not(:first-child) {
+        margin-left: -3vw;
+      }
     }
 
     img {

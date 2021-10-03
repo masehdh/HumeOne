@@ -18,7 +18,9 @@
 
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
 
-      <div class="event-info flex flex-column md:flex-row px-3 md:px-4">
+      <div
+        class="event-info flex flex-column md:flex-row px-3 my-2 md:my-0 md:px-4"
+      >
         <p class="max-spots mr-3 mt-2 font-medium">
           <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} spots
           <span class="spots-left" v-if="showSpotsLeft"
@@ -97,7 +99,7 @@
     <div class="container form-card" v-if="eventDetails.map">
       <iframe
         width="100%"
-        height="300"
+        height="200"
         style="border:0"
         loading="lazy"
         allowfullscreen

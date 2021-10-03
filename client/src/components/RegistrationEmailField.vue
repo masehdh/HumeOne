@@ -27,17 +27,17 @@
 
   <!-- Vaccine Field -->
   <div class="form-control" v-if="vaccineRequiredProp">
-    <div class="field-checkbox mb-0">
+    <div class="field-checkbox mb-1">
       <Checkbox
         v-model="vaccineCertification"
         id="vaccine-certification"
         :binary="true"
         @change="sendEmail()"
       />
-      <label for="vaccine-certification"
-        >I confirm that I am fully vaccinated (this information will not be
-        stored)</label
-      >
+      <label for="vaccine-certification" class="line-height-3">
+        I confirm that I am fully vaccinated (this information will not be
+        stored)
+      </label>
     </div>
     <div
       v-for="(message, index) of validationMessagesProp['vaccineCertification']"
