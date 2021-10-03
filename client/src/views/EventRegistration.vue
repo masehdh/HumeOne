@@ -7,7 +7,7 @@
         :style="{
           backgroundImage:
             'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' +
-            require('../../../resources/' + eventDetails.image) +
+            require(`@/assets/${eventDetails.image}`) +
             ')'
         }"
       >
@@ -45,7 +45,10 @@
         </p>
       </div>
 
-      <div class="register-btn mt-3 md:mx-4" @click="scrollToBottom()">
+      <div
+        class="register-btn mt-3 md:mx-4 no-underline"
+        @click="scrollToBottom()"
+      >
         REGISTER
       </div>
     </div>
@@ -54,7 +57,7 @@
       <div class="host-info">
         <div>
           <img
-            :src="hostImageSrc"
+            :src="require(`@/assets/${eventDetails.hostImage}`)"
             alt="portrait of the event host"
             class="host-image"
           />
@@ -63,7 +66,7 @@
         <div class="host-contact-details font-medium">
           <p>
             <i class="pi pi-user"></i>Hosted by
-            <span class="underline">{{ eventDetails.hostName }}</span>
+            <span class="color-brand-red">{{ eventDetails.hostName }}</span>
           </p>
 
           <span class="mx-3 hidden md:inline">|</span>
@@ -117,7 +120,7 @@
     </div>
     <div class="container form-card">
       <div
-        class="flex flex-row justify-content-between align-items-center cursor-pointer px-3 py-3 md:px-4 md:py-4"
+        class="flex flex-row justify-content-between align-items-center cursor-pointer px-3 py-3 md:px-4 md:py-4 no-underline"
         @click="showDetails = !showDetails"
       >
         <h3 class="form-section-title select-none">Event Details</h3>
@@ -176,7 +179,7 @@
         </div>
 
         <div
-          class="show-all-button w-8rem text-center mr-3 mt-4"
+          class="show-all-button w-8rem text-center mr-3 mt-4 no-underline"
           v-if="attendees.length > 6"
           @click="showAllAttendees"
         >
@@ -301,9 +304,6 @@ export default {
   computed: {
     mapsURL() {
       return `https://www.google.com/maps/embed/v1/place?key=AIzaSyA5RqZZ9AOCln9QeeR2_Obd22-PGEXqpA0&q=${this.eventDetails.map}&maptype=satellite`;
-    },
-    hostImageSrc() {
-      return require(`../../../resources/${this.eventDetails.hostImage}`);
     },
     showSpotsLeft() {
       if (

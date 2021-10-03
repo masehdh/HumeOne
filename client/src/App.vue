@@ -5,7 +5,7 @@
         <div id="header-logo">
           <img
             id="humeone-logo"
-            src="../../resources/humeone-logo.png"
+            src="@/assets/humeone-logo.png"
             alt="HumeOne Logo"
             @click.prevent="goHome()"
           />
@@ -207,5 +207,9 @@ export default {
 
 .p-autocomplete-panel {
   max-width: 100%;
+}
+
+.color-brand-red {
+  color: $brand-red;
 }
 </style>

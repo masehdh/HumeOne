@@ -116,7 +116,7 @@ const template = function (name, event) {
       <tr>
         <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">&nbsp;</td>
         <td class="container"
-          style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;">
+          style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 0; width: 580px;">
           <div class="content"
             style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
@@ -132,9 +132,9 @@ const template = function (name, event) {
                     style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                     <tr>
                       <td style="font-family: Montserrat, Helvetica; font-size: 14px; vertical-align: top;">
-                        <img src="cid:humeone-email-banner" alt="Humeone Email Banner" width="100%" height="auto"
-                          max-height="100px" max-width="100%" border="0"
-                          style="border:0; outline:none; text-decoration:none; margin-left: auto; margin-right: auto; display:block; margin-bottom: 20px;">
+                        <img src="cid:humeone-email-banner" alt="Humeone Email Banner" height="auto"
+                          max-height="60px" max-width="100%" width="220" border="0"
+                          style="border:0; outline:none; text-decoration:none; display:block; margin-bottom: 14px;">
                         <h3
                           style="font-family: Montserrat, Helvetica; text-transform: uppercase;font-size: 14px; font-weight: 700;color: rgb(230, 126, 115); margin: 0; Margin-bottom: 4px;">
                           Registration Confirmation:</h3>
@@ -144,9 +144,10 @@ const template = function (name, event) {
 
                         <p
                           style="font-family: Montserrat, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">
-                          Hi ${name.charAt(0).toUpperCase()}${name.slice(1)}, thank you for registering for this event! We
-                          look forward to seeing you ${event.dateTime} at
-                          ${event.location}</p>
+                          Hi ${name.charAt(0).toUpperCase()}${name.slice(1)}</p>
+                        <p
+                          style="font-family: Montserrat, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">
+                          Thank you for registering for this event! We look forward to seeing you ${event.dateTime} at ${event.location}.</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary"
                           style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>

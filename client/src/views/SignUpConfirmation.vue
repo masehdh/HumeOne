@@ -8,7 +8,7 @@
         like to unsubscribe, please let us know at
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
-      <div class="home-btn mt-3" @click="goHome()">
+      <div class="home-btn mt-3 no-underline" @click="goHome()">
         Back to Home
       </div>
     </div>

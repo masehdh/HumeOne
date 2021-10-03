@@ -4,7 +4,7 @@
     <div class="container home-page">
       <img
         class="hero-image fadein animation-duration-1000"
-        src="../../../resources/home-page-squad.png"
+        src="@/assets/home-page-squad.png"
       />
 
       <div class="tagline mx-3 md:mx-4 fadein animation-duration-1000">
@@ -55,7 +55,7 @@
       <div class="row mx-3 md:mx-4">
         <div class="horizontal-row-item">
           <div class="timeline-image">
-            <img src="../../public/sign-up-illustration.png" alt="sign up" />
+            <img src="@/assets/sign-up-illustration.png" alt="sign up" />
           </div>
 
           <div class="timeline">
@@ -101,7 +101,7 @@
         <div class="horizontal-row-item">
           <div class="timeline-image">
             <img
-              src="../../public/event-planning-illustration.png"
+              src="@/assets/event-planning-illustration.png"
               alt="planning events"
             />
           </div>
@@ -151,7 +151,7 @@
         <div class="horizontal-row-item">
           <div class="timeline-image">
             <img
-              src="../../public/invite-illustration.png"
+              src="@/assets/invite-illustration.png"
               alt="planning events"
             />
           </div>
@@ -201,7 +201,7 @@
         <div class="horizontal-row-item">
           <div class="timeline-image">
             <img
-              src="../../public/reservation-illustration.png"
+              src="@/assets/reservation-illustration.png"
               alt="planning events"
             />
           </div>
@@ -259,8 +259,13 @@
 
       <div class="mb-4 max-w-full">
         <div class="host-image">
+          <img src="@/assets/shareef-portrait.jpg" alt="Portrait of a host" />
+          <div class="img-overlay">&nbsp;</div>
+        </div>
+
+        <div class="host-image">
           <img
-            src="../../../resources/shareef-portrait.jpg"
+            src="@/assets/maseh-host-portrait.jpg"
             alt="Portrait of a host"
           />
           <div class="img-overlay">&nbsp;</div>
@@ -268,15 +273,7 @@
 
         <div class="host-image">
           <img
-            src="../../../resources/maseh-host-portrait.jpg"
-            alt="Portrait of a host"
-          />
-          <div class="img-overlay">&nbsp;</div>
-        </div>
-
-        <div class="host-image">
-          <img
-            src="../../../resources/anika-host-portrait.jpg"
+            src="@/assets/anika-host-portrait.jpg"
             alt="Portrait of a host"
           />
           <div class="img-overlay">&nbsp;</div>
@@ -292,7 +289,10 @@
         contact us!
       </p>
 
-      <div class="contact-button mx-3 md:mx-4" @click="showContactForm">
+      <div
+        class="contact-button mx-3 md:mx-4 no-underline"
+        @click="showContactForm"
+      >
         CONTACT US
       </div>
     </div>
@@ -384,7 +384,7 @@
     <Button
       type="submit"
       label="Submit"
-      class="p-button-md p-button-primary submit-button"
+      class="p-button-md p-button-primary submit-button no-underline"
       @click="submitContactForm"
     />
   </Dialog>
@@ -534,7 +534,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url("../../public/blob.svg");
+    background-image: url("../assets/blob.svg");
     background-attachment: scroll;
     background-repeat: no-repeat;
     background-size: contain;

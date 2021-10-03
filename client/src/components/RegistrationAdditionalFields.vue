@@ -69,12 +69,12 @@
   <div class="mt-3">
     <Button
       label="Back"
-      class="p-button-md p-button-primary submit-button mr-1 mt-0"
+      class="p-button-md p-button-primary submit-button mr-1 mt-0 no-underline"
       @click="$emit('back')"
     />
     <Button
       label="Submit"
-      class="p-button-md p-button-primary submit-button mt-0"
+      class="p-button-md p-button-primary submit-button mt-0 no-underline"
       @click="$emit('submit-sign-up')"
     />
     <div

@@ -175,6 +175,7 @@
 
       <small
         id="reset-filter"
+        class="no-underline"
         v-if="tagFilter.length > 0"
         @click="tagFilter = ''"
         >Reset filter</small
@@ -195,7 +196,7 @@
 
       <Button
         label="Show More"
-        class="p-button-text my-1 block"
+        class="p-button-text my-1 block no-underline"
         @click="incrementTags"
         icon="pi pi-plus"
         iconPos="left"
@@ -214,7 +215,7 @@
   <div class="mt-2">
     <Button
       label="Submit"
-      class="p-button-md p-button-primary submit-button"
+      class="p-button-md p-button-primary submit-button no-underline"
       @click="submitPreferences"
     />
   </div>

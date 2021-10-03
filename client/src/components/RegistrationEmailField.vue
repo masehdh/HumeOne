@@ -50,7 +50,7 @@
   <div>
     <Button
       label="Next"
-      class="p-button-md p-button-primary submit-button"
+      class="p-button-md p-button-primary submit-button no-underline"
       @click="$emit('submit-registration')"
     />
   </div>

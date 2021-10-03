@@ -7,7 +7,7 @@
           If you have any questions, you can reach us at
           <a href="mailto:team@humeone.com">team@humeone.com</a>
         </h2>
-        <div class="home-btn mt-5" @click="goHome()">
+        <div class="home-btn mt-5 no-underline" @click="goHome()">
           Back to Home
         </div>
       </div>

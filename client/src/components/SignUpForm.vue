@@ -131,7 +131,7 @@
         <div class="mt-2">
           <Button
             label="Submit"
-            class="p-button-md p-button-primary submit-button"
+            class="p-button-md p-button-primary submit-button no-underline"
             @click="submitSignUp"
           />
         </div>
@@ -252,7 +252,7 @@ export default {
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.2)
     ),
-    url("../../../resources/friends-walking.jpg");
+    url("../assets/friends-walking.jpg");
   background-size: cover;
   background-position: center center;
   border-radius: 0px 8px 8px 0px;
