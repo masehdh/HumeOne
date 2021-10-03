@@ -249,7 +249,7 @@ export default {
       serverResponses: [],
       availability: [],
       interests: [],
-      maxTravelDistance: 50,
+      maxTravelDistance: 25,
       interestOptions: interestCategories.map(interest => {
         return { interest: interest };
       }),

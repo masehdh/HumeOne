@@ -77,11 +77,20 @@ router.put("/preferences", async (req, res) => {
   if (!emailExists) {
     return res.status(400).json({ message: "This email is not signed up" });
   }
-
+  console.log(req.body.preferences)
   try {
     const updatedAttendee = await Attendee.findOneAndUpdate(
       { email: req.body.email },
-      req.body.preferences
+      {
+        gender: req.body.preferences.gender,
+        birthYear: req.body.preferences.birthYear,
+        selectedEventTags: req.body.preferences.selectedEventTags,
+        preferences: {
+          interests: req.body.preferences.interests,
+          maxTravelDistance: req.body.preferences.maxTravelDistance,
+          availability: req.body.preferences.availability
+        }
+      }
     );
     res.status(201).json({
       code: 201,
