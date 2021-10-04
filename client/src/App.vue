@@ -52,6 +52,7 @@ export default {
   justify-content: center;
   max-height: 60px;
   #humeone-logo__img {
+    object-fit: contain;
     transition: all 0.5s ease;
     &:hover {
       cursor: pointer;
