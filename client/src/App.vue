@@ -2,9 +2,10 @@
   <div class="section off-white-bg">
     <div class="container">
       <div id="nav" class="mx-3">
-        <div id="header-logo">
+        <div class="flex justify-content-center max-w-full">
           <img
-            id="humeone-logo"
+            id="humeone-logo__img"
+            class="max-w-full"
             src="@/assets/humeone-logo.png"
             alt="HumeOne Logo"
             @click.prevent="goHome()"
@@ -50,20 +51,11 @@ export default {
   display: flex;
   justify-content: center;
   max-height: 60px;
-
-  #header-logo {
-    max-height: 100%;
-    max-width: 100%;
-    display: flex;
-    justify-content: center;
-
-    #humeone-logo {
-      max-height: 100%;
-      transition: all 0.5s ease;
-      &:hover {
-        cursor: pointer;
-        transform: scale(0.95);
-      }
+  #humeone-logo__img {
+    transition: all 0.5s ease;
+    &:hover {
+      cursor: pointer;
+      transform: scale(0.95);
     }
   }
 }
