@@ -1,0 +1,50 @@
+[
+  {
+    "hostImage": "maseh-host-portrait.jpg",
+    "hostName": "Maseh",
+    "image": "past-event-1.jpg",
+    "name": "Desserts and Deep Talks",
+    "description": "Your kind of people are a lot closer to home than you might think. Come for the dessert, stay for the deep talks!",
+    "location": "Cream n Sugar Cafe",
+    "area": "Richmond Hill",
+    "dateTime": "Friday October 8 at 6:30 PM",
+    "maxSpots": "7",
+    "reservationFee": "0.00"
+  },
+  {
+    "hostImage": "maseh-host-portrait.jpg",
+    "hostName": "Maseh",
+    "image": "past-event-2.jpg",
+    "name": "Bonfire and S'mores",
+    "description": "Summer is almost over! Don't miss out on fireside chats that will warm your soul in one of Toronto's hidden gems. We have vegan marshmallows!",
+    "location": "Earl Bales Park",
+    "area": "North York",
+    "dateTime": "Tuesday September 8 at 7:00 PM",
+    "maxSpots": "10",
+    "reservationFee": "5.00"
+  },
+  {
+    "hostImage": "maseh-host-portrait.jpg",
+    "hostName": "Maseh",
+    "image": "past-event-3.jpg",
+    "name": "Board Game Night",
+    "description": "You're invited to a board game night at Snakes and Lattes! What better way to make friends for a good time, not a long time than a competitive game of UNO? Board game aficionados and noobs welcome!",
+    "location": "Snakes and Lattes",
+    "area": "Toronto",
+    "dateTime": "Friday September 10 at 7:00 PM",
+    "maxSpots": "9",
+    "reservationFee": "15.00"
+  },
+  {
+    "hostImage": "maseh-host-portrait.jpg",
+    "hostName": "Maseh",
+    "image": "past-event-4.jpg",
+    "name": "Meet and Eat",
+    "description": "If the smell of freshly baked Afghan naan and juicy kabob has you salivating, this is the event for you! A great opportunity to enjoy Middle Eastern cuisine and make lasting connections.",
+    "location": "Bamiyan Kabob",
+    "area": "North York",
+    "dateTime": "Sunday August 1 at 7:00 PM",
+    "maxSpots": "7",
+    "reservationFee": "5.00"
+  }
+]

@@ -118,7 +118,9 @@
         <div class="form-control mt-5">
           <div class="field-checkbox mb-0">
             <Checkbox v-model="over18" id="over-18" :binary="true" />
-            <label for="over-18">I am 18 years old or over</label>
+            <label for="over-18" class="primary-font-color"
+              >I am 18 years old or over</label
+            >
           </div>
           <div
             v-for="(message, index) of validationMessages['over18']"
@@ -255,7 +257,7 @@ export default {
     url("../assets/friends-walking.jpg");
   background-size: cover;
   background-position: center center;
-  border-radius: 0px 8px 8px 0px;
+  border-radius: 0px 4px 4px 0px;
   box-shadow: -4px 0px 16px rgba(0, 0, 0, 0.2);
 }
 </style>

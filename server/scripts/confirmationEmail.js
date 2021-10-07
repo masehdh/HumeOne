@@ -144,10 +144,10 @@ const template = function (name, event) {
 
                         <p
                           style="font-family: Montserrat, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">
-                          Hi ${name.charAt(0).toUpperCase()}${name.slice(1)}</p>
+                          Hi ${name.charAt(0).toUpperCase()}${name.slice(1)},</p>
                         <p
                           style="font-family: Montserrat, Helvetica; font-size: 16px; font-weight: normal; color: #333333; margin: 0; Margin-bottom: 16px;">
-                          Thank you for registering for this event! We look forward to seeing you ${event.dateTime} at ${event.location}.</p>
+                          Thank you for registering for this event! We look forward to seeing you <span style="font-weight: 600;"> ${event.dateTime}</span> at <span style="font-weight: 600;">${event.location}.</span></p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary"
                           style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>

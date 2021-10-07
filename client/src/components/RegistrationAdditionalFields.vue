@@ -56,7 +56,9 @@
         :binary="true"
         @change="sendAdditionalInfo()"
       />
-      <label for="over-18">I am 18 years old or over</label>
+      <label for="over-18" class="primary-font-color">
+        I am 18 years old or over
+      </label>
     </div>
     <div
       v-for="(message, index) of validationMessagesProp['over18']"

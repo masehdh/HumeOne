@@ -34,7 +34,10 @@
         :binary="true"
         @change="sendEmail()"
       />
-      <label for="vaccine-certification" class="line-height-3">
+      <label
+        for="vaccine-certification"
+        class="primary-font-color line-height-3"
+      >
         I confirm that I am fully vaccinated (this information will not be
         stored)
       </label>

@@ -1,5 +1,5 @@
 <template>
-  <div class="section form-section">
+  <section class="section form-section">
     <form class="max-w-full" action="#" @submit.prevent="">
       <keep-alive>
         <component
@@ -10,7 +10,7 @@
         ></component>
       </keep-alive>
     </form>
-  </div>
+  </section>
 </template>
 
 <script>
