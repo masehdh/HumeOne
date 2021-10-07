@@ -73,7 +73,7 @@ const router = createRouter({
       return {
         el: to.hash,
       }
-    } else return { top: 0 };
+    } else return { top: -1 };
   },
 });
 
