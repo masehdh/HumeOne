@@ -338,7 +338,11 @@
       class="container flex flex-column justify-content-center
       align-items-center text-center px-3"
     >
-      <h2 id="past-events" class="primary-font-color text-4xl mt-4">
+      <h2
+        id="past-events"
+        name="past-events"
+        class="primary-font-color text-4xl mt-4"
+      >
         Check out some of our past events...
       </h2>
 
@@ -364,7 +368,7 @@
       </div>
 
       <p class="text-lg mt-3 md:mt-5 text-base">
-        Don't want to miss out? Sign up today to let us know what events you
+        Don't want to miss out? Sign up today and let us know what events you
         want in your area.
       </p>
 
