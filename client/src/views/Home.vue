@@ -335,14 +335,12 @@
 
   <section class="section violet-bg pt-6">
     <div
+      id="past-events"
+      name="past-events"
       class="container flex flex-column justify-content-center
       align-items-center text-center px-3"
     >
-      <h2
-        id="past-events"
-        name="past-events"
-        class="primary-font-color text-4xl mt-4"
-      >
+      <h2 class="primary-font-color text-4xl mt-4">
         Check out some of our past events...
       </h2>
 
