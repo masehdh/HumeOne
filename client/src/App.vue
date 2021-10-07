@@ -1,5 +1,5 @@
 <template>
-  <div class="section off-white-bg">
+  <section class="section off-white-bg">
     <div class="container">
       <div id="nav" class="mx-3">
         <div class="flex justify-content-center max-w-full">
@@ -8,12 +8,12 @@
             class="max-w-full"
             src="@/assets/humeone-logo.png"
             alt="HumeOne Logo"
-            @click.prevent="goHome()"
+            @click.prevent="routeToHome()"
           />
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <router-view />
 </template>
@@ -22,7 +22,7 @@
 export default {
   name: "Home",
   methods: {
-    goHome() {
+    routeToHome() {
       return this.$router.push({ name: "Home" });
     }
   }
@@ -39,12 +39,57 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $primary-font-color;
+}
+
+.color-accent-red {
+  color: $accent-red;
+}
+
 .off-white-bg {
   background-color: $off-white;
 }
 
 .violet-bg {
   background-color: $violet;
+}
+
+.primary-font-color {
+  color: $primary-font-color;
+}
+
+.accent-divider {
+  background: linear-gradient(
+    90deg,
+    rgba(230, 92, 138, 0.9) 0%,
+    rgba(255, 204, 102, 0.9) 100%
+  );
+  height: 2.5px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &:last-child {
+    padding-bottom: 100px;
+  }
+
+  .container {
+    width: 1140px;
+    max-width: 100%;
+  }
 }
 
 #nav {
@@ -61,21 +106,58 @@ export default {
   }
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .container {
-    width: 1140px;
-    max-width: 100%;
-  }
-}
-
 .validation-message {
   padding-top: 4px;
   font-size: 14px;
   color: rgb(255, 62, 62);
+}
+
+.border-pill {
+  border-radius: 100px;
+}
+
+.cta-button {
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px 20px;
+  width: fit-content;
+  background: rgb(255, 124, 172);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 124, 172, 1) 0%,
+    rgba(255, 245, 108, 1) 100%
+  );
+  max-width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
+  color: #444444;
+  transition: all 0.3s ease-out;
+  &:hover {
+    box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
+    transform: scale(1.04);
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:before {
+    border-radius: inherit;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 245, 108, 1) 0%,
+      rgba(255, 124, 172, 1) 100%
+    );
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.45s ease;
+  }
 }
 
 .form-section {
@@ -89,9 +171,8 @@ export default {
 
   .form-card {
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.1);
-    color: $primary-font-color;
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
@@ -100,7 +181,7 @@ export default {
       font-size: 16px;
       text-transform: uppercase;
       font-weight: 500;
-      color: $brand-red;
+      color: $accent-red;
     }
 
     .form-title {
@@ -121,6 +202,7 @@ export default {
       }
       font-size: 16px;
       line-height: 1.5;
+
       .event-detail-title {
         font-weight: 500;
       }
@@ -129,9 +211,11 @@ export default {
     .form-control {
       margin-top: 20px;
       max-width: 100%;
+
       .p-inputtext {
         max-width: 100%;
       }
+
       .p-inputtextarea {
         max-width: 100%;
       }
@@ -144,13 +228,13 @@ export default {
 
     #event-image {
       padding: 200px 0;
-      border-radius: 8px 8px 0px 0px;
+      border-radius: 4px 4px 0px 0px;
       box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 32px;
       background-attachment: scroll;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center bottom;
+
       @media (max-width: $mobile-breakpoint) {
         padding: 125px 0;
       }
@@ -202,7 +286,24 @@ export default {
   max-width: 100%;
 }
 
-.color-brand-red {
-  color: $brand-red;
+.p-scrolltop.p-link {
+  background: $accent-red !important;
+}
+
+.p-dialog-header {
+  color: $primary-font-color !important;
+}
+
+#event-modal {
+  box-shadow: none !important;
+
+  .p-dialog-header {
+    padding: 0 !important;
+    background-color: transparent !important;
+
+    .p-dialog-header-close-icon {
+      color: rgb(255, 255, 255, 0.7);
+    }
+  }
 }
 </style>

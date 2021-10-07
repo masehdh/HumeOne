@@ -1,5 +1,5 @@
 <template>
-  <div class="section form-section">
+  <section class="section form-section">
     <div class="container form-card pb-3 md:pb-4">
       <div
         id="event-image"
@@ -10,11 +10,9 @@
             require(`@/assets/${eventDetails.image}`) +
             ')'
         }"
-      >
-        &nbsp;
-      </div>
+      ></div>
 
-      <h1 class="form-header mx-3 md:mx-4">Event Registration</h1>
+      <h1 class="form-header mx-3 md:mx-4 mt-4">Event Registration</h1>
 
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
 
@@ -29,7 +27,8 @@
         </p>
 
         <p class="max-spots mr-3 mt-2 font-medium" v-if="eventDetails.dateTime">
-          <i class="pi pi-clock mr-2"></i>{{ eventDetails.dateTime }}
+          <i class="pi pi-clock mr-2"></i>{{ eventDetails.dateTime }} -
+          {{ eventDetails.endTime }}
         </p>
 
         <p
@@ -46,14 +45,30 @@
       </div>
 
       <div
-        class="register-btn mt-3 md:mx-4 no-underline"
+        class="register-button cta-button border-round mt-3 md:mx-4"
         @click="scrollToBottom()"
+        v-if="!hideRegistration"
       >
         REGISTER
       </div>
     </div>
 
-    <div class="container form-card px-3 py-3 md:px-4 md:py-4">
+    <div
+      class="container form-card px-3 py-3 md:px-4 md:py-4"
+      v-if="hideRegistration"
+    >
+      <h3 class="form-section-title">Event Registration Closed</h3>
+
+      <p class="mt-3 line-height-3">
+        Unfortunately, reservation for this event has closed. The reservation
+        deadline has passed or all the spots have been reserved. We apologize
+        for the inconvenience, and hope to see you at our next event! If you
+        have any questions, feel free to contact us at
+        <a href="mailto:team@humeone.com">team@humeone.com</a>.
+      </p>
+    </div>
+
+    <div class="container form-card px-3 py-3 md:px-4">
       <div class="host-info">
         <div>
           <img
@@ -63,26 +78,35 @@
           />
         </div>
 
-        <div class="host-contact-details font-medium">
+        <div class="host-contact-details font-medium ml-2">
           <p>
-            <i class="pi pi-user"></i>Hosted by
-            <span class="color-brand-red">{{ eventDetails.hostName }}</span>
+            Hosted by
+            <span class="font-semibold">{{ eventDetails.hostName }}</span>
           </p>
 
-          <span class="mx-3 hidden md:inline">|</span>
+          <span
+            class="primary-font-color mx-3 hidden md:inline"
+            v-if="eventDetails.hostEmail"
+            >|</span
+          >
+
+          <a
+            class="primary-font-color"
+            :href="'mailto:' + eventDetails.hostEmail"
+            ><i class="pi pi-envelope"></i>{{ eventDetails.hostEmail }}</a
+          >
+
+          <span
+            class="primary-font-color mx-3 hidden md:inline"
+            v-if="eventDetails.hostNumber"
+            >|</span
+          >
 
           <a
             v-if="eventDetails.hostNumber"
             :href="'tel:' + eventDetails.hostNumber"
+            class="primary-font-color"
             ><i class="pi pi-phone"></i>{{ eventDetails.hostNumber }}</a
-          >
-
-          <span class="mx-3 hidden md:inline" v-if="eventDetails.hostNumber"
-            >|</span
-          >
-
-          <a :href="'mailto:' + eventDetails.hostEmail"
-            ><i class="pi pi-envelope"></i>{{ eventDetails.hostEmail }}</a
           >
         </div>
       </div>
@@ -97,37 +121,8 @@
       <p class="event-detail-item">
         {{ eventDetails.description }}
       </p>
-    </div>
 
-    <div class="container form-card" v-if="eventDetails.map">
-      <iframe
-        width="100%"
-        height="200"
-        style="border:0"
-        loading="lazy"
-        allowfullscreen
-        :src="mapsURL"
-      >
-      </iframe>
-      <h3 class="form-section-title mt-4 mx-3 md:mx-4">Event Location</h3>
-
-      <p
-        class="event-detail-item mx-3 mb-3 md:mx-4 md:mb-4"
-        v-if="eventDetails.map"
-      >
-        {{ eventDetails.map }}
-      </p>
-    </div>
-    <div class="container form-card">
-      <div
-        class="flex flex-row justify-content-between align-items-center cursor-pointer px-3 py-3 md:px-4 md:py-4 no-underline"
-        @click="showDetails = !showDetails"
-      >
-        <h3 class="form-section-title select-none">Event Details</h3>
-        <i class="pi pi-chevron-right text-2xl" v-if="!showDetails"></i>
-        <i class="pi pi-chevron-down text-2xl" v-else></i>
-      </div>
-      <div v-show="showDetails" class="px-3 pb-3 md:px-4 md:pb-4">
+      <div v-show="showDetails" class="mt-3">
         <p class="event-detail-item" v-if="eventDetails.paymentDeadline">
           <span class="event-detail-title">Reservation deadline:</span>
           Before {{ eventDetails.paymentDeadline }}
@@ -153,6 +148,31 @@
           {{ eventDetails.cancellation }}
         </p>
       </div>
+
+      <small class="toggle-details mt-2" @click="showDetails = !showDetails">
+        {{ showDetails ? "Hide" : "Show" }} details
+      </small>
+    </div>
+
+    <div class="container form-card" v-if="eventDetails.map">
+      <iframe
+        width="100%"
+        height="200"
+        style="border:0; border-radius: 4px 4px 0 0;"
+        loading="lazy"
+        allowfullscreen
+        :src="mapsURL"
+      >
+      </iframe>
+
+      <h3 class="form-section-title mt-4 mx-3 md:mx-4">Event Location</h3>
+
+      <p
+        class="event-detail-item mx-3 mb-3 md:mx-4 md:mb-4"
+        v-if="eventDetails.map"
+      >
+        {{ eventDetails.map }}
+      </p>
     </div>
 
     <div
@@ -219,6 +239,7 @@
         <h3 class="form-section-title">Register for this event</h3>
         <keep-alive>
           <component
+            id="register"
             :is="currentComponent"
             :validationMessagesProp="validationMessages"
             :vaccineRequiredProp="eventDetails.vaccineRequired"
@@ -232,22 +253,7 @@
         </keep-alive>
       </div>
     </form>
-
-    <div
-      class="container form-card px-3 py-3 md:px-4 md:py-4"
-      v-if="hideRegistration"
-    >
-      <h3 class="form-section-title">Event Registration Closed</h3>
-
-      <p class="mt-3 line-height-3">
-        Unfortunately, reservation for this event has closed. The reservation
-        deadline has passed or all the spots have been reserved. We apologize
-        for the inconvenience, and hope to see you at our next event! If you
-        have any questions, feel free to contact us at
-        <a href="mailto:team@humeone.com">team@humeone.com</a>.
-      </p>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -332,8 +338,8 @@ export default {
       return (this.displayAllAttendees = true);
     },
     scrollToBottom() {
-      window.scrollTo(0, document.body.scrollHeight);
       this.$refs.registrationForm.focusEmail();
+      window.scrollTo(0, document.body.scrollHeight);
     },
     setEmail(payload) {
       this.email = payload.email;
@@ -497,7 +503,14 @@ i.pi {
     border-radius: 50%;
     width: 60px;
     height: auto;
+    padding: 2px;
     max-width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(230, 92, 138, 0.9) 0%,
+      rgba(255, 204, 102, 0.9) 100%
+    );
+
     @media (max-width: $mobile-breakpoint) {
       width: 80px;
     }
@@ -506,7 +519,6 @@ i.pi {
   .host-contact-details {
     display: flex;
     flex-direction: row;
-    margin-left: 16px;
     font-size: 14px;
     @media (max-width: $mobile-breakpoint) {
       margin-top: 16px;
@@ -517,7 +529,6 @@ i.pi {
 
     a {
       text-decoration: none;
-      color: $primary-font-color;
       display: flex;
       align-items: center;
       &:hover {
@@ -538,53 +549,17 @@ i.pi {
   word-wrap: break-word;
 }
 
-.register-btn {
-  padding: 8px 16px;
-  width: fit-content;
-  border-radius: 4px;
-  background: rgb(255, 124, 172);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 124, 172, 1) 0%,
-    rgba(255, 245, 108, 1) 100%
-  );
-  max-width: 100%;
-  text-align: center;
-  font-weight: 500;
-  font-size: 16px;
-  box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
-  color: #444444;
-  transition: all 0.3s ease-out;
-  &:hover {
-    box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
-    cursor: pointer;
-    transform: scale(1);
-    &:before {
-      opacity: 1;
-    }
-  }
-
+.register-button {
   @media (max-width: $mobile-breakpoint) {
     margin-left: auto;
     margin-right: auto;
   }
+}
 
-  &:before {
-    border-radius: inherit;
-    background-image: linear-gradient(
-      90deg,
-      rgba(255, 245, 108, 1) 0%,
-      rgba(255, 124, 172, 1) 100%
-    );
-    content: "";
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.45s ease;
+.toggle-details {
+  color: rgba(63, 81, 181, 0.92);
+  &:hover {
+    cursor: pointer;
   }
 }
 </style>

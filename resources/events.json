@@ -1,7 +1,7 @@
 [
   {
     "hostImage": "maseh-host-portrait.jpg",
-    "hostName": "Maseh Hadaf",
+    "hostName": "Maseh",
     "hostNumber": "",
     "hostEmail": "maseh@humeone.com",
     "id": "0",
@@ -12,6 +12,7 @@
     "name": "Desserts and Deep Talks",
     "description": "Your kind of people are a lot closer to home than you might think. Come for the dessert, stay for the deep talks!",
     "dateTime": "Friday October 8 at 6:30 PM",
+    "endTime": "8:30 PM",
     "location": "Cream n Sugar Cafe",
     "map": "Cream n Sugar Cafe, 8910 Yonge St, Richmond Hill, ON L4C 0L7",
     "whatToBring": "Make sure you have your vaccine passport and photo ID on hand.",

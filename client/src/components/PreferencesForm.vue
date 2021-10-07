@@ -11,7 +11,7 @@
       </p>
     </div>
 
-    <!-- age Field -->
+    <!-- Age Field -->
     <div class="form-control md:mr-3">
       <span class="p-float-label">
         <InputMask
@@ -311,8 +311,9 @@ export default {
       );
     },
     birthYear() {
-      const val = new Date().getFullYear() - Number(this.age);
-      if (Number(this.age)) return val;
+      const age = Number(this.age);
+      const val = new Date().getFullYear() - age;
+      if (typeof age === "number") return val;
       return undefined;
     },
     preferencesPayload() {
