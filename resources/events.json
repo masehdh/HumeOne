@@ -23,5 +23,30 @@
     "paymentDeadline": "Friday October 8, 2021",
     "maxSpots": "7",
     "vaccineRequired": true
+  },
+  {
+    "hostImage": "anika-host-portrait.jpg",
+    "hostName": "Anika",
+    "hostNumber": "",
+    "hostEmail": "anikanika54321@gmail.com",
+    "id": "prod_KNSugQhmFSBcKR",
+    "priceId": "price_1JihyRGvJIobDPYaKLxBLlNi",
+    "testId": "",
+    "testPriceId": "",
+    "image": "escape-room-event-image.jpg",
+    "name": "Escape rooms are back!",
+    "description": "Immerse yourself in another world and test your escape room skills, then grab some hot/cold beverages at a nearby Tim Hortons, all with a group of new friends. What more can one ask of a Sunday afternoon? Please keep in mind that booking is subject to reaching a minimum number of six registered individuals. A $40.00 payment by Wednesday October 13 will reserve your spot, fully refundable should the event be cancelled.",
+    "dateTime": "Sunday October 17 at 2:00 PM",
+    "endTime": "5:00 PM",
+    "location": "Escape From The 6",
+    "map": "Escape from the 6, 3600A Laird Rd unit 3, Mississauga, ON L5L 6A6, Canada",
+    "whatToBring": "Bring your vaccine document, ID, and an openness to connect :)",
+    "whenYouArrive": "Look for the girl with purple/blue nails, blonde hair and bangs.",
+    "additionalDetails": "Free parking available!",
+    "cancellation": "If you need to cancel, please let us know at team@humeone.com. If the event is cancelled for any reason, you will be notified at least 24 hours in advance and fully refunded.",
+    "reservationFee": "40.00",
+    "paymentDeadline": "Wednesday October 13, 2021",
+    "maxSpots": "9",
+    "vaccineRequired": true
   }
 ]
