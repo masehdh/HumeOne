@@ -718,6 +718,12 @@ export default {
     }
   }
 
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+  }
+
   .img-overlay {
     position: absolute;
     bottom: 0;
@@ -725,6 +731,7 @@ export default {
     right: 0;
     top: 0;
     background-color: black;
+    border-radius: 100%;
     opacity: 0.12;
     transition: all 0.3s ease;
     &:hover {
@@ -770,6 +777,7 @@ export default {
 
 .host-image {
   border-radius: 50%;
+  object-fit: contain;
   width: 45px;
   height: auto;
   max-width: 100%;
