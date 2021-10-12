@@ -11,7 +11,7 @@
 
       <div class="fadein animation-duration-1000 mt-6">
         <h1 class="text-4xl">
-          Make new friends, grow your circle
+          Find your people, grow your circle
         </h1>
       </div>
 
