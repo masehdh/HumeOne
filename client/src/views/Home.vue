@@ -315,7 +315,6 @@
         questions or would like to become a Host, click the button below to
         contact us!
       </p>
-
       <div
         class="cta-button border-pill mx-3 mt-4 md:mx-4"
         @click="showContactForm"
@@ -333,7 +332,7 @@
     />
   </section>
 
-  <section class="section violet-bg pt-6">
+  <section class="section violet-bg pt-6 pb-6">
     <div
       id="past-events"
       name="past-events"
@@ -375,6 +374,21 @@
       </div>
     </div>
   </section>
+
+  <div
+    class="flex flex-row justify-content-center py-3"
+    style="background-color: hsl(240, 45%, 92%)"
+  >
+    <a href="https://www.facebook.com/HumeOne" target="_blank" class="mr-4">
+      <font-awesome-icon :icon="['fab', 'facebook-square']" />
+    </a>
+    <a href="https://www.instagram.com/hume_one/" target="_blank" class="mr-4">
+      <font-awesome-icon :icon="['fab', 'instagram-square']" />
+    </a>
+    <a href="https://www.linkedin.com/company/humeone" target="_blank">
+      <font-awesome-icon :icon="['fab', 'linkedin']" />
+    </a>
+  </div>
 
   <Dialog
     v-model:visible="displayEventModal"
@@ -787,5 +801,17 @@ export default {
     rgba(230, 92, 138, 0.9) 0%,
     rgba(255, 204, 102, 0.9) 100%
   );
+}
+
+.svg-inline--fa {
+  color: $primary-font-color;
+  transition: all 0.2s;
+  font-size: 36px;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1.0;
+    cursor: pointer;
+    transform: scale(0.95);
+  }
 }
 </style>

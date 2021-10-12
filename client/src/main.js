@@ -3,6 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// FONT AWESOME
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
+import { faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
+library.add(faFacebookSquare, faLinkedin, faInstagramSquare, faEnvelopeSquare)
+
 // ANALYTICS
 import Hotjar from 'vue-hotjar'
 import VueGtag from "vue-gtag-next";
@@ -54,6 +64,7 @@ createApp(App)
     isProduction: process.env.VUE_APP_ANALYTICS ? true : false
   })
   .directive('tooltip', Tooltip)
+  .component('font-awesome-icon', FontAwesomeIcon)
   .component("InputText", InputText)
   .component("Textarea", Textarea)
   .component("Button", Button)
