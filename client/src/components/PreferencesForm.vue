@@ -311,7 +311,7 @@ export default {
       );
     },
     birthYear() {
-      const age = Number(this.age);
+      const age = this.age.length > 0 ? Number(this.age) : null;
       const val = new Date().getFullYear() - age;
       if (typeof age === "number") return val;
       return undefined;
