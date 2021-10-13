@@ -48,5 +48,30 @@
     "paymentDeadline": "Wednesday October 13, 2021",
     "maxSpots": "9",
     "vaccineRequired": true
+  },
+  {
+    "hostImage": "Olivia-host.jpg",
+    "hostName": "Olivia",
+    "hostNumber": "",
+    "hostEmail": "olivialassaline@gmail.com",
+    "id": "prod_KOwYtfPOAnEknw",
+    "priceId": "price_1Jk8fbGvJIobDPYaZF2CM3lT",
+    "testId": "",
+    "testPriceId": "",
+    "image": "paints-in-the-park.jpg",
+    "name": "Paints in the Park",
+    "description": "There's no better season to be in Ottawa than the Fall! The weather is just right and the colours are beautiful. Join us for Paints in the Park, and take home new connections and your own painting of stunning Major's Hill Park. No art skills (or supplies) required!",
+    "dateTime": "Sunday October 24 at 1:00 PM",
+    "endTime": "4:00 PM",
+    "location": "Major's Hill Park",
+    "map": "Major's Hill Park, Mackenzie Avenue, Ottawa, ON",
+    "whatToBring": "What I'll bring: Paints, canvases, paint brushes, limited amounts of picnic blankets, and some snacks! What you'll bring: Appropriate dress for the weather (i.e. a sweater, light jacket, or scarf if needed), a picnic blanket if you have one available, any 'fancy' supplies for your own use if you're a real artiste (i.e. canvas, specialty paints), any other snacks and drinks, and your imagination!",
+    "whenYouArrive": "I'll be set up with a plethora of picnic blankets for us to sit on! I'll wear a bright yellow sweater so you can spot me.",
+    "additionalDetails": "Parking around Major's Hill can be tricky. I recommend walking/bussing where possible! Parking in Byward and walking over is your best bet, if you do drive.",
+    "cancellation": "If you need to cancel, please let us know at team@humeone.com. If the event is cancelled for any reason, you will be notified at least 24 hours in advance and fully refunded.",
+    "reservationFee": "18.00",
+    "paymentDeadline": "Friday October 22, 2021",
+    "maxSpots": "12",
+    "vaccineRequired": false
   }
 ]
