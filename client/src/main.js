@@ -7,11 +7,13 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
+import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faFacebookSquare, faLinkedin, faInstagramSquare, faEnvelopeSquare)
+library.add(faFacebookSquare, faLinkedin, faInstagramSquare, faEnvelopeSquare, faTwitterSquare, faLink)
 
 // ANALYTICS
 import Hotjar from 'vue-hotjar'

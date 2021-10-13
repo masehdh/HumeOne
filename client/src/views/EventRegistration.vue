@@ -13,14 +13,13 @@
       ></div>
 
       <h1 class="form-header mx-3 md:mx-4 mt-4">Event Registration</h1>
-
       <h2 class="form-title mx-3 md:mx-4">{{ eventDetails.name }}</h2>
 
       <div
         class="event-info flex flex-column md:flex-row px-3 my-2 md:my-0 md:px-4"
       >
         <p class="max-spots mr-3 mt-2 font-medium">
-          <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} spots
+          <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} max spots
           <span class="spots-left" v-if="showSpotsLeft"
             >&#183; {{ spotsLeft }} spots left</span
           >
@@ -44,12 +43,47 @@
         </p>
       </div>
 
+      <!-- Social icons and register button -->
       <div
-        class="register-button cta-button border-round mt-3 md:mx-4"
-        @click="scrollToBottom()"
-        v-if="!hideRegistration"
+        class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
-        REGISTER
+        <div
+          class="register-button cta-button border-round mt-3 md:mx-4"
+          @click="scrollToBottom()"
+          v-if="!hideRegistration"
+        >
+          REGISTER
+        </div>
+
+        <div
+          class="flex flex-row align-items-center justify-content-center md:justify-content-start mx-3 mt-1 md:mx-4 md:mt-0"
+        >
+          <a @click="copyUrl()" class="relative mr-2">
+            <font-awesome-icon :icon="['fas', 'link']" class="copy-icon" />
+            <p
+              v-show="showCopyTip"
+              class="copy-tip text-sm select-none ml-1 py-1 px-1 absolute left-100 border-round z-1"
+              style="background-color: rgb(50,50,50); color: white;"
+            >
+              Copied!
+            </p>
+          </a>
+          <a :href="shareLink.facebook" target="_blank" class="mr-2">
+            <font-awesome-icon :icon="['fab', 'facebook-square']" />
+          </a>
+
+          <a
+            href="https://twitter.com/intent/tweet?"
+            target="_blank"
+            class="mr-2"
+          >
+            <font-awesome-icon :icon="['fab', 'twitter-square']" />
+          </a>
+
+          <a href="https://www.linkedin.com/company/humeone" target="_blank">
+            <font-awesome-icon :icon="['fab', 'linkedin']" />
+          </a>
+        </div>
       </div>
     </div>
 
@@ -285,7 +319,8 @@ export default {
       displayAllAttendees: false,
       validationMessages: {},
       currentComponent: "RegistrationEmailField",
-      showDetails: false
+      showDetails: false,
+      showCopyTip: false
     };
   },
   mounted() {
@@ -308,6 +343,13 @@ export default {
       );
   },
   computed: {
+    shareLink() {
+      return {
+        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}`,
+        twitter: ``,
+        linkedin: ``
+      };
+    },
     mapsURL() {
       return `https://www.google.com/maps/embed/v1/place?key=AIzaSyA5RqZZ9AOCln9QeeR2_Obd22-PGEXqpA0&q=${this.eventDetails.map}&maptype=satellite`;
     },
@@ -334,6 +376,13 @@ export default {
     }
   },
   methods: {
+    copyUrl() {
+      navigator.clipboard.writeText(window.location.href);
+      this.showCopyTip = true;
+      setTimeout(() => {
+        this.showCopyTip = false;
+      }, 1000);
+    },
     showAllAttendees() {
       return (this.displayAllAttendees = true);
     },
@@ -561,5 +610,33 @@ i.pi {
   &:hover {
     cursor: pointer;
   }
+}
+
+.svg-inline--fa {
+  color: $primary-font-color;
+  transition: all 0.2s;
+  font-size: 28px;
+  opacity: 0.5;
+
+  @media (max-width: $mobile-breakpoint) {
+    font-size: 20px;
+  }
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(0.95);
+  }
+}
+
+.copy-icon {
+  font-size: 24px;
+  @media (max-width: $mobile-breakpoint) {
+    font-size: 18px;
+  }
+}
+
+.copy-tip {
+  top: -2px;
 }
 </style>
