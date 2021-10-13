@@ -45,12 +45,12 @@
 
       <!-- Social icons and register button -->
       <div
+        v-if="!hideRegistration"
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
         <div
           class="register-button cta-button border-round mt-3 md:mx-4"
           @click="scrollToBottom()"
-          v-if="!hideRegistration"
         >
           REGISTER
         </div>
@@ -72,15 +72,11 @@
             <font-awesome-icon :icon="['fab', 'facebook-square']" />
           </a>
 
-          <a
-            href="https://twitter.com/intent/tweet?"
-            target="_blank"
-            class="mr-2"
-          >
+          <a :href="shareLink.twitter" target="_blank" class="mr-2">
             <font-awesome-icon :icon="['fab', 'twitter-square']" />
           </a>
 
-          <a href="https://www.linkedin.com/company/humeone" target="_blank">
+          <a :href="shareLink.linkedin" target="_blank">
             <font-awesome-icon :icon="['fab', 'linkedin']" />
           </a>
         </div>
@@ -345,9 +341,9 @@ export default {
   computed: {
     shareLink() {
       return {
-        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}`,
-        twitter: ``,
-        linkedin: ``
+        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}.&hashtag=#HumeOne`,
+        twitter: `https://twitter.com/intent/tweet?url=${window.location.href}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}.&hashtags=HumeOne,ThingsToDo,Events`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
       };
     },
     mapsURL() {
