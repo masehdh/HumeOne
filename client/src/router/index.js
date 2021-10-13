@@ -6,7 +6,7 @@ const routes = [
     name: "Home",
     component: () => import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
     meta: {
-      title: "Home",
+      title: "Find Your People",
     },
   },
   {
@@ -16,7 +16,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "sign-up" */ "@/views/SignUp.vue"),
     meta: {
-      title: "Sign Up",
+      title: "Sign Up For Free",
     },
   },
   {
@@ -39,7 +39,7 @@ const routes = [
         /* webpackChunkName: "event registration confirmation" */ "@/views/EventRegistrationConfirmation.vue"
       ),
     meta: {
-      title: "Event Registration Confirmation",
+      title: "Registration Confirmation",
     },
   },
   {
@@ -58,7 +58,7 @@ const routes = [
     name: "404",
     component: () => import(/* webpackChunkName: "404" */ "../views/404.vue"),
     meta: {
-      title: "404",
+      title: "Page Not Found",
       requiresAuth: false,
     },
   },
@@ -81,7 +81,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
   if (nearestWithTitle) {
-    document.title = nearestWithTitle.meta.title;
+    document.title = "HumeOne | " + nearestWithTitle.meta.title;
   }
   next()
 })
