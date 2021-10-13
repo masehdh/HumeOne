@@ -68,15 +68,29 @@
               Copied!
             </p>
           </a>
-          <a :href="shareLink.facebook" target="_blank" class="mr-2">
+          <a
+            :href="shareLink.facebook"
+            target="_blank"
+            @click.prevent="showShareWindow(shareLink.facebook)"
+            class="mr-2"
+          >
             <font-awesome-icon :icon="['fab', 'facebook-square']" />
           </a>
 
-          <a :href="shareLink.twitter" target="_blank" class="mr-2">
+          <a
+            :href="shareLink.twitter"
+            target="_blank"
+            @click.prevent="showShareWindow(shareLink.twitter)"
+            class="mr-2"
+          >
             <font-awesome-icon :icon="['fab', 'twitter-square']" />
           </a>
 
-          <a :href="shareLink.linkedin" target="_blank">
+          <a
+            :href="shareLink.linkedin"
+            @click.prevent="showShareWindow(shareLink.linkedin)"
+            target="_blank"
+          >
             <font-awesome-icon :icon="['fab', 'linkedin']" />
           </a>
         </div>
@@ -341,8 +355,8 @@ export default {
   computed: {
     shareLink() {
       return {
-        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}.&hashtag=#HumeOne`,
-        twitter: `https://twitter.com/intent/tweet?url=${window.location.href}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}.&hashtags=HumeOne,ThingsToDo,Events`,
+        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
+        twitter: `https://twitter.com/intent/tweet?url=${window.location.href}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
         linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
       };
     },
@@ -378,6 +392,19 @@ export default {
       setTimeout(() => {
         this.showCopyTip = false;
       }, 1000);
+    },
+    showShareWindow(value) {
+      let left = (screen.width - 570) / 2;
+      let top = (screen.height - 570) / 2;
+      let params =
+        "menubar=no,toolbar=no,status=no,width=570,height=570,top=" +
+        top +
+        ",left=" +
+        left;
+
+      const url = encodeURI(value);
+
+      window.open(url, "NewWindow", params);
     },
     showAllAttendees() {
       return (this.displayAllAttendees = true);
