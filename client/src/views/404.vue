@@ -10,9 +10,11 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>
       </h2>
 
-      <div class="cta-button mt-5 border-round" @click="routeToHome()">
-        Back to Home
-      </div>
+      <a href="/" @click.prevent="routeToHome()" class="no-underline mt-5">
+        <div class="cta-button border-round">
+          Back to Home
+        </div>
+      </a>
     </div>
   </section>
 </template>

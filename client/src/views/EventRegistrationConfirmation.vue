@@ -11,9 +11,11 @@
         to cancel, please email
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
-      <div class="cta-button border-round mt-3" @click="routeToHome()">
-        Back to Home
-      </div>
+      <a href="/" @click.prevent="routeToHome()" class="no-underline mt-3">
+        <div class="cta-button border-round">
+          Back to Home
+        </div>
+      </a>
     </div>
   </section>
 </template>

@@ -45,6 +45,9 @@ app.use("/api/contact-us", express.json(), contactUsRoute);
 const mapRoute = require("./routes/map");
 app.use("/api/map", express.json(), mapRoute);
 
+// ROUTE FOR ROBOTS.TXT (USED BY CRAWLERS)
+app.get("/robots", (req, res) => res.sendFile(`${__dirname}/robots.txt`));
+
 // ROUTE FOR SITEMAP
 app.get("/sitemap", (req, res) => res.sendFile(`${__dirname}/public/sitemap.xml`));
 

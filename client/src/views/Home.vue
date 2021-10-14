@@ -23,9 +23,15 @@
         </p>
       </div>
 
-      <div class="cta-button mt-4 border-pill" @click="routeToSignUp()">
-        SIGN UP FOR FREE
-      </div>
+      <a
+        href="/sign-up"
+        @click.prevent="routeToSignUp()"
+        class="no-underline mt-4"
+      >
+        <div class="cta-button border-pill">
+          SIGN UP FOR FREE
+        </div>
+      </a>
     </div>
   </section>
 
@@ -101,15 +107,20 @@
         </div>
 
         <div class=" vertical-row-item primary-font-color mx-3 md:mx-4">
-          <h3
-            class="text-xl mb-3 no-underline cursor-pointer"
-            @click="routeToSignUp()"
+          <a
+            href="/sign-up"
+            @click.prevent="routeToSignUp()"
+            class="no-underline mb-3"
           >
-            Sign Up For Free
-          </h3>
+            <h3 class="text-xl no-underline cursor-pointer">
+              Sign Up For Free
+            </h3>
+          </a>
+
           <p class="text-base line-height-3">
             Let us know what you are interested in.
           </p>
+
           <div class="vertical-spacer">&nbsp;</div>
         </div>
       </div>
@@ -369,9 +380,15 @@
         want in your area.
       </p>
 
-      <div class="cta-button mt-4 border-pill" @click="routeToSignUp()">
-        SIGN UP FOR FREE
-      </div>
+      <a
+        href="/sign-up"
+        @click.prevent="routeToSignUp()"
+        class="no-underline mt-4"
+      >
+        <div class="cta-button border-pill">
+          SIGN UP FOR FREE
+        </div>
+      </a>
     </div>
   </section>
 
@@ -809,7 +826,7 @@ export default {
   font-size: 36px;
   opacity: 0.5;
   &:hover {
-    opacity: 1.0;
+    opacity: 1;
     cursor: pointer;
     transform: scale(0.95);
   }
