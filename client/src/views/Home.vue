@@ -1,4 +1,11 @@
 <template>
+  <Head>
+    <meta
+      name="description"
+      content="HumeOne brings people together by organizing intimate social gatherings and events. Let us know what you're looking for to start receiving invites today!"
+    />
+  </Head>
+
   <ScrollTop />
   <section class="section off-white-bg">
     <div
@@ -6,6 +13,7 @@
     >
       <img
         class="hero-image h-auto max-w-full fadein animation-duration-1000"
+        alt="Background image of people hanging out"
         src="@/assets/home-page-squad.png"
       />
 
@@ -23,9 +31,15 @@
         </p>
       </div>
 
-      <div class="cta-button mt-4 border-pill" @click="routeToSignUp()">
-        SIGN UP FOR FREE
-      </div>
+      <a
+        href="/sign-up"
+        @click.prevent="routeToSignUp()"
+        class="no-underline mt-4"
+      >
+        <div class="cta-button border-pill">
+          SIGN UP FOR FREE
+        </div>
+      </a>
     </div>
   </section>
 
@@ -65,7 +79,7 @@
             <img
               src="@/assets/sign-up-illustration.png"
               class="max-w-full"
-              alt="sign up"
+              alt="A man next to a large phone"
             />
           </div>
 
@@ -101,15 +115,20 @@
         </div>
 
         <div class=" vertical-row-item primary-font-color mx-3 md:mx-4">
-          <h3
-            class="text-xl mb-3 no-underline cursor-pointer"
-            @click="routeToSignUp()"
+          <a
+            href="/sign-up"
+            @click.prevent="routeToSignUp()"
+            class="no-underline mb-3"
           >
-            Sign Up For Free
-          </h3>
+            <h3 class="text-xl no-underline cursor-pointer">
+              Sign Up For Free
+            </h3>
+          </a>
+
           <p class="text-base line-height-3">
             Let us know what you are interested in.
           </p>
+
           <div class="vertical-spacer">&nbsp;</div>
         </div>
       </div>
@@ -121,7 +140,7 @@
             <img
               src="@/assets/event-planning-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A woman next to a large calendar"
             />
           </div>
 
@@ -174,7 +193,7 @@
             <img
               src="@/assets/invite-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A man next to a large envelope"
             />
           </div>
 
@@ -225,7 +244,7 @@
             <img
               src="@/assets/reservation-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A phone in someones hand"
             />
           </div>
 
@@ -329,6 +348,7 @@
       id="home-illustration-divider"
       src="@/assets/home-illustration-divider.svg"
       class="w-full divider"
+      alt="A wavey page divider"
     />
   </section>
 
@@ -369,9 +389,15 @@
         want in your area.
       </p>
 
-      <div class="cta-button mt-4 border-pill" @click="routeToSignUp()">
-        SIGN UP FOR FREE
-      </div>
+      <a
+        href="/sign-up"
+        @click.prevent="routeToSignUp()"
+        class="no-underline mt-4"
+      >
+        <div class="cta-button border-pill">
+          SIGN UP FOR FREE
+        </div>
+      </a>
     </div>
   </section>
 
@@ -420,7 +446,7 @@
         >
           <img
             :src="require(`@/assets/${event.hostImage}`)"
-            alt="portrait of the event host"
+            alt="Portrait of the event host"
             class="host-image mr-2"
           />
 
@@ -809,7 +835,7 @@ export default {
   font-size: 36px;
   opacity: 0.5;
   &:hover {
-    opacity: 1.0;
+    opacity: 1;
     cursor: pointer;
     transform: scale(0.95);
   }

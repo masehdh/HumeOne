@@ -6,6 +6,7 @@ module.exports.routes = [
     meta: {
       title: "Find Your People",
       sitemap: {
+        lastmod: 'October 14, 2021',
         priority: 1.0,
       }
     },
@@ -19,6 +20,7 @@ module.exports.routes = [
     meta: {
       title: "Sign Up For Free",
       sitemap: {
+        lastmod: 'October 14, 2021',
         priority: 0.9,
       }
     },
@@ -45,7 +47,9 @@ module.exports.routes = [
     meta: {
       title: "Registration Confirmation",
       sitemap: {
+        lastmod: 'October 14, 2021',
         priority: 0.1,
+        ignoreRoute: true,
       }
     },
   },
@@ -59,7 +63,9 @@ module.exports.routes = [
     meta: {
       title: "Sign Up Confirmation",
       sitemap: {
+        lastmod: 'October 14, 2021',
         priority: 0.1,
+        ignoreRoute: true,
       }
     },
   },
@@ -70,7 +76,9 @@ module.exports.routes = [
     meta: {
       title: "Page Not Found",
       sitemap: {
+        lastmod: 'October 14, 2021',
         priority: 0.1,
+        ignoreRoute: true,
       }
     },
   },
