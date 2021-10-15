@@ -73,5 +73,30 @@
     "paymentDeadline": "Friday October 22, 2021",
     "maxSpots": "12",
     "vaccineRequired": false
+  },
+  {
+    "hostImage": "hike.jpg",
+    "hostName": "Maseh",
+    "hostNumber": "",
+    "hostEmail": "maseh@humeone.com",
+    "id": "prod_KPRfXUAysIbp0O",
+    "priceId": "price_1Jkcm1GvJIobDPYaNbjwIG9X",
+    "testId": "",
+    "testPriceId": "",
+    "image": "hike.jpg",
+    "name": "Autumn Hike",
+    "description": "Forget returning to the office, I'm about returning to the forest. If you gawk at colourful leaves and hidden mushrooms bring you joy, meet me under the canopy.",
+    "dateTime": "Saturday October 23 at 11:00 AM",
+    "endTime": "1:30 PM",
+    "location": "Rouge National Urban Park",
+    "map": "Vista Trail Trailhead, Rouge National Urban Park",
+    "whatToBring": "Active wear, some snacks, probably a sweater you can take off and plenty of water.",
+    "whenYouArrive": "We'll meet in the parking lot and head out on the Vista Trail to get the best views.",
+    "additionalDetails": "Parking is free! You can also reach the park by TTC and the GO train from Union Station. If people want to carpool, send me an email, and we'll try to coordinate.",
+    "cancellation": "If you need to cancel, please let us know at team@humeone.com. If the event is cancelled for any reason, you will be notified at least 24 hours in advance and fully refunded.",
+    "reservationFee": "5.00",
+    "paymentDeadline": "Friday October 22, 2021",
+    "maxSpots": "9",
+    "vaccineRequired": false
   }
 ]
