@@ -6,6 +6,7 @@
     >
       <img
         class="hero-image h-auto max-w-full fadein animation-duration-1000"
+        alt="Background image of people hanging out"
         src="@/assets/home-page-squad.png"
       />
 
@@ -71,7 +72,7 @@
             <img
               src="@/assets/sign-up-illustration.png"
               class="max-w-full"
-              alt="sign up"
+              alt="A man next to a large phone"
             />
           </div>
 
@@ -132,7 +133,7 @@
             <img
               src="@/assets/event-planning-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A woman next to a large calendar"
             />
           </div>
 
@@ -185,7 +186,7 @@
             <img
               src="@/assets/invite-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A man next to a large envelope"
             />
           </div>
 
@@ -236,7 +237,7 @@
             <img
               src="@/assets/reservation-illustration.png"
               class="max-w-full"
-              alt="planning events"
+              alt="A phone in someones hand"
             />
           </div>
 
@@ -340,6 +341,7 @@
       id="home-illustration-divider"
       src="@/assets/home-illustration-divider.svg"
       class="w-full divider"
+      alt="A wavey page divider"
     />
   </section>
 
@@ -437,7 +439,7 @@
         >
           <img
             :src="require(`@/assets/${event.hostImage}`)"
-            alt="portrait of the event host"
+            alt="Portrait of the event host"
             class="host-image mr-2"
           />
 

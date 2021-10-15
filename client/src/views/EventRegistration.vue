@@ -117,7 +117,7 @@
         <div>
           <img
             :src="require(`@/assets/${eventDetails.hostImage}`)"
-            alt="portrait of the event host"
+            alt="Portrait of the event host"
             class="host-image"
           />
         </div>
