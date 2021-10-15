@@ -1,4 +1,20 @@
 <template>
+  <Head>
+    <meta name="description" :content="eventDetails.description" />
+
+
+    <!-- Open Graph for Social Share -->
+    <meta property="og:title" :content="eventDetails.name" />
+    <meta
+      property="og:image"
+      :content="
+        'https://humeone.com' + require(`@/assets/${eventDetails.image}`)
+      "
+    />
+    <meta property="og:description" :content="eventDetails.description" />
+    <meta property="og:url" :content="eventLink" />
+  </Head>
+
   <section class="section form-section">
     <div class="container form-card pb-3 md:pb-4">
       <div
@@ -117,7 +133,7 @@
         <div>
           <img
             :src="require(`@/assets/${eventDetails.hostImage}`)"
-            alt="portrait of the event host"
+            alt="Portrait of the event host"
             class="host-image"
           />
         </div>
@@ -353,11 +369,14 @@ export default {
       );
   },
   computed: {
+    eventLink() {
+      return window.location.href;
+    },
     shareLink() {
       return {
-        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${window.location.href}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
-        twitter: `https://twitter.com/intent/tweet?url=${window.location.href}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
+        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.eventLink}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
+        twitter: `https://twitter.com/intent/tweet?url=${this.eventLink}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${this.eventLink}`
       };
     },
     mapsURL() {
@@ -387,7 +406,7 @@ export default {
   },
   methods: {
     copyUrl() {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(this.eventLink);
       this.showCopyTip = true;
       setTimeout(() => {
         this.showCopyTip = false;

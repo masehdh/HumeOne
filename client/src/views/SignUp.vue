@@ -1,4 +1,11 @@
 <template>
+<Head>
+    <meta
+      name="description"
+      content="HumeOne brings people together by organizing intimate social gatherings and events. Let us know what you're looking for to start receiving invites today! Signing up is free."
+    />
+  </Head>
+
   <section class="section form-section">
     <form class="max-w-full" action="#" @submit.prevent="">
       <keep-alive>

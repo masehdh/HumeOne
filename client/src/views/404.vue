@@ -1,4 +1,8 @@
 <template>
+  <Head>
+    <meta name="robots" content="noindex" />
+  </Head>
+
   <section class="section off-white-bg">
     <div
       class="container page-not-found-container flex flex-column text-center justify-content-center align-items-center mx-3"
@@ -10,9 +14,11 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>
       </h2>
 
-      <div class="cta-button mt-5 border-round" @click="routeToHome()">
-        Back to Home
-      </div>
+      <a href="/" @click.prevent="routeToHome()" class="no-underline mt-5">
+        <div class="cta-button border-round">
+          Back to Home
+        </div>
+      </a>
     </div>
   </section>
 </template>
