@@ -3,6 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// VUE HEAD
+import { Head } from '@vueuse/head'
+import { createHead } from '@vueuse/head'
+
+const head = createHead()
+
 // FONT AWESOME
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -53,6 +59,7 @@ import Checkbox from 'primevue/checkbox';
 createApp(App)
   .use(store)
   .use(router)
+  .use(head)
   .use(PrimeVue)
   .use(VueGtag, {
     property: {
@@ -83,4 +90,5 @@ createApp(App)
   .component("ScrollPanel", ScrollPanel)
   .component("Avatar", Avatar)
   .component("Checkbox", Checkbox)
+  .component("Head", Head)
   .mount('#app')

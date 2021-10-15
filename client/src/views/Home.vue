@@ -1,4 +1,11 @@
 <template>
+  <Head>
+    <meta
+      name="description"
+      content="HumeOne brings people together by organizing intimate social gatherings and events. Let us know what you're looking for to start receiving invites today!"
+    />
+  </Head>
+
   <ScrollTop />
   <section class="section off-white-bg">
     <div

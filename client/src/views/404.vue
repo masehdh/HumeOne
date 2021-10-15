@@ -1,4 +1,8 @@
 <template>
+  <Head>
+    <meta name="robots" content="noindex" />
+  </Head>
+
   <section class="section off-white-bg">
     <div
       class="container page-not-found-container flex flex-column text-center justify-content-center align-items-center mx-3"
