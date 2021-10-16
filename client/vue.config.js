@@ -11,7 +11,7 @@ module.exports = {
   // Creates sitemap for SEO purposes
   pluginOptions: {
     sitemap: {
-      baseURL: 'https://example.com',
+      baseURL: 'https://humeone.com',
       routes,
     }
   },
