@@ -47,8 +47,8 @@ export default {
   },
   data() {
     return {
-      showCopyTip: false
-    };
+      showCopyTip: false,
+    }
   },
   computed: {
     shareLink() {

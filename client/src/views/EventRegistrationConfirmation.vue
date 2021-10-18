@@ -56,7 +56,7 @@
 
 <script>
 import eventList from "../../../resources/events.json";
-import SocialShareIcons from "@/components/SocialShareIcons";
+import SocialShareIcons from "../components/SocialShareIcons.vue";
 
 export default {
   name: "Event Registration Confirmation",
