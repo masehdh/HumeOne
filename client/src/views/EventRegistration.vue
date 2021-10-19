@@ -70,7 +70,7 @@
           REGISTER
         </div>
 
-        <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" />
+        <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" class="social-share mx-3 md:mx-4" />
       </div>
     </div>
 
@@ -614,5 +614,9 @@ i.pi {
   @media (max-width: $mobile-breakpoint) {
     font-size: 18px;
   }
+}
+
+.social-share {
+  justify-content: center;
 }
 </style>
