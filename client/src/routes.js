@@ -26,6 +26,20 @@ module.exports.routes = [
     },
   },
   {
+    path: "/upcoming-events/",
+    name: "Upcoming Events",
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "upcoming-events" */ "@/views/UpcomingEvents.vue"),
+    meta: {
+      title: "Upcoming Events",
+      sitemap: {
+        lastmod: 'October 19, 2021',
+        priority: 0.9,
+      }
+    },
+  },
+  {
     path: "/event-registration/",
     name: "Event Registration",
     component: () =>
