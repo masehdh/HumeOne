@@ -9,9 +9,7 @@
   <ScrollTop />
 
   <section class="section off-white-bg">
-    <div class="container">
-      <TheHeader />
-    </div>
+    <TheHeader />
 
     <div
       class="container justify-content-start align-items-center text-center flex flex-column px-3 pb-6"

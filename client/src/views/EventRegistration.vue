@@ -15,9 +15,7 @@
   </Head>
 
   <section class="section form-section">
-    <div class="container">
-      <TheHeader />
-    </div>
+    <TheHeader />
 
     <div class="container form-card pb-3 md:pb-4">
       <div
@@ -74,7 +72,11 @@
           REGISTER
         </div>
 
-        <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" class="social-share mx-3 md:mx-4" />
+        <SocialShareIcons
+          :eventDetails="eventDetails"
+          :eventLink="eventLink"
+          class="social-share mx-3 md:mx-4"
+        />
       </div>
     </div>
 

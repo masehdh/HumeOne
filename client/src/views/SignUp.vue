@@ -7,9 +7,7 @@
   </Head>
 
   <section class="section form-section">
-    <div class="container">
-      <TheHeader />
-    </div>
+    <TheHeader />
 
     <form class="max-w-full" action="#" @submit.prevent="">
       <keep-alive>

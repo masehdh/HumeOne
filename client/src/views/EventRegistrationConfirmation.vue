@@ -25,9 +25,7 @@
   </Head>
 
   <section class="section form-section">
-    <div class="container">
-      <TheHeader />
-    </div>
+    <TheHeader />
 
     <div class="container form-card px-3 py-4 md:px-4 md:py-5">
       <h1 class="form-header">Registration Confirmation</h1>
