@@ -7,9 +7,14 @@
   </Head>
 
   <ScrollTop />
+
   <section class="section off-white-bg">
+    <div class="container">
+      <TheHeader />
+    </div>
+
     <div
-      class="container justify-content-start align-items-center text-center flex flex-column px-3 pt-4 pb-6"
+      class="container justify-content-start align-items-center text-center flex flex-column px-3 pb-6"
     >
       <img
         class="hero-image h-auto max-w-full fadein animation-duration-1000"
@@ -418,6 +423,7 @@
     :showLink="false"
     ref="eventPreviewDialog"
   />
+
   <ContactFormDialog ref="contactFormDialog" />
 </template>
 
@@ -473,10 +479,6 @@ export default {
 
   .row {
     width: 600px;
-
-    .horizontal-spacer {
-      padding-right: 130px;
-    }
 
     .timeline {
       position: relative;

@@ -1,31 +1,10 @@
 <template>
-  <section class="section off-white-bg">
-    <div class="container">
-      <div id="nav" class="mx-3">
-        <div class="flex justify-content-center max-w-full">
-          <img
-            id="humeone-logo__img"
-            class="max-w-full"
-            src="@/assets/humeone-logo.png"
-            alt="HumeOne Logo"
-            @click.prevent="routeToHome()"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
   <router-view />
 </template>
 
 <script>
 export default {
   name: "Home",
-  methods: {
-    routeToHome() {
-      return this.$router.push({ name: "Home" });
-    }
-  }
 };
 </script>
 
@@ -92,20 +71,6 @@ p {
   }
 }
 
-#nav {
-  display: flex;
-  justify-content: center;
-  max-height: 60px;
-  #humeone-logo__img {
-    object-fit: contain;
-    transition: all 0.5s ease;
-    &:hover {
-      cursor: pointer;
-      transform: scale(0.95);
-    }
-  }
-}
-
 .validation-message {
   padding-top: 4px;
   font-size: 14px;
@@ -162,7 +127,7 @@ p {
 
 .form-section {
   background-color: $off-white;
-  padding: 40px 10px;
+  padding: 0 10px 40px 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -4,6 +4,10 @@
   </Head>
 
   <section class="section off-white-bg">
+    <div class="container">
+      <TheHeader />
+    </div>
+
     <div
       class="container page-not-found-container flex flex-column text-center justify-content-center align-items-center mx-3"
     >

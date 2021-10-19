@@ -4,8 +4,12 @@
   </Head>
 
   <div class="section off-white-bg min-h-screen">
+    <div class="container">
+      <TheHeader />
+    </div>
+
     <div class="container px-3 md:px-4">
-      <h2 class="primary-font-color block text-center text-3xl mt-6 font-bold">
+      <h2 class="primary-font-color block text-center text-3xl mt-4 font-bold">
         Upcoming Events
       </h2>
 

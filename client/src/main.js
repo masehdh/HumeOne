@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// GLOBAL COMPONENTS
+import TheHeader from './components/TheHeader.vue'
+
 // VUE HEAD
 import { Head } from '@vueuse/head'
 import { createHead } from '@vueuse/head'
@@ -73,6 +76,7 @@ createApp(App)
     isProduction: process.env.VUE_APP_ANALYTICS ? true : false
   })
   .directive('tooltip', Tooltip)
+  .component('TheHeader', TheHeader)
   .component('font-awesome-icon', FontAwesomeIcon)
   .component("InputText", InputText)
   .component("Textarea", Textarea)

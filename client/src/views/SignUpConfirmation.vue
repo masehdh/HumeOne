@@ -1,9 +1,11 @@
 <template>
   <Head>
-    <meta name="robots" content="noindex">
+    <meta name="robots" content="noindex" />
   </Head>
 
   <section class="section form-section">
+    <TheHeader />
+
     <div class="container form-card px-3 py-4 md:px-4 md:py-5">
       <h1 class="text-2xl">Sign Up Confirmation</h1>
       <p class="line-height-3 mt-3">

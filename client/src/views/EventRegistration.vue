@@ -15,6 +15,10 @@
   </Head>
 
   <section class="section form-section">
+    <div class="container">
+      <TheHeader />
+    </div>
+
     <div class="container form-card pb-3 md:pb-4">
       <div
         id="event-image"

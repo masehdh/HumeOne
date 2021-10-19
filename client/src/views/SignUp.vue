@@ -1,5 +1,5 @@
 <template>
-<Head>
+  <Head>
     <meta
       name="description"
       content="Sign up for free to host and attend events in your area. Let us know what you are interested in to start receiving invites today!"
@@ -7,6 +7,10 @@
   </Head>
 
   <section class="section form-section">
+    <div class="container">
+      <TheHeader />
+    </div>
+
     <form class="max-w-full" action="#" @submit.prevent="">
       <keep-alive>
         <component
