@@ -47,15 +47,15 @@ export default {
   },
   data() {
     return {
-      showCopyTip: false,
-    }
+      showCopyTip: false
+    };
   },
   computed: {
     shareLink() {
       return {
         facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.eventLink}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
         twitter: `https://twitter.com/intent/tweet?url=${this.eventLink}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${this.eventLink}`
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.eventLink}`
       };
     }
   },
