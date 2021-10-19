@@ -63,10 +63,8 @@
       class="container flex flex-column align-items-center py-4 mt-4 mb-6 md:mb-8"
     >
       <div class="row flex max-w-full">
-        <div class="horizontal-spacer hidden md:inline"></div>
-
         <h2
-          class="text-4xl text-center w-full block md:w-auto mx-3 md:mx-4 my-5"
+          class="text-4xl text-center w-full block md:w-auto mx-3 md:mx-auto my-5"
         >
           How it works...
         </h2>
@@ -282,8 +280,7 @@
         <div class="vertical-row-item mx-3 md:mx-4">
           <h3 class="text-xl mb-3">Reserve Your Spot</h3>
           <p class="line-height-3">
-            You pay a small fee to support our Hosts, and they make sure you
-            have a great time.
+            And get ready to have a great time!
           </p>
           <div class="vertical-spacer">&nbsp;</div>
         </div>
@@ -680,7 +677,7 @@ export default {
     width: 600px;
 
     .horizontal-spacer {
-      padding-right: 120px;
+      padding-right: 130px;
     }
 
     .timeline {
@@ -729,7 +726,7 @@ export default {
       margin-top: 18px;
 
       .vertical-spacer {
-        padding-bottom: 32px;
+        padding-bottom: 24px;
       }
     }
   }
