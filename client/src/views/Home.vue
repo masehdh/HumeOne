@@ -369,7 +369,7 @@
             :style="{
               backgroundImage:
                 'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url(' +
-                require(`@/assets/event-portfolio/${pastEvent.image}`) +
+                require(`@/assets/${pastEvent.image}`) +
                 ')'
             }"
             @click="showEventModal(index)"
@@ -413,191 +413,26 @@
     </a>
   </div>
 
-  <Dialog
-    v-model:visible="displayEventModal"
-    id="event-modal"
-    header=" "
-    :style="{ maxWidth: '95vw' }"
-    :modal="true"
-    :dismissableMask="true"
-    :draggable="false"
-    :contentStyle="{
-      padding: '0',
-      backgroundColor: '#f7f7f7'
-    }"
-  >
-    <div class="flex flex-column md:flex-row">
-      <div
-        class="event-modal-image w-full md:w-20rem max-w-full"
-        :style="{
-          backgroundImage:
-            'url(' + require(`@/assets/event-portfolio/${event.image}`) + ')'
-        }"
-      ></div>
-
-      <div
-        class="w-30rem max-w-full text-left md:text-left fadein animation-duration-300"
-      >
-        <div
-          class="flex flex-row border-bottom-1 border-300 py-2 px-3 align-items-center"
-        >
-          <img
-            :src="require(`@/assets/${event.hostImage}`)"
-            alt="Portrait of the event host"
-            class="host-image mr-2"
-          />
-
-          <p class="text-sm font-medium">
-            Hosted by
-            <span class="font-semibold">{{ event.hostName }} </span>
-          </p>
-        </div>
-
-        <div class="px-3 py-3">
-          <h3 class="text-2xl font-medium">{{ event.name }}</h3>
-
-          <p class="text-base mt-3 line-height-3">{{ event.description }}</p>
-
-          <div
-            class="flex flex-row flex-wrap mt-3 pt-3 border-top-1 border-300"
-          >
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-map-marker mr-2"></i>{{ event.location }}
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-clock mr-2"></i>{{ event.dateTime }}
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-users mr-2"></i>{{ event.maxSpots }} spots
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-wallet mr-2"></i
-              >{{
-                event.reservationFee > 0 ? "$" + event.reservationFee : "FREE"
-              }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Dialog>
-
-  <Dialog
-    header="Contact Us"
-    v-model:visible="displayContactForm"
-    :style="{ width: '50vw' }"
-    :breakpoints="{ '960px': '90vw' }"
-    :modal="true"
-    :dismissableMask="true"
-    :draggable="false"
-  >
-    <div class="field">
-      <label for="name">Name</label>
-      <InputText
-        type="text"
-        id="name"
-        v-model="name"
-        class="inputfield w-full "
-        :class="{
-          'p-invalid': validationMessages.hasOwnProperty('name')
-        }"
-      />
-
-      <div v-for="(message, index) of validationMessages['name']" :key="index">
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="email">Email</label>
-      <InputText
-        type="text"
-        id="email"
-        v-model="email"
-        class="inputfield w-full "
-        :class="{
-          'p-invalid': validationMessages.hasOwnProperty('email')
-        }"
-      />
-
-      <div v-for="(message, index) of validationMessages['email']" :key="index">
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="subject">Subject</label>
-      <InputText
-        type="text"
-        id="subject"
-        v-model="subject"
-        class="inputfield w-full "
-        :class="{
-          'p-invalid': validationMessages.hasOwnProperty('subject')
-        }"
-      />
-
-      <div
-        v-for="(message, index) of validationMessages['subject']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="message">Message</label>
-      <Textarea
-        type="text"
-        :autoResize="true"
-        id="message"
-        v-model="message"
-        class="inputfield w-full"
-        :class="{
-          'p-invalid': validationMessages.hasOwnProperty('message')
-        }"
-      />
-
-      <div
-        v-for="(message, index) of validationMessages['message']"
-        :key="index"
-      >
-        <div class="validation-message">{{ message }}</div>
-      </div>
-    </div>
-
-    <br />
-
-    <Button
-      type="submit"
-      label="Submit"
-      class="p-button-md p-button-primary submit-button no-underline"
-      @click="submitContactForm"
-    />
-  </Dialog>
+  <EventPreviewDialog
+    :event="event"
+    :showLink="false"
+    ref="eventPreviewDialog"
+  />
+  <ContactFormDialog ref="contactFormDialog" />
 </template>
 
 <script>
-const { contactUsValidation } = require("../../../resources/validation.js");
 import pastEvents from "../../../resources/pastEvents.json";
-import axios from "axios";
+import ContactFormDialog from "../components/ContactFormDialog.vue";
+import EventPreviewDialog from "../components/EventPreviewDialog.vue";
 
 export default {
   name: "Home",
+  components: { ContactFormDialog, EventPreviewDialog },
   data() {
     return {
       pastEvents: pastEvents,
-      event: pastEvents[0],
-      displayContactForm: false,
-      displayEventModal: false,
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      validationMessages: {}
+      event: pastEvents[0]
     };
   },
   methods: {
@@ -606,47 +441,10 @@ export default {
     },
     showEventModal(val) {
       this.event = this.pastEvents[val];
-      this.displayEventModal = true;
+      this.$refs.eventPreviewDialog.showEventModal();
     },
     showContactForm() {
-      return (this.displayContactForm = true);
-    },
-    submitContactForm() {
-      this.validationMessages = {};
-      const { error } = contactUsValidation({
-        name: this.name,
-        email: this.email,
-        subject: this.subject,
-        message: this.message
-      });
-      if (error) {
-        error.details.forEach(({ path }) => {
-          let messages = error.details
-            .filter(val => val.path[0] === path[0])
-            .map(({ message }) => message);
-          messages = [...new Set(messages)];
-          return (this.validationMessages[path[0]] = messages);
-        });
-        return;
-      }
-
-      axios
-        .post("/api/contact-us", {
-          name: this.name,
-          email: this.email,
-          subject: this.subject,
-          message: this.message
-        })
-        .then(() => {
-          this.displayContactForm = false;
-          this.name = "";
-          this.email = "";
-          this.subject = "";
-          this.message = "";
-        })
-        .catch(error =>
-          console.log("error from /api/contact-us: ", error.response.data)
-        );
+      return this.$refs.contactFormDialog.showContactForm();
     }
   }
 };
@@ -802,28 +600,6 @@ export default {
   p:nth-child(3) {
     color: rgba(255, 255, 255, 0.6);
   }
-}
-
-.event-modal-image {
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  height: 400px;
-}
-
-.host-image {
-  border-radius: 50%;
-  object-fit: contain;
-  width: 45px;
-  height: auto;
-  max-width: 100%;
-  padding: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(230, 92, 138, 0.9) 0%,
-    rgba(255, 204, 102, 0.9) 100%
-  );
 }
 
 .svg-inline--fa {
