@@ -99,6 +99,7 @@ const { contactUsValidation } = require("../../../resources/validation.js");
 import axios from "axios";
 
 export default {
+  name: "Contact Form Dialog",
   data() {
     return {
       email: "",

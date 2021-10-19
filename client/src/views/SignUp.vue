@@ -2,7 +2,7 @@
 <Head>
     <meta
       name="description"
-      content="HumeOne brings people together by organizing intimate social gatherings and events. Let us know what you're looking for to start receiving invites today! Signing up is free."
+      content="Sign up for free to host and attend events in your area. Let us know what you are interested in to start receiving invites today!"
     />
   </Head>
 

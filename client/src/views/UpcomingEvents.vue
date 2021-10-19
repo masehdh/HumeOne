@@ -1,9 +1,6 @@
 <template>
   <Head>
-    <meta
-      name="description"
-      content="View upcoming events from HumeOne."
-    />
+    <meta name="description" content="View upcoming events from HumeOne." />
   </Head>
 
   <div class="section off-white-bg min-h-screen">
@@ -54,90 +51,11 @@
         </a>
       </div>
 
-      <Dialog
-        v-model:visible="displayEventModal"
-        id="event-modal"
-        header=" "
-        :style="{ maxWidth: '95vw' }"
-        :modal="true"
-        :dismissableMask="true"
-        :draggable="false"
-        :contentStyle="{
-          padding: '0',
-          backgroundColor: '#f7f7f7'
-        }"
-      >
-        <div class="flex flex-column md:flex-row">
-          <div
-            class="event-modal-image w-full md:w-20rem max-w-full"
-            :style="{
-              backgroundImage: 'url(' + require(`@/assets/${event.image}`) + ')'
-            }"
-          ></div>
-
-          <div
-            class="w-30rem max-w-full text-left md:text-left fadein animation-duration-300"
-          >
-            <div
-              class="flex flex-row border-bottom-1 border-300 py-2 px-3 align-items-center"
-            >
-              <img
-                :src="require(`@/assets/${event.hostImage}`)"
-                alt="Portrait of the event host"
-                class="host-image mr-2"
-              />
-
-              <p class="text-sm font-medium">
-                Hosted by
-                <span class="font-semibold">{{ event.hostName }} </span>
-              </p>
-            </div>
-
-            <div class="px-3 py-3">
-              <h3 class="text-2xl font-medium">{{ event.name }}</h3>
-
-              <p class="text-base mt-3 line-height-3">
-                {{ event.description }}
-              </p>
-
-              <a
-                :href="`/event-registration?eventId${event.id}`"
-                @click.prevent="routeToEvent(event.id)"
-                class="no-underline mt-4"
-              >
-                <div class="cta-button border-round text-sm mt-3">
-                  View Event Details
-                </div>
-              </a>
-
-              <div
-                class="flex flex-row flex-wrap mt-3 pt-3 border-top-1 border-300"
-              >
-                <p class="mr-3 text-sm mb-2">
-                  <i class="pi pi-map-marker mr-2"></i>{{ event.location }}
-                </p>
-
-                <p class="mr-3 text-sm mb-2">
-                  <i class="pi pi-clock mr-2"></i>{{ event.dateTime }}
-                </p>
-
-                <p class="mr-3 text-sm mb-2">
-                  <i class="pi pi-users mr-2"></i>{{ event.maxSpots }} spots
-                </p>
-
-                <p class="mr-3 text-sm mb-2">
-                  <i class="pi pi-wallet mr-2"></i
-                  >{{
-                    event.reservationFee > 0
-                      ? "$" + event.reservationFee
-                      : "FREE"
-                  }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Dialog>
+      <EventPreviewDialog
+        :event="event"
+        :showLink="true"
+        ref="eventPreviewDialog"
+      />
     </div>
   </div>
 </template>
@@ -148,25 +66,21 @@ const upcomingEvents = eventList.filter(
   event => new Date(event.paymentDeadline) > new Date()
 );
 
+import EventPreviewDialog from "../components/EventPreviewDialog.vue";
+
 export default {
   name: "Upcoming Events",
+  components: { EventPreviewDialog },
   data() {
     return {
       upcomingEvents: upcomingEvents,
-      event: upcomingEvents[0],
-      displayEventModal: false
+      event: upcomingEvents[0]
     };
   },
   methods: {
     showEventModal(val) {
       this.event = this.upcomingEvents[val];
-      this.displayEventModal = true;
-    },
-    routeToEvent(id) {
-      return this.$router.push({
-        name: "Event Registration",
-        query: { eventId: id }
-      });
+      this.$refs.eventPreviewDialog.showEventModal();
     },
     routeToSignUp() {
       return this.$router.push({ name: "Sign Up" });

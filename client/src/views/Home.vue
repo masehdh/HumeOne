@@ -369,7 +369,7 @@
             :style="{
               backgroundImage:
                 'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)), url(' +
-                require(`@/assets/event-portfolio/${pastEvent.image}`) +
+                require(`@/assets/${pastEvent.image}`) +
                 ')'
             }"
             @click="showEventModal(index)"
@@ -413,100 +413,26 @@
     </a>
   </div>
 
-  <Dialog
-    v-model:visible="displayEventModal"
-    id="event-modal"
-    header=" "
-    :style="{ maxWidth: '95vw' }"
-    :modal="true"
-    :dismissableMask="true"
-    :draggable="false"
-    :contentStyle="{
-      padding: '0',
-      backgroundColor: '#f7f7f7'
-    }"
-  >
-    <div class="flex flex-column md:flex-row">
-      <div
-        class="event-modal-image w-full md:w-20rem max-w-full"
-        :style="{
-          backgroundImage:
-            'url(' + require(`@/assets/event-portfolio/${event.image}`) + ')'
-        }"
-      ></div>
-
-      <div
-        class="w-30rem max-w-full text-left md:text-left fadein animation-duration-300"
-      >
-        <div
-          class="flex flex-row border-bottom-1 border-300 py-2 px-3 align-items-center"
-        >
-          <img
-            :src="require(`@/assets/${event.hostImage}`)"
-            alt="Portrait of the event host"
-            class="host-image mr-2"
-          />
-
-          <p class="text-sm font-medium">
-            Hosted by
-            <span class="font-semibold">{{ event.hostName }} </span>
-          </p>
-        </div>
-
-        <div class="px-3 py-3">
-          <h3 class="text-2xl font-medium">{{ event.name }}</h3>
-
-          <p class="text-base mt-3 line-height-3">{{ event.description }}</p>
-
-          <div
-            class="flex flex-row flex-wrap mt-3 pt-3 border-top-1 border-300"
-          >
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-map-marker mr-2"></i>{{ event.location }}
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-clock mr-2"></i>{{ event.dateTime }}
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-users mr-2"></i>{{ event.maxSpots }} spots
-            </p>
-
-            <p class="mr-3 text-sm mb-2">
-              <i class="pi pi-wallet mr-2"></i
-              >{{
-                event.reservationFee > 0 ? "$" + event.reservationFee : "FREE"
-              }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Dialog>
-
-  <ContactFormDialog
-    ref="contactFormDialog"
+  <EventPreviewDialog
+    :event="event"
+    :showLink="false"
+    ref="eventPreviewDialog"
   />
+  <ContactFormDialog ref="contactFormDialog" />
 </template>
 
 <script>
 import pastEvents from "../../../resources/pastEvents.json";
 import ContactFormDialog from "../components/ContactFormDialog.vue";
+import EventPreviewDialog from "../components/EventPreviewDialog.vue";
 
 export default {
   name: "Home",
-  components: { ContactFormDialog },
+  components: { ContactFormDialog, EventPreviewDialog },
   data() {
     return {
       pastEvents: pastEvents,
-      event: pastEvents[0],
-      displayEventModal: false,
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      validationMessages: {}
+      event: pastEvents[0]
     };
   },
   methods: {
@@ -515,10 +441,10 @@ export default {
     },
     showEventModal(val) {
       this.event = this.pastEvents[val];
-      this.displayEventModal = true;
+      this.$refs.eventPreviewDialog.showEventModal();
     },
     showContactForm() {
-      return this.$refs.contactFormDialog.showContactForm()
+      return this.$refs.contactFormDialog.showContactForm();
     }
   }
 };
@@ -674,28 +600,6 @@ export default {
   p:nth-child(3) {
     color: rgba(255, 255, 255, 0.6);
   }
-}
-
-.event-modal-image {
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  height: 400px;
-}
-
-.host-image {
-  border-radius: 50%;
-  object-fit: contain;
-  width: 45px;
-  height: auto;
-  max-width: 100%;
-  padding: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(230, 92, 138, 0.9) 0%,
-    rgba(255, 204, 102, 0.9) 100%
-  );
 }
 
 .svg-inline--fa {
