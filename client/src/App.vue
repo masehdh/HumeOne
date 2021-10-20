@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Home"
 };
 </script>
 
@@ -127,7 +127,7 @@ p {
 
 .form-section {
   background-color: $off-white;
-  padding: 0 10px 40px 0;
+  padding: 0 10px 40px 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -268,6 +268,23 @@ p {
 
     .p-dialog-header-close-icon {
       color: rgb(255, 255, 255, 0.7);
+    }
+  }
+}
+
+.p-sidebar {
+  background-color: $accent-red !important;
+  .p-sidebar-close {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      .p-sidebar-close-icon {
+        opacity: 1;
+      }
+    }
+
+    .p-sidebar-close-icon {
+      color: white;
+      opacity: 0.6;
     }
   }
 }

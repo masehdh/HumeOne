@@ -4,47 +4,64 @@
       class="flex justify-content-between md:justify-content-center align-items-center h-4rem px-3 md:px-4 py-2"
     >
       <nav class="hidden md:flex flex-row">
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>Home</p>
-          <div class="link-underline"></div>
-        </a>
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>About</p>
-          <div class="link-underline"></div>
-        </a>
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>Contact</p>
-          <div class="link-underline"></div>
-        </a>
+        <template
+          v-for="(navLink, index) in navLinks.slice(0, navLinks.length / 2)"
+          :key="index"
+        >
+          <router-link :to="{ name: navLink.target }" class="nav-link">
+            <p>{{ navLink.name }}</p>
+            <div class="link-underline"></div>
+          </router-link>
+        </template>
       </nav>
 
-      <a
-        href="/"
-        @click.prevent="routeToHome()"
-        class="no-underline h-full md:mx-5"
-      >
+      <router-link :to="{ name: 'Home' }" class="no-underline h-full md:mx-5">
         <img
           id="humeone-logo__img"
           class="max-h-full"
           src="@/assets/humeone-square-logo.png"
           alt="HumeOne Logo"
         />
-      </a>
+      </router-link>
 
       <nav class="hidden md:flex flex-row">
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>Host</p>
-          <div class="link-underline"></div>
-        </a>
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>Log In</p>
-          <div class="link-underline"></div>
-        </a>
-        <a href="/" @click.prevent="routeToHome()" class="nav-link">
-          <p>Sign Up</p>
-          <div class="link-underline"></div>
-        </a>
+        <template
+          v-for="(navLink, index) in navLinks.slice(navLinks.length / 2)"
+          :key="index"
+        >
+          <router-link :to="{ name: navLink.target }" class="nav-link">
+            <p>{{ navLink.name }}</p>
+            <div class="link-underline"></div>
+          </router-link>
+        </template>
       </nav>
+
+      <div
+        class="block md:hidden no-underline cursor-pointer"
+        @click="showMobileMenu()"
+      >
+        <p class="flex align-items-center font-medium">
+          <font-awesome-icon :icon="['fas', 'bars']" class="mr-2" />
+          Menu
+        </p>
+      </div>
+
+      <Sidebar
+        v-model:visible="displayMobileMenu"
+        position="right"
+        class="mobile-menu sidebar-sm w-15rem"
+      >
+        <nav class="flex flex-column">
+          <template v-for="(navLink, index) in navLinks" :key="index">
+            <router-link
+              :to="{ name: navLink.target }"
+              class="mobile-nav-link mb-3 no-underline"
+            >
+              <p>{{ navLink.name }}</p>
+            </router-link>
+          </template>
+        </nav>
+      </Sidebar>
     </header>
   </div>
 </template>
@@ -52,9 +69,22 @@
 <script>
 export default {
   name: "The Header",
+  data() {
+    return {
+      navLinks: [
+        { name: "Home", target: "Home" },
+        { name: "About", target: "Home" },
+        { name: "Contact", target: "Home" },
+        { name: "Host", target: "Home" },
+        { name: "Log In", target: "Home" },
+        { name: "Sign Up", target: "Sign Up" }
+      ],
+      displayMobileMenu: false
+    };
+  },
   methods: {
-    routeToHome() {
-      return this.$router.push({ name: "Home" });
+    showMobileMenu() {
+      return (this.displayMobileMenu = true);
     }
   }
 };
@@ -109,6 +139,20 @@ export default {
     font-size: 16px;
     font-weight: 400;
     transition: all 0.2s ease;
+  }
+}
+
+.mobile-nav-link {
+  p {
+    color: white;
+    opacity: 0.4;
+    font-weight: 500;
+  }
+
+  &:hover {
+    p {
+      opacity: 1;
+    }
   }
 }
 </style>

@@ -17,12 +17,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 import { faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
 import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faFacebookSquare, faLinkedin, faInstagramSquare, faEnvelopeSquare, faTwitterSquare, faLink)
+library.add(faFacebookSquare, faLinkedin, faInstagramSquare, faEnvelopeSquare, faTwitterSquare, faLink, faBars)
 
 // ANALYTICS
 import Hotjar from 'vue-hotjar'
@@ -57,6 +58,7 @@ import ScrollPanel from 'primevue/scrollpanel';
 import Avatar from 'primevue/avatar';
 import Tooltip from 'primevue/tooltip';
 import Checkbox from 'primevue/checkbox';
+import Sidebar from 'primevue/sidebar';
 
 
 createApp(App)
@@ -95,4 +97,5 @@ createApp(App)
   .component("Avatar", Avatar)
   .component("Checkbox", Checkbox)
   .component("Head", Head)
+  .component("Sidebar", Sidebar)
   .mount('#app')
