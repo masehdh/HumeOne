@@ -1,31 +1,10 @@
 <template>
-  <section class="section off-white-bg">
-    <div class="container">
-      <div id="nav" class="mx-3">
-        <div class="flex justify-content-center max-w-full">
-          <img
-            id="humeone-logo__img"
-            class="max-w-full"
-            src="@/assets/humeone-logo.png"
-            alt="HumeOne Logo"
-            @click.prevent="routeToHome()"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
   <router-view />
 </template>
 
 <script>
 export default {
-  name: "Home",
-  methods: {
-    routeToHome() {
-      return this.$router.push({ name: "Home" });
-    }
-  }
+  name: "Home"
 };
 </script>
 
@@ -82,6 +61,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
   &:last-child {
     padding-bottom: 100px;
   }
@@ -89,20 +70,6 @@ p {
   .container {
     width: 1140px;
     max-width: 100%;
-  }
-}
-
-#nav {
-  display: flex;
-  justify-content: center;
-  max-height: 60px;
-  #humeone-logo__img {
-    object-fit: contain;
-    transition: all 0.5s ease;
-    &:hover {
-      cursor: pointer;
-      transform: scale(0.95);
-    }
   }
 }
 
@@ -132,7 +99,7 @@ p {
   font-size: 16px;
   box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
   color: #444444;
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease;
   &:hover {
     box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
     transform: scale(1.04);
@@ -156,13 +123,12 @@ p {
     left: 0;
     opacity: 0;
     z-index: -1;
-    transition: opacity 0.45s ease;
+    transition: opacity 0.3s ease;
   }
 }
 
 .form-section {
   background-color: $off-white;
-  padding: 40px 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -303,6 +269,23 @@ p {
 
     .p-dialog-header-close-icon {
       color: rgb(255, 255, 255, 0.7);
+    }
+  }
+}
+
+.p-sidebar {
+  background-color: $accent-red !important;
+  .p-sidebar-close {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      .p-sidebar-close-icon {
+        opacity: 1;
+      }
+    }
+
+    .p-sidebar-close-icon {
+      color: white;
+      opacity: 0.6;
     }
   }
 }

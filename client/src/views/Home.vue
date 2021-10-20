@@ -7,23 +7,26 @@
   </Head>
 
   <ScrollTop />
+
   <section class="section off-white-bg">
+    <TheHeader />
+
     <div
-      class="container justify-content-start align-items-center text-center flex flex-column px-3 pt-4 pb-6"
+      class="container justify-content-start align-items-center text-center flex flex-column pb-6"
     >
       <img
-        class="hero-image h-auto max-w-full fadein animation-duration-1000"
+        class="hero-image h-auto max-w-full fadein animation-duration-500"
         alt="Background image of people hanging out"
         src="@/assets/home-page-squad.png"
       />
 
-      <div class="fadein animation-duration-1000 mt-6">
+      <div class="fadein animation-duration-500 mt-6">
         <h1 class="text-4xl">
           Find your people, grow your circle
         </h1>
       </div>
 
-      <div class="details fadein animation-duration-1000 mt-4">
+      <div class="details fadein animation-duration-500 mt-4">
         <p class="line-height-3 primary-font-color" style="max-width: 726px">
           HumeOne brings people together by organizing intimate social
           gatherings and events. Let us know what you're looking for to start
@@ -31,15 +34,11 @@
         </p>
       </div>
 
-      <a
-        href="/sign-up"
-        @click.prevent="routeToSignUp()"
-        class="no-underline mt-4"
-      >
+      <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
           SIGN UP FOR FREE
         </div>
-      </a>
+      </router-link>
     </div>
   </section>
 
@@ -64,14 +63,14 @@
     >
       <div class="row flex max-w-full">
         <h2
-          class="text-4xl text-center w-full block md:w-auto mx-3 md:mx-auto my-5"
+          class="text-4xl text-center w-full block md:w-auto md:mx-auto my-5"
         >
           How it works...
         </h2>
       </div>
 
       <!-- Step 1. Sign Up -->
-      <div class="row flex max-w-full mx-3 md:mx-4">
+      <div class="row flex max-w-full">
         <div class="flex">
           <div class="w-3rem md:w-6rem pl-3 ml-1 md:pl-0 text-right">
             <img
@@ -112,16 +111,12 @@
           <p class="step-number pl-2">1</p>
         </div>
 
-        <div class=" vertical-row-item primary-font-color mx-3 md:mx-4">
-          <a
-            href="/sign-up"
-            @click.prevent="routeToSignUp()"
-            class="no-underline mb-3"
-          >
+        <div class=" vertical-row-item primary-font-color ml-3">
+          <router-link :to="{ name: 'Sign Up' }" class="no-underline mb-3">
             <h3 class="text-xl no-underline cursor-pointer">
               Sign Up For Free
             </h3>
-          </a>
+          </router-link>
 
           <p class="text-base line-height-3">
             Let us know what you are interested in.
@@ -132,7 +127,7 @@
       </div>
 
       <!-- Step 2. We'll Plan Events -->
-      <div class="row flex max-w-full mx-3 md:mx-4">
+      <div class="row flex max-w-full">
         <div class="flex">
           <div class="w-3rem md:w-6rem ml-1 text-right">
             <img
@@ -173,7 +168,7 @@
           <p class="step-number">2</p>
         </div>
 
-        <div class="vertical-row-item mx-3 md:mx-4">
+        <div class="vertical-row-item ml-3">
           <a href="#past-events" class="no-underline">
             <h3 class="text-xl mb-3">We'll Plan Events</h3>
           </a>
@@ -185,7 +180,7 @@
       </div>
 
       <!-- Step 3. Receive Invites -->
-      <div class="row flex max-w-full mx-3 md:mx-4">
+      <div class="row flex max-w-full">
         <div class="flex">
           <div class="w-3rem md:w-6rem ml-1 text-right">
             <img
@@ -226,7 +221,7 @@
           <p class="step-number">3</p>
         </div>
 
-        <div class="vertical-row-item primary-font-color mx-3 md:mx-4">
+        <div class="vertical-row-item primary-font-color ml-3">
           <h3 class="text-xl mb-3">Receive Invites</h3>
           <p class="text-base line-height-3">
             Directly to your inbox, according to your preferences.
@@ -236,7 +231,7 @@
       </div>
 
       <!-- Step 4. Reserve your spot -->
-      <div class="row flex max-w-full mx-3 md:mx-4">
+      <div class="row flex max-w-full">
         <div class="flex">
           <div class="w-3rem md:w-6rem ml-1 text-right">
             <img
@@ -277,7 +272,7 @@
           <p class="step-number mr-1 md:mr-3">4</p>
         </div>
 
-        <div class="vertical-row-item mx-3 md:mx-4">
+        <div class="vertical-row-item ml-3">
           <h3 class="text-xl mb-3">Reserve Your Spot</h3>
           <p class="line-height-3">
             And get ready to have a great time!
@@ -292,12 +287,12 @@
     class="section off-white-bg py-6 flex flex-column align-items-center text-center"
   >
     <div class="container flex flex-column align-items-center text-center">
-      <h2 class="primary-font-color text-4xl mx-3 md:mx-4">
+      <h2 class="primary-font-color text-4xl">
         Who We Are
       </h2>
 
       <div
-        class="accent-divider w-6rem max-w-full mx-3 md:mx-4 mt-3 mb-5"
+        class="accent-divider w-6rem max-w-full mt-3 mb-5"
       ></div>
 
       <div class="mb-4 max-w-full">
@@ -323,7 +318,7 @@
         </div>
       </div>
 
-      <p class="text-base line-height-3 mx-3 md:mx-4">
+      <p class="text-base line-height-3">
         We believe humans are better together, hence our name (a portmanteau of
         human + one). We are creating a platform that builds authentic human
         connection through social gatherings. Anyone can take part by attending
@@ -332,7 +327,7 @@
         contact us!
       </p>
       <div
-        class="cta-button border-pill mx-3 mt-4 md:mx-4"
+        class="cta-button border-pill mt-4"
         @click="showContactForm"
       >
         CONTACT US
@@ -354,7 +349,7 @@
       id="past-events"
       name="past-events"
       class="container flex flex-column justify-content-center
-      align-items-center text-center px-3"
+      align-items-center text-center"
     >
       <h2 class="primary-font-color text-4xl mt-4">
         Check out some of our past events...
@@ -386,15 +381,11 @@
         want in your area.
       </p>
 
-      <a
-        href="/sign-up"
-        @click.prevent="routeToSignUp()"
-        class="no-underline mt-4"
-      >
+      <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
           SIGN UP FOR FREE
         </div>
-      </a>
+      </router-link>
     </div>
   </section>
 
@@ -418,6 +409,7 @@
     :showLink="false"
     ref="eventPreviewDialog"
   />
+
   <ContactFormDialog ref="contactFormDialog" />
 </template>
 
@@ -436,9 +428,6 @@ export default {
     };
   },
   methods: {
-    routeToSignUp() {
-      return this.$router.push({ name: "Sign Up" });
-    },
     showEventModal(val) {
       this.event = this.pastEvents[val];
       this.$refs.eventPreviewDialog.showEventModal();
@@ -473,10 +462,6 @@ export default {
 
   .row {
     width: 600px;
-
-    .horizontal-spacer {
-      padding-right: 130px;
-    }
 
     .timeline {
       position: relative;

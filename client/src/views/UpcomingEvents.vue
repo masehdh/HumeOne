@@ -3,9 +3,11 @@
     <meta name="description" content="View upcoming events from HumeOne." />
   </Head>
 
-  <div class="section off-white-bg min-h-screen">
-    <div class="container px-3 md:px-4">
-      <h2 class="primary-font-color block text-center text-3xl mt-6 font-bold">
+  <div class="section off-white-bg min-h-screen pb-0">
+    <TheHeader />
+
+    <div class="container fadein animation-duration-500 pb-6">
+      <h2 class="primary-font-color block text-center text-3xl mt-4 font-bold">
         Upcoming Events
       </h2>
 
@@ -40,15 +42,11 @@
           want in your area.
         </p>
 
-        <a
-          href="/sign-up"
-          @click.prevent="routeToSignUp()"
-          class="no-underline mt-4"
-        >
+        <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
           <div class="cta-button border-pill">
             SIGN UP FOR FREE
           </div>
-        </a>
+        </router-link>
       </div>
 
       <EventPreviewDialog
@@ -81,9 +79,6 @@ export default {
     showEventModal(val) {
       this.event = this.upcomingEvents[val];
       this.$refs.eventPreviewDialog.showEventModal();
-    },
-    routeToSignUp() {
-      return this.$router.push({ name: "Sign Up" });
     }
   }
 };

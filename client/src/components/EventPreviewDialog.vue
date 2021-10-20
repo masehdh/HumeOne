@@ -16,8 +16,7 @@
       <div
         class="event-modal-image w-full md:w-20rem max-w-full"
         :style="{
-          backgroundImage:
-            'url(' + require(`@/assets/${event.image}`) + ')'
+          backgroundImage: 'url(' + require(`@/assets/${event.image}`) + ')'
         }"
       ></div>
 
@@ -44,16 +43,15 @@
 
           <p class="text-base mt-3 line-height-3">{{ event.description }}</p>
 
-          <a
+          <router-link
+            :to="{ name: 'Event Registration', query: { eventId: event.id } }"
             v-if="showLink"
-            :href="`/event-registration?eventId${event.id}`"
-            @click.prevent="routeToEvent(event.id)"
             class="no-underline mt-4"
           >
             <div class="cta-button border-round text-sm mt-3">
               View Event Details
             </div>
-          </a>
+          </router-link>
 
           <div
             class="flex flex-row flex-wrap mt-3 pt-3 border-top-1 border-300"
@@ -96,12 +94,6 @@ export default {
     showEventModal() {
       this.displayEventModal = true;
     },
-    routeToEvent(id) {
-      return this.$router.push({
-        name: "Event Registration",
-        query: { eventId: id }
-      });
-    }
   }
 };
 </script>

@@ -25,6 +25,8 @@
   </Head>
 
   <section class="section form-section">
+    <TheHeader />
+
     <div class="container form-card px-3 py-4 md:px-4 md:py-5">
       <h1 class="form-header">Registration Confirmation</h1>
 
@@ -42,11 +44,11 @@
       <div
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
-        <a href="/" @click.prevent="routeToHome()" class="no-underline mt-3">
+        <router-link :to="{ name: 'Home' }" class="no-underline mt-3">
           <div class="cta-button border-round">
             Back to Home
           </div>
-        </a>
+        </router-link>
 
         <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" />
       </div>
@@ -74,11 +76,6 @@ export default {
   computed: {
     eventLink() {
       return `https://www.humeone.com/event-registration?eventId=${this.eventId}`;
-    }
-  },
-  methods: {
-    routeToHome() {
-      this.$router.push({ name: "Home" });
     }
   }
 };
