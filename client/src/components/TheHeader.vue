@@ -1,21 +1,9 @@
 <template>
   <div class="container mb-4">
     <header
-      class="flex justify-content-between md:justify-content-center align-items-center h-4rem px-3 md:px-4 py-2"
+      class="flex justify-content-between align-items-center h-4rem px-3 md:px-4 py-2"
     >
-      <nav class="hidden md:flex flex-row">
-        <template
-          v-for="(navLink, index) in navLinks.slice(0, navLinks.length / 2)"
-          :key="index"
-        >
-          <router-link :to="{ name: navLink.target }" class="nav-link">
-            <p>{{ navLink.name }}</p>
-            <div class="link-underline"></div>
-          </router-link>
-        </template>
-      </nav>
-
-      <router-link :to="{ name: 'Home' }" class="no-underline h-full md:mx-5">
+      <router-link :to="{ name: 'Home' }" class="no-underline h-full">
         <img
           id="humeone-logo__img"
           class="max-h-full"
@@ -26,7 +14,7 @@
 
       <nav class="hidden md:flex flex-row">
         <template
-          v-for="(navLink, index) in navLinks.slice(navLinks.length / 2)"
+          v-for="(navLink, index) in navLinks"
           :key="index"
         >
           <router-link :to="{ name: navLink.target }" class="nav-link">
@@ -72,11 +60,9 @@ export default {
   data() {
     return {
       navLinks: [
-        { name: "Home", target: "Home" },
-        { name: "About", target: "Home" },
-        { name: "Contact", target: "Home" },
         { name: "Host", target: "Home" },
-        { name: "Log In", target: "Home" },
+        { name: "Upcoming Events", target: "Upcoming Events" },
+        // { name: "Log In", target: "Home" },
         { name: "Sign Up", target: "Sign Up" }
       ],
       displayMobileMenu: false
@@ -145,7 +131,7 @@ export default {
 .mobile-nav-link {
   p {
     color: white;
-    opacity: 0.4;
+    opacity: 0.5;
     font-weight: 500;
   }
 
