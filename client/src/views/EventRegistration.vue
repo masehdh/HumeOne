@@ -69,14 +69,13 @@
           class="register-button cta-button border-round mt-3 md:mx-4"
           @click="scrollToBottom()"
         >
-          REGISTER
+          Register
         </div>
 
         <SocialShareIcons
           :eventDetails="eventDetails"
           :linkProp="eventLink"
-          :isEvent="true"
-          class="social-share mx-3 md:mx-4"
+          class="social-share mx-3 mt-2 md:mt-0 md:mx-4"
         />
       </div>
     </div>
@@ -599,14 +598,14 @@ i.pi {
   }
 }
 
-:deep(.svg-inline--fa) {
+:deep(.svg-inline--fa:not(.fa-bars)) {
   color: $primary-font-color;
   transition: all 0.2s;
   font-size: 28px;
   opacity: 0.5;
 
   @media (max-width: $mobile-breakpoint) {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   &:hover {
@@ -617,9 +616,9 @@ i.pi {
 }
 
 :deep(.copy-icon) {
-  font-size: 24px;
+  font-size: 24px !important;
   @media (max-width: $mobile-breakpoint) {
-    font-size: 18px;
+    font-size: 20px !important;
   }
 }
 

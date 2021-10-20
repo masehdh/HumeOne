@@ -26,7 +26,7 @@
         </h1>
       </div>
 
-      <div class="details fadein animation-duration-500 mt-4">
+      <div class="fadein animation-duration-500 mt-4">
         <p class="line-height-3 primary-font-color" style="max-width: 726px">
           HumeOne brings people together by organizing intimate social
           gatherings and events. Let us know what you're looking for to start
@@ -36,7 +36,7 @@
 
       <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
-          SIGN UP FOR FREE
+          Sign Up For Free
         </div>
       </router-link>
     </div>
@@ -327,10 +327,10 @@
         contact us!
       </p>
       <div
-        class="cta-button border-pill mt-4"
+        class="cta-button border-pill mt-4 uppercase"
         @click="showContactForm"
       >
-        CONTACT US
+        Contact Us
       </div>
     </div>
   </section>
@@ -383,7 +383,7 @@
 
       <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
-          SIGN UP FOR FREE
+          Sign Up For Free
         </div>
       </router-link>
     </div>

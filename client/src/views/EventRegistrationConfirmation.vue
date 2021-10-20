@@ -50,11 +50,13 @@
           </div>
         </router-link>
 
-        <SocialShareIcons
-          :eventDetails="eventDetails"
-          :linkProp="eventLink"
-          :isEvent="true"
-        />
+        <div class="flex flex-row align-items-center mt-3 md:mt-0">
+          <p class="font-medium mr-2 opacity-70 select-none">Share:</p>
+          <SocialShareIcons
+            :eventDetails="eventDetails"
+            :linkProp="eventLink"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -86,7 +88,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-:deep(.svg-inline--fa) {
+:deep(.svg-inline--fa:not(.fa-bars)) {
   color: $primary-font-color;
   transition: all 0.2s;
   font-size: 28px;
@@ -100,6 +102,6 @@ export default {
 }
 
 :deep(.copy-icon) {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 </style>

@@ -44,7 +44,7 @@
 
         <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
           <div class="cta-button border-pill">
-            SIGN UP FOR FREE
+            Sign Up For Free
           </div>
         </router-link>
       </div>

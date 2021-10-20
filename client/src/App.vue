@@ -86,6 +86,7 @@ p {
 .cta-button {
   cursor: pointer;
   text-decoration: none;
+  text-transform: uppercase;
   padding: 10px 20px;
   width: fit-content;
   background: rgb(255, 124, 172);
@@ -95,14 +96,14 @@ p {
     rgba(255, 245, 108, 1) 100%
   );
   max-width: 100%;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
-  color: #444444;
+  color: #333333;
   transition: all 0.2s ease;
   &:hover {
     box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
-    transform: scale(1.04);
+    transform: scale(1.02);
     &:before {
       opacity: 1;
     }
