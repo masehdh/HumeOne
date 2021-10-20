@@ -42,15 +42,11 @@
           want in your area.
         </p>
 
-        <a
-          href="/sign-up"
-          @click.prevent="routeToSignUp()"
-          class="no-underline mt-4"
-        >
+        <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
           <div class="cta-button border-pill">
             SIGN UP FOR FREE
           </div>
-        </a>
+        </router-link>
       </div>
 
       <EventPreviewDialog
@@ -83,9 +79,6 @@ export default {
     showEventModal(val) {
       this.event = this.upcomingEvents[val];
       this.$refs.eventPreviewDialog.showEventModal();
-    },
-    routeToSignUp() {
-      return this.$router.push({ name: "Sign Up" });
     }
   }
 };

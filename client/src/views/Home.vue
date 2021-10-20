@@ -34,15 +34,11 @@
         </p>
       </div>
 
-      <a
-        href="/sign-up"
-        @click.prevent="routeToSignUp()"
-        class="no-underline mt-4"
-      >
+      <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
           SIGN UP FOR FREE
         </div>
-      </a>
+      </router-link>
     </div>
   </section>
 
@@ -116,15 +112,11 @@
         </div>
 
         <div class=" vertical-row-item primary-font-color mx-3 md:mx-4">
-          <a
-            href="/sign-up"
-            @click.prevent="routeToSignUp()"
-            class="no-underline mb-3"
-          >
+          <router-link :to="{ name: 'Sign Up' }" class="no-underline mb-3">
             <h3 class="text-xl no-underline cursor-pointer">
               Sign Up For Free
             </h3>
-          </a>
+          </router-link>
 
           <p class="text-base line-height-3">
             Let us know what you are interested in.
@@ -389,15 +381,11 @@
         want in your area.
       </p>
 
-      <a
-        href="/sign-up"
-        @click.prevent="routeToSignUp()"
-        class="no-underline mt-4"
-      >
+      <router-link :to="{ name: 'Sign Up' }" class="no-underline mt-4">
         <div class="cta-button border-pill">
           SIGN UP FOR FREE
         </div>
-      </a>
+      </router-link>
     </div>
   </section>
 
@@ -440,9 +428,6 @@ export default {
     };
   },
   methods: {
-    routeToSignUp() {
-      return this.$router.push({ name: "Sign Up" });
-    },
     showEventModal(val) {
       this.event = this.pastEvents[val];
       this.$refs.eventPreviewDialog.showEventModal();

@@ -16,11 +16,11 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>
       </h2>
 
-      <a href="/" @click.prevent="routeToHome()" class="no-underline mt-5">
+      <router-link :to="{ name: 'Home' }" class="no-underline mt-5">
         <div class="cta-button border-round">
           Back to Home
         </div>
-      </a>
+      </router-link>
     </div>
   </section>
 </template>
@@ -35,11 +35,6 @@ export default {
       messages: [],
       validationMessages: {}
     };
-  },
-  methods: {
-    routeToHome() {
-      this.$router.push({ name: "Home" });
-    }
   }
 };
 </script>
