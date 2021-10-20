@@ -290,4 +290,8 @@ p {
     }
   }
 }
+
+.p-dialog-header {
+  padding-bottom: 1rem !important;
+}
 </style>

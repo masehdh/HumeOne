@@ -435,7 +435,9 @@ export default {
             return this.$router.push({
               name: "Event Registration Confirmation",
               query: {
-                eventId: this.eventId
+                eventId: this.eventId,
+                firstName: this.firstName,
+                lastName: this.lastName
               }
             });
           }

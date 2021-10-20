@@ -2,7 +2,7 @@
   <Head>
     <meta
       name="description"
-      content="Sign up for free to host and attend events in your area. Let us know what you are interested in to start receiving invites today!"
+      content="Sign up for free to attend or host events in your area. Let us know what you are interested in to start receiving invites today!"
     />
   </Head>
 
@@ -13,9 +13,9 @@
       <keep-alive>
         <component
           :is="currentComponent"
-          :emailProp="email"
+          :userProp="user"
           @next-step="setComponent"
-          @send-email="email = $event"
+          @send-user="user = $event"
         ></component>
       </keep-alive>
     </form>
@@ -31,7 +31,7 @@ export default {
   name: "Sign Up",
   data() {
     return {
-      email: "",
+      user: {},
       currentComponent: "SignUpForm"
     };
   },

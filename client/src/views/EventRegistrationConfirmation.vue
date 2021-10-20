@@ -44,11 +44,42 @@
       <div
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
-        <router-link :to="{ name: 'Home' }" class="no-underline mt-3">
-          <div class="cta-button border-round">
+        <div
+          class="cta-button border-round no-underline mt-3"
+          @click="showInviteModal()"
+          v-if="firstName && lastName"
+        >
+          Invite Friends
+        </div>
+
+        <router-link :to="{ name: 'Home' }" class="no-underline" v-else>
+          <div class="cta-button border-round mt-3 mr-3">
             Back to Home
           </div>
         </router-link>
+
+        <InviteDialog
+          v-if="firstName && lastName"
+          :messageProp="
+            `${firstName.charAt(0).toUpperCase()}${firstName.slice(
+              1
+            )} ${lastName.charAt(0).toUpperCase()}${lastName.slice(
+              1
+            )} has signed up for ${
+              eventDetails.name
+            } and would like to invite you to attend. If you are interested, you can click the button below to view the event details and register before ${
+              eventDetails.paymentDeadline
+            }.`
+          "
+          :subjectProp="
+            `${firstName.charAt(0).toUpperCase()}${firstName.slice(
+              1
+            )} ${lastName.charAt(0).toUpperCase()}${lastName.slice(
+              1
+            )} is inviting you to ${eventDetails.name}`
+          "
+          ref="inviteModal"
+        />
 
         <div class="flex flex-row align-items-center mt-3 md:mt-0">
           <p class="font-medium mr-2 opacity-70 select-none">Share:</p>
@@ -65,15 +96,18 @@
 <script>
 import eventList from "../../../resources/events.json";
 import SocialShareIcons from "../components/SocialShareIcons.vue";
+import InviteDialog from "../components/InviteDialog.vue";
 
 export default {
   name: "Event Registration Confirmation",
-  components: { SocialShareIcons },
+  components: { SocialShareIcons, InviteDialog },
   data() {
     return {
       eventDetails:
         eventList.find(event => event.id === this.$route.query.eventId) || {},
-      eventId: this.$route.query.eventId
+      eventId: this.$route.query.eventId,
+      firstName: this.$route.query.firstName,
+      lastName: this.$route.query.lastName
     };
   },
   created() {
@@ -82,6 +116,11 @@ export default {
   computed: {
     eventLink() {
       return `https://www.humeone.com/event-registration?eventId=${this.eventId}`;
+    }
+  },
+  methods: {
+    showInviteModal() {
+      return this.$refs.inviteModal.showInviteModal();
     }
   }
 };

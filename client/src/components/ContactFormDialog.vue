@@ -83,8 +83,6 @@
       </div>
     </div>
 
-    <br />
-
     <Button
       type="submit"
       label="Submit"

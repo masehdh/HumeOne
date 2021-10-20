@@ -69,7 +69,6 @@
                 'p-invalid': validationMessages.hasOwnProperty('email')
               }"
               class="w-20rem"
-              @input="$emit('send-email', email)"
             />
 
             <label for="email">Email</label>
@@ -165,7 +164,7 @@ import { signUpValidation } from "../../../resources/validation";
 
 export default {
   name: "Sign Up Form",
-  emits: ["next-step", "send-email"],
+  emits: ["next-step", "send-user"],
   data() {
     return {
       serverResponses: [],
@@ -228,6 +227,11 @@ export default {
           over18: this.over18
         })
         .then(() => {
+          this.$emit("send-user", {
+            email: this.email,
+            firstName: this.firstName,
+            lastName: this.lastName
+          });
           this.$emit("next-step", "PreferencesForm");
         })
         .catch(error =>
