@@ -50,7 +50,11 @@
           </div>
         </router-link>
 
-        <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" />
+        <SocialShareIcons
+          :eventDetails="eventDetails"
+          :linkProp="eventLink"
+          :isEvent="true"
+        />
       </div>
     </div>
   </section>

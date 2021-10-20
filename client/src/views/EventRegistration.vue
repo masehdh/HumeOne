@@ -74,7 +74,8 @@
 
         <SocialShareIcons
           :eventDetails="eventDetails"
-          :eventLink="eventLink"
+          :linkProp="eventLink"
+          :isEvent="true"
           class="social-share mx-3 md:mx-4"
         />
       </div>
