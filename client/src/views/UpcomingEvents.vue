@@ -3,10 +3,10 @@
     <meta name="description" content="View upcoming events from HumeOne." />
   </Head>
 
-  <div class="section off-white-bg min-h-screen">
+  <div class="section off-white-bg min-h-screen pb-0">
     <TheHeader />
 
-    <div class="container px-3 md:px-4">
+    <div class="container fadein animation-duration-500 pb-6">
       <h2 class="primary-font-color block text-center text-3xl mt-4 font-bold">
         Upcoming Events
       </h2>

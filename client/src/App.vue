@@ -61,6 +61,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
   &:last-child {
     padding-bottom: 100px;
   }
@@ -97,7 +99,7 @@ p {
   font-size: 16px;
   box-shadow: 3px 3px 12px rgba($color: #000000, $alpha: 0.2);
   color: #444444;
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease;
   &:hover {
     box-shadow: 6px 6px 10px rgba($color: #000000, $alpha: 0.2);
     transform: scale(1.04);
@@ -121,13 +123,12 @@ p {
     left: 0;
     opacity: 0;
     z-index: -1;
-    transition: opacity 0.45s ease;
+    transition: opacity 0.3s ease;
   }
 }
 
 .form-section {
   background-color: $off-white;
-  padding: 0 10px 40px 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
