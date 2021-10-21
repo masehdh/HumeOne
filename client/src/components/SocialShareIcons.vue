@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row align-items-center mt-3 md:mt-0">
+  <div class="flex flex-row align-items-center">
     <a @click="copyUrl()" class="relative mr-2">
       <font-awesome-icon :icon="['fas', 'link']" class="copy-icon" />
       <p
@@ -42,8 +42,9 @@
 export default {
   name: "Social Share Icons",
   props: {
-    eventLink: String,
-    eventDetails: Object
+    linkProp: String,
+    eventDetails: Object,
+    description: String
   },
   data() {
     return {
@@ -52,11 +53,19 @@ export default {
   },
   computed: {
     shareLink() {
-      return {
-        facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.eventLink}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
-        twitter: `https://twitter.com/intent/tweet?url=${this.eventLink}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.eventLink}`
-      };
+      if (this.eventDetails) {
+        return {
+          facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.linkProp}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
+          twitter: `https://twitter.com/intent/tweet?url=${this.linkProp}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.linkProp}`
+        };
+      } else {
+        return {
+          facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.linkProp}&quote=${this.description}&hashtag=%23HumeOne`,
+          twitter: `https://twitter.com/intent/tweet?url=${this.linkProp}&text=${this.description}&hashtags=HumeOne,ThingsToDo,Events`,
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.linkProp}`
+        };
+      }
     }
   },
   methods: {
@@ -74,7 +83,7 @@ export default {
       window.open(url, "NewWindow", params);
     },
     copyUrl() {
-      navigator.clipboard.writeText(this.eventLink);
+      navigator.clipboard.writeText(this.linkProp);
       this.showCopyTip = true;
       setTimeout(() => {
         this.showCopyTip = false;

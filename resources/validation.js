@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { tldSet } = require("./tlds");
+const tlds = require("./tlds");
 const interestCategories = require("./interests.json");
 const availabilityCategories = require("./availability.json");
 let eventTagCategories = require("./eventTags.json")
@@ -9,40 +9,143 @@ const currentYear = new Date().getFullYear()
 const minBirthYear = currentYear - 120
 const maxBirthYear = currentYear - 18
 
+// PROPERTY VALIDATORS
+const emailValidator = Joi.string()
+  .email({ tlds: { allow: tlds } })
+  .min(3)
+  .max(60)
+  .required()
+  .messages({
+    "string.base": `This field should be a string`,
+    "string.empty": `This field is required`,
+    "string.min": `This field should be at least {#limit} characters`,
+    "string.max": `This field should be under {#limit} characters`,
+    "any.required": `This field is required`,
+    "string.email": `The email you entered appears to be invalid`,
+  })
+
+const firstNameValidator = Joi.string()
+  .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
+  .min(2)
+  .max(40)
+  .required()
+  .messages({
+    "string.base": `This field should be a string`,
+    "string.empty": `This field is required`,
+    "string.min": `This field should be at least {#limit} characters`,
+    "string.max": `This field should be under {#limit} characters`,
+    "string.pattern.base": `This field can only contain letters`,
+    "any.required": `This field is required`,
+  })
+
+const lastNameValidator = Joi.string()
+  .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
+  .min(2)
+  .max(40)
+  .required()
+  .messages({
+    "string.base": `This field should be a string`,
+    "string.empty": `This field is required`,
+    "string.min": `This field should be at least {#limit} characters`,
+    "string.max": `This field should be under {#limit} characters`,
+    "string.pattern.base": `This field can only contain letters`,
+    "any.required": `This field is required`,
+  })
+
+const over18Validator = Joi.boolean().valid(true).required().messages({
+  "any.only": `You must be 18 years old or over to register for events`,
+})
+
+const areaValidator = Joi.object({
+  name:
+    Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+      .min(2)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.pattern.base": `This field cannot contain special characters`,
+        "any.required": `This field is required`,
+      }),
+  region:
+    Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+      .min(2)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.pattern.base": `This field cannot contain special characters`,
+        "any.required": `This field is required`,
+      }),
+  country:
+    Joi.string()
+      .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
+      .min(2)
+      .required()
+      .messages({
+        "string.base": `This field should be a string`,
+        "string.empty": `This field is required`,
+        "string.min": `This field should be at least {#limit} characters`,
+        "string.pattern.base": `This field cannot contain special characters`,
+        "any.required": `This field is required`,
+      }),
+  location:
+    Joi.object({
+      type: Joi.string().required().valid("Point"),
+      coordinates: Joi.array().items(Joi.number().required())
+    })
+}).required().messages({
+  "object.base": `This field is required`,
+  "object.empty": `This field is required`,
+  "any.required": `This field is required`,
+})
+
+const shortStringValidator = Joi.string()
+  .pattern(/[<>]/, { invert: true })
+  .min(3)
+  .max(80)
+  .required()
+  .messages({
+    "string.base": `This field should be a string`,
+    "string.empty": `This field is required`,
+    "string.min": `This field should be at least {#limit} characters`,
+    "string.max": `This field should be under {#limit} characters`,
+    "string.pattern.base": `This field can only contain letters`,
+    "string.pattern.invert.base": `This field cannot contain the characters < or >`,
+    "any.required": `This field is required`,
+  })
+
+const longStringValidator = Joi.string()
+  .pattern(/[<>]/, { invert: true })
+  .min(10)
+  .max(3000)
+  .required()
+  .messages({
+    "string.base": `This field should be a string`,
+    "string.empty": `This field is required`,
+    "string.min": `This field should be at least {#limit} characters`,
+    "string.max": `This field should be under {#limit} characters`,
+    "string.pattern.base": `This field can only contain letters`,
+    "string.pattern.invert.base": `This field cannot contain the characters < or >`,
+    "any.required": `This field is required`,
+  })
+
+
+// VALIDATION SCHEMAS
 const emailValidation = (data) => {
   const schema = Joi.alternatives().conditional(Joi.object({ vaccineRequired: true }).unknown(), {
     then: Joi.object({
-      email: Joi.string()
-        .email({ tlds: { allow: tldSet } })
-        .min(3)
-        .max(60)
-        .required()
-        .messages({
-          "string.base": `This field should be a string`,
-          "string.empty": `This field is required`,
-          "string.min": `This field should be at least {#limit} characters`,
-          "string.max": `This field should be under {#limit} characters`,
-          "any.required": `This field is required`,
-          "string.email": `The email you entered appears to be invalid`,
-        }),
+      email: emailValidator,
       vaccineCertification: Joi.boolean().valid(true).required().messages({
         "any.only": `To comply with public health guidelines, you must be fully vaccinated to attend this event`,
       }),
     }).unknown(),
     otherwise: Joi.object({
-      email: Joi.string()
-        .email({ tlds: { allow: tldSet } })
-        .min(3)
-        .max(60)
-        .required()
-        .messages({
-          "string.base": `This field should be a string`,
-          "string.empty": `This field is required`,
-          "string.min": `This field should be at least {#limit} characters`,
-          "string.max": `This field should be under {#limit} characters`,
-          "any.required": `This field is required`,
-          "string.email": `The email you entered appears to be invalid`,
-        }),
+      email: emailValidator,
     }).unknown()
   })
   return schema.validate(data, {
@@ -53,48 +156,10 @@ const emailValidation = (data) => {
 
 const registrationValidation = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
-      .min(2)
-      .max(40)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
-      }),
-    lastName: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
-      .min(2)
-      .max(40)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
-      }),
-    email: Joi.string()
-      .email({ tlds: { allow: tldSet } })
-      .min(3)
-      .max(60)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
-        "string.email": `The email you entered appears to be invalid`,
-      }),
-    over18: Joi.boolean().valid(true).required().messages({
-      "any.only": `You must be 18 years old or over to register for events`,
-    })
+    firstName: firstNameValidator,
+    lastName: lastNameValidator,
+    email: emailValidator,
+    over18: over18Validator
   });
   return schema.validate(data, {
     abortEarly: false,
@@ -104,94 +169,11 @@ const registrationValidation = (data) => {
 
 const signUpValidation = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
-      .min(2)
-      .max(40)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
-      }),
-    lastName: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
-      .min(2)
-      .max(40)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
-      }),
-    email: Joi.string()
-      .email({ tlds: { allow: tldSet } })
-      .min(3)
-      .max(60)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
-        "string.email": `The email you entered appears to be invalid`,
-      }),
-    area: Joi.object({
-      name:
-        Joi.string()
-          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
-          .min(2)
-          .required()
-          .messages({
-            "string.base": `This field should be a string`,
-            "string.empty": `This field is required`,
-            "string.min": `This field should be at least {#limit} characters`,
-            "string.pattern.base": `This field cannot contain special characters`,
-            "any.required": `This field is required`,
-          }),
-      region:
-        Joi.string()
-          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
-          .min(2)
-          .required()
-          .messages({
-            "string.base": `This field should be a string`,
-            "string.empty": `This field is required`,
-            "string.min": `This field should be at least {#limit} characters`,
-            "string.pattern.base": `This field cannot contain special characters`,
-            "any.required": `This field is required`,
-          }),
-      country:
-        Joi.string()
-          .pattern(/^[ a-zA-ZÀ-ÿ0-9'.,-]+$/)
-          .min(2)
-          .required()
-          .messages({
-            "string.base": `This field should be a string`,
-            "string.empty": `This field is required`,
-            "string.min": `This field should be at least {#limit} characters`,
-            "string.pattern.base": `This field cannot contain special characters`,
-            "any.required": `This field is required`,
-          }),
-      location: Joi.object({
-        type: Joi.string().required().valid("Point"),
-        coordinates: Joi.array().items(Joi.number().required())
-      })
-    }).required().messages({
-      "object.base": `This field is required`,
-      "object.empty": `This field is required`,
-      "any.required": `This field is required`,
-    }),
-    over18: Joi.boolean().valid(true).required().messages({
-      "any.only": `You must be 18 years old or over to sign up`,
-    })
+    firstName: firstNameValidator,
+    lastName: lastNameValidator,
+    email: emailValidator,
+    area: areaValidator,
+    over18: over18Validator
   });
   return schema.validate(data, {
     abortEarly: false,
@@ -253,60 +235,44 @@ const preferencesValidation = (data) => {
 
 const contactUsValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string()
-      .pattern(/^[ a-zA-ZÀ-ÿ'-]+$/)
-      .min(2)
-      .max(40)
-      .required()
+    name: firstNameValidator,
+    email: emailValidator,
+    subject: shortStringValidator,
+    messageBody: longStringValidator,
+  });
+  return schema.validate(data, {
+    abortEarly: false,
+    errors: { label: "key", escapeHtml: true },
+  });
+};
+
+const userInviteValidation = (data) => {
+  const schema = Joi.object({
+    emails: Joi.array()
+      .items(
+        Joi.string()
+          .email({ tlds: { allow: tlds } })
+          .min(3)
+          .max(60)
+          .messages({
+            "string.empty": `You must include at least one email`,
+            "string.min": `Emails should be at least {#limit} characters`,
+            "string.max": `Emails should be under {#limit} characters`,
+            "string.email": `One or emails appears to be invalid`,
+          }),
+        Joi.string()
+          .pattern(/[<>]/)
+          .forbidden()
+      )
+      .max(10)
+      .min(1)
       .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "any.required": `This field is required`,
+        "array.excludes": `One or emails appears to be invalid`,
+        "array.max": `You can send a maximum of {#limit} invites at a time`,
+        "array.min": `You must include at least one email`,
       }),
-    email: Joi.string()
-      .email({ tlds: { allow: tldSet } })
-      .min(3)
-      .max(60)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "any.required": `This field is required`,
-        "string.email": `The email you entered appears to be invalid`,
-      }),
-    subject: Joi.string()
-      .pattern(/[<>]/, { invert: true })
-      .min(3)
-      .max(80)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "string.pattern.invert.base": `This field cannot contain the characters < or >`,
-        "any.required": `This field is required`,
-      }),
-    message: Joi.string()
-      .pattern(/[<>]/, { invert: true })
-      .min(10)
-      .max(3000)
-      .required()
-      .messages({
-        "string.base": `This field should be a string`,
-        "string.empty": `This field is required`,
-        "string.min": `This field should be at least {#limit} characters`,
-        "string.max": `This field should be under {#limit} characters`,
-        "string.pattern.base": `This field can only contain letters`,
-        "string.pattern.invert.base": `This field cannot contain the characters < or >`,
-        "any.required": `This field is required`,
-      }),
+    subject: shortStringValidator,
+    messageBody: longStringValidator,
   });
   return schema.validate(data, {
     abortEarly: false,
@@ -319,3 +285,4 @@ module.exports.registrationValidation = registrationValidation;
 module.exports.signUpValidation = signUpValidation;
 module.exports.preferencesValidation = preferencesValidation;
 module.exports.contactUsValidation = contactUsValidation;
+module.exports.userInviteValidation = userInviteValidation;

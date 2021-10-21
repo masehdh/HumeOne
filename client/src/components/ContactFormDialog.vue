@@ -63,12 +63,12 @@
     </div>
 
     <div class="field">
-      <label for="message">Message</label>
+      <label for="message-body">Message</label>
       <Textarea
         type="text"
         :autoResize="true"
-        id="message"
-        v-model="message"
+        id="message-body"
+        v-model="messageBody"
         class="inputfield w-full"
         :class="{
           'p-invalid': validationMessages.hasOwnProperty('message')
@@ -83,14 +83,16 @@
       </div>
     </div>
 
-    <br />
-
     <Button
       type="submit"
       label="Submit"
       class="p-button-md p-button-primary submit-button no-underline"
       @click="submitContactForm"
     />
+
+    <div v-for="(message, index) of validationMessages['submit']" :key="index">
+      <div class="validation-message">{{ message }}</div>
+    </div>
   </Dialog>
 </template>
 
@@ -105,7 +107,7 @@ export default {
       email: "",
       name: "",
       subject: "",
-      message: "",
+      messageBody: "",
       validationMessages: {},
       displayContactForm: false
     };
@@ -117,7 +119,7 @@ export default {
         name: this.name,
         email: this.email,
         subject: this.subject,
-        message: this.message
+        messageBody: this.messageBody
       });
       if (error) {
         error.details.forEach(({ path }) => {
@@ -127,6 +129,9 @@ export default {
           messages = [...new Set(messages)];
           return (this.validationMessages[path[0]] = messages);
         });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
         return;
       }
 
@@ -135,14 +140,14 @@ export default {
           name: this.name,
           email: this.email,
           subject: this.subject,
-          message: this.message
+          messageBody: this.messageBody
         })
         .then(() => {
           this.displayContactForm = false;
           this.name = "";
           this.email = "";
           this.subject = "";
-          this.message = "";
+          this.messageBody = "";
         })
         .catch(error =>
           console.log("error from /api/contact-us: ", error.response.data)

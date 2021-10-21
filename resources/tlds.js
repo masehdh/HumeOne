@@ -1513,5 +1513,4 @@ internals.tlds = [
 ];
 
 // Keep as upper-case to make updating from source easier
-
 module.exports = new Set(internals.tlds.map((tld) => tld.toLowerCase()));

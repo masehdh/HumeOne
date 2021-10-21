@@ -41,16 +41,58 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
 
+      <p class="line-height-3 mt-3">
+        Want to bring a friend? Use the button below to send them an invite!
+      </p>
+
       <div
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
-        <router-link :to="{ name: 'Home' }" class="no-underline mt-3">
-          <div class="cta-button border-round">
+        <div
+          class="cta-button border-round no-underline mt-3"
+          @click="showInviteModal()"
+          v-if="firstName && lastName"
+        >
+          Invite Friends
+        </div>
+
+        <router-link :to="{ name: 'Home' }" class="no-underline" v-else>
+          <div class="cta-button border-round mt-3 mr-3">
             Back to Home
           </div>
         </router-link>
 
-        <SocialShareIcons :eventDetails="eventDetails" :eventLink="eventLink" />
+        <InviteDialog
+          v-if="firstName && lastName"
+          :messageProp="
+            `${firstName.charAt(0).toUpperCase()}${firstName.slice(
+              1
+            )} ${lastName.charAt(0).toUpperCase()}${lastName.slice(
+              1
+            )} has signed up for ${
+              eventDetails.name
+            } and would like to invite you to attend. If you are interested, you can click the button below to view the event details and register before ${
+              eventDetails.paymentDeadline
+            }.`
+          "
+          :subjectProp="
+            `${firstName.charAt(0).toUpperCase()}${firstName.slice(
+              1
+            )} ${lastName.charAt(0).toUpperCase()}${lastName.slice(
+              1
+            )} is inviting you to ${eventDetails.name}`
+          "
+          :linkProp="eventLink"
+          ref="inviteModal"
+        />
+
+        <div class="flex flex-row align-items-center mt-3 md:mt-0">
+          <p class="font-medium mr-2 opacity-70 select-none">Share:</p>
+          <SocialShareIcons
+            :eventDetails="eventDetails"
+            :linkProp="eventLink"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -59,15 +101,18 @@
 <script>
 import eventList from "../../../resources/events.json";
 import SocialShareIcons from "../components/SocialShareIcons.vue";
+import InviteDialog from "../components/InviteDialog.vue";
 
 export default {
   name: "Event Registration Confirmation",
-  components: { SocialShareIcons },
+  components: { SocialShareIcons, InviteDialog },
   data() {
     return {
       eventDetails:
         eventList.find(event => event.id === this.$route.query.eventId) || {},
-      eventId: this.$route.query.eventId
+      eventId: this.$route.query.eventId,
+      firstName: this.$route.query.firstName,
+      lastName: this.$route.query.lastName
     };
   },
   created() {
@@ -77,12 +122,17 @@ export default {
     eventLink() {
       return `https://www.humeone.com/event-registration?eventId=${this.eventId}`;
     }
+  },
+  methods: {
+    showInviteModal() {
+      return this.$refs.inviteModal.showInviteModal();
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-:deep(.svg-inline--fa) {
+:deep(.svg-inline--fa:not(.fa-bars)) {
   color: $primary-font-color;
   transition: all 0.2s;
   font-size: 28px;
@@ -96,6 +146,6 @@ export default {
 }
 
 :deep(.copy-icon) {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 </style>

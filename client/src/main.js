@@ -59,6 +59,7 @@ import Avatar from 'primevue/avatar';
 import Tooltip from 'primevue/tooltip';
 import Checkbox from 'primevue/checkbox';
 import Sidebar from 'primevue/sidebar';
+import Chips from 'primevue/chips';
 
 
 createApp(App)
@@ -98,4 +99,5 @@ createApp(App)
   .component("Checkbox", Checkbox)
   .component("Head", Head)
   .component("Sidebar", Sidebar)
+  .component("Chips", Chips)
   .mount('#app')

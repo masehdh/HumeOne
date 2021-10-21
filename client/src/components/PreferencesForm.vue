@@ -243,7 +243,7 @@ import { preferencesValidation } from "../../../resources/validation";
 export default {
   name: "Preferences Form",
   props: {
-    emailProp: String
+    userProp: Object
   },
   data() {
     return {
@@ -351,12 +351,16 @@ export default {
       }
       axios
         .put("/api/sign-up/preferences", {
-          email: this.emailProp,
+          email: this.userProp.email,
           preferences: this.preferencesPayload
         })
         .then(() => {
           this.$router.push({
-            name: "Sign Up Confirmation"
+            name: "Sign Up Confirmation",
+            query: {
+              firstName: this.userProp.firstName,
+              lastName: this.userProp.lastName
+            }
           });
         })
         .catch(error =>

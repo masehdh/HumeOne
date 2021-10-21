@@ -42,6 +42,9 @@ app.use("/api/event-registration", eventRegistrationRoute);
 const contactUsRoute = require("./routes/contactUs");
 app.use("/api/contact-us", express.json(), contactUsRoute);
 
+const userInviteRoute = require("./routes/userInvite");
+app.use("/api/user-invite", express.json(), userInviteRoute);
+
 const mapRoute = require("./routes/map");
 app.use("/api/map", express.json(), mapRoute);
 
