@@ -441,8 +441,8 @@ export default {
               name: "Event Registration Confirmation",
               query: {
                 eventId: this.eventId,
-                firstName: this.firstName,
-                lastName: this.lastName
+                firstName: res.data.output.firstName,
+                lastName: res.data.output.lastName
               }
             });
           }

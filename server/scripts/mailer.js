@@ -6,6 +6,7 @@ const Attendee = require("../models/Attendee.js");
 const eventList = require("../../resources/events.json")
 // SCRIPTS
 const confirmationEmail = require("./confirmationEmail");
+const userInviteEmail = require("./userInviteEmail");
 
 // INITIALIZER FOR MAILER
 const start = () =>
@@ -52,7 +53,7 @@ const sendEventConfirmation = async (email, eventId) => {
   }
 };
 
-const contactUs = async (name, email, subject, message) => {
+const contactUs = async (name, email, subject, messageBody) => {
   try {
     await transporter.sendMail(
       {
@@ -66,7 +67,7 @@ const contactUs = async (name, email, subject, message) => {
          Subject: ${subject}
 
          Message:
-         ${message}
+         ${messageBody}
         `,
       },
       async (error, info) => {
@@ -81,8 +82,37 @@ const contactUs = async (name, email, subject, message) => {
   }
 };
 
-// SEND TEST NEWSLETTER.
+const sendUserInvite = async (emails, subject, messageBody, link) => {
+  emails.forEach(async function (email) {
+    try {
+      await transporter.sendMail(
+        {
+          from: '"HumeOne" <team@humeone.com>',
+          to: email,
+          subject: subject,
+          html: userInviteEmail(messageBody, link),
+          attachments: [
+            {
+              filename: "humeone-email-banner.png",
+              path: path.join(__dirname, "../../resources/humeone-email-banner.png"),
+              cid: "humeone-email-banner",
+            },
+          ],
+        },
+        async (error, info) => {
+          if (error) {
+            return console.log("Mailer Error:", error);
+          }
+          return console.log("Message sent: " + info.response);
+        }
+      );
+    } catch (error) {
+      return console.log("Mailer Error:", error);
+    }
+  })
+};
 
 module.exports.start = start;
 module.exports.sendEventConfirmation = sendEventConfirmation;
+module.exports.sendUserInvite = sendUserInvite;
 module.exports.contactUs = contactUs;

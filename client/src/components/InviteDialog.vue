@@ -43,13 +43,13 @@
     </div>
 
     <div class="field">
-      <label for="message">Preview Message</label>
+      <label for="message-body">Preview Message</label>
       <Textarea
         type="text"
         :autoResize="true"
         rows="8"
-        id="message"
-        v-model="message"
+        id="message-body"
+        v-model="messageBody"
         readonly
         class="inputfield w-full select-none"
       />
@@ -63,21 +63,26 @@
       type="submit"
       :label="`Send Invite${emails.length > 1 ? 's' : ''}`"
       class="p-button-md p-button-primary submit-button no-underline"
-      @click="submitContactForm"
+      @click="submitInviteForm"
     />
+
+    <div v-for="(message, index) of validationMessages['submit']" :key="index">
+      <div class="validation-message">{{ message }}</div>
+    </div>
   </Dialog>
 </template>
 
 <script>
 import axios from "axios";
+const { userInviteValidation } = require("../../../resources/validation.js");
 
 export default {
   name: "Invite Dialog",
-  props: { subjectProp: String, messageProp: String },
+  props: { subjectProp: String, messageProp: String, linkProp: String },
   data() {
     return {
       subject: this.subjectProp,
-      message: this.messageProp,
+      messageBody: this.messageProp,
       displayInviteModal: false,
       validationMessages: {},
       emails: []
@@ -87,38 +92,38 @@ export default {
     showInviteModal() {
       this.displayInviteModal = true;
     },
-    submitContactForm() {
+    submitInviteForm() {
       this.validationMessages = {};
-      // const { error } = contactUsValidation({
-      //   name: this.name,
-      //   email: this.email,
-      //   subject: this.subject,
-      //   message: this.message
-      // });
-      // if (error) {
-      //   error.details.forEach(({ path }) => {
-      //     let messages = error.details
-      //       .filter(val => val.path[0] === path[0])
-      //       .map(({ message }) => message);
-      //     messages = [...new Set(messages)];
-      //     return (this.validationMessages[path[0]] = messages);
-      //   });
-      //   return;
-      // }
+      const { error } = userInviteValidation({
+        emails: this.emails,
+        subject: this.subject,
+        messageBody: this.messageBody
+      });
+      if (error) {
+        error.details.forEach(({ path }) => {
+          let messages = error.details
+            .filter(val => val.path[0] === path[0])
+            .map(({ message }) => message);
+          messages = [...new Set(messages)];
+          return (this.validationMessages[path[0]] = messages);
+        });
+        this.validationMessages["submit"] = [
+          "Please review the errors above before submitting"
+        ];
+        return;
+      }
 
       axios
-        .post("/api/contact-us", {
-          name: this.name,
-          email: this.email,
+        .post("/api/user-invite", {
+          emails: this.emails,
           subject: this.subject,
-          message: this.message
+          messageBody: this.messageBody,
+          link: this.linkProp
         })
-        .then(() => {
-          this.displayContactForm = false;
-          this.name = "";
-          this.email = "";
-          this.subject = "";
-          this.message = "";
+        .then(res => {
+          this.emails = [];
+          this.displayInviteModal = false;
+          console.log(res.data);
         })
         .catch(error =>
           console.log("error from /api/contact-us: ", error.response.data)
@@ -133,5 +138,9 @@ export default {
   width: 100%;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
+  .p-chips-token {
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
+  }
 }
 </style>

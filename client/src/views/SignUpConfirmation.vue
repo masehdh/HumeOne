@@ -15,6 +15,10 @@
         <a href="mailto:team@humeone.com">team@humeone.com</a>.
       </p>
 
+      <p class="line-height-3 mt-3">
+        Want to bring a friend? Use the button below to send them an invite!
+      </p>
+
       <div
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
@@ -48,6 +52,7 @@
               1
             )} is inviting you to join HumeOne`
           "
+          :linkProp="'https://www.humeone.com/'"
           ref="inviteModal"
         />
 

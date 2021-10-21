@@ -147,7 +147,7 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       .status(200)
       .json({
         code: 200,
-        output: { freeEvent: true },
+        output: { freeEvent: true, firstName: signedUp.firstName, lastName: signedUp.lastName },
       });
   }
 
@@ -171,7 +171,7 @@ router.post("/create-checkout-session", express.json(), async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}`,
+    success_url: `http://${process.env.DOMAIN}/event-registration-confirmation?eventId=${req.body.eventId}&firstName=${signedUp.firstName}&lastName=${signedUp.lastName}`,
     cancel_url: `http://${process.env.DOMAIN}/event-registration?eventId=${req.body.eventId}`,
   });
   res.status(200).json({ url: session.url, output: {} });
