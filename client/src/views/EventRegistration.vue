@@ -36,14 +36,15 @@
         class="event-info flex flex-column md:flex-row px-3 my-2 md:my-0 md:px-4"
       >
         <p class="max-spots mr-3 mt-2 font-medium">
-          <i class="pi pi-users mr-2"></i>{{ eventDetails.maxSpots }} max spots
+          <i class="pi pi-users mr-2 text-sm"></i
+          >{{ eventDetails.maxSpots }} max spots
           <span class="spots-left" v-if="showSpotsLeft"
             >&#183; {{ spotsLeft }} spots left</span
           >
         </p>
 
         <p class="max-spots mr-3 mt-2 font-medium" v-if="eventDetails.dateTime">
-          <i class="pi pi-clock mr-2"></i>{{ eventDetails.dateTime }} -
+          <i class="pi pi-clock mr-2 text-sm"></i>{{ eventDetails.dateTime }} -
           {{ eventDetails.endTime }}
         </p>
 
@@ -51,12 +52,14 @@
           class="max-spots mt-2 font-medium"
           v-if="eventDetails.reservationFee > 0"
         >
-          <i class="pi pi-wallet mr-2"></i>${{ eventDetails.reservationFee }}
+          <i class="pi pi-wallet mr-2 text-sm"></i>${{
+            eventDetails.reservationFee
+          }}
           (plus tax)
         </p>
 
         <p class="max-spots mt-2 font-medium" v-else>
-          <i class="pi pi-wallet mr-2"></i>FREE
+          <i class="pi pi-wallet mr-2 text-sm"></i>FREE
         </p>
       </div>
 
@@ -66,7 +69,7 @@
         class="flex flex-column-reverse md:flex-row md:align-items-baseline justify-content-center md:justify-content-between"
       >
         <div
-          class="register-button cta-button border-round mt-3 md:mx-4"
+          class="ml-auto mr-auto cta-button border-round mt-3 md:mx-4"
           @click="scrollToBottom()"
         >
           Register
@@ -75,7 +78,7 @@
         <SocialShareIcons
           :eventDetails="eventDetails"
           :linkProp="eventLink"
-          class="social-share mx-3 mt-2 md:mt-0 md:mx-4"
+          class="justify-content-center mx-3 mt-2 md:mt-0 md:mx-4"
         />
       </div>
     </div>
@@ -120,7 +123,8 @@
           <a
             class="primary-font-color"
             :href="'mailto:' + eventDetails.hostEmail"
-            ><i class="pi pi-envelope"></i>{{ eventDetails.hostEmail }}</a
+            ><i class="pi pi-envelope mr-2 text-sm"></i
+            >{{ eventDetails.hostEmail }}</a
           >
 
           <span
@@ -133,7 +137,8 @@
             v-if="eventDetails.hostNumber"
             :href="'tel:' + eventDetails.hostNumber"
             class="primary-font-color"
-            ><i class="pi pi-phone"></i>{{ eventDetails.hostNumber }}</a
+            ><i class="pi pi-phone mr-2 text-sm"></i
+            >{{ eventDetails.hostNumber }}</a
           >
         </div>
       </div>
@@ -226,7 +231,7 @@
         </div>
 
         <div
-          class="show-all-button w-8rem text-center mr-3 mt-4 no-underline"
+          class="cursor-pointer w-8rem text-center mr-3 mt-4 no-underline"
           v-if="attendees.length > 6"
           @click="showAllAttendees"
         >
@@ -501,6 +506,7 @@ export default {
 .form-header {
   @media (max-width: $mobile-breakpoint) {
     align-self: center;
+    text-align: center;
   }
 }
 
@@ -519,11 +525,6 @@ export default {
 
 .spots-left {
   color: hsl(0, 75%, 55%);
-}
-
-i.pi {
-  margin-right: 4px;
-  font-size: 14px;
 }
 
 .host-info {
@@ -578,19 +579,8 @@ i.pi {
   }
 }
 
-.show-all-button {
-  cursor: pointer !important;
-}
-
 .avatar-item p {
   word-wrap: break-word;
-}
-
-.register-button {
-  @media (max-width: $mobile-breakpoint) {
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
 .toggle-details {
@@ -622,9 +612,5 @@ i.pi {
   @media (max-width: $mobile-breakpoint) {
     font-size: 20px !important;
   }
-}
-
-.social-share {
-  justify-content: center;
 }
 </style>
