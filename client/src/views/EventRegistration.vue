@@ -108,7 +108,7 @@
           />
         </div>
 
-        <div class="host-contact-details font-medium ml-2">
+        <div class="host-contact-details font-medium ml-0 md:ml-3">
           <p>
             Hosted by
             <span class="font-semibold">{{ eventDetails.hostName }}</span>
