@@ -286,7 +286,7 @@ p {
 
     .p-sidebar-close-icon {
       color: white;
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 }

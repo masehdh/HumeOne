@@ -137,7 +137,7 @@ export default {
 .mobile-nav-link {
   p {
     color: white;
-    opacity: 0.6;
+    opacity: 0.8;
     font-weight: 500;
   }
 
