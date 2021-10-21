@@ -62,7 +62,7 @@
             :description="
               'HumeOne brings people together by organizing intimate social gatherings and events. Sign up for free to start receiving invites in your area.'
             "
-            :linkProp="'https://www.humeone.com/'"
+            :linkProp="'https://www.humeone.com'"
           />
         </div>
       </div>

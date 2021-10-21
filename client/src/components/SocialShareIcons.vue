@@ -57,13 +57,13 @@ export default {
         return {
           facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.linkProp}&quote=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtag=%23HumeOne`,
           twitter: `https://twitter.com/intent/tweet?url=${this.linkProp}&text=HumeOne is hosting "${this.eventDetails.name}" on ${this.eventDetails.dateTime}. Check it out using the link below.&hashtags=HumeOne,ThingsToDo,Events`,
-          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.linkProp}`
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=https://humeone.com/event-registration?eventId%3D${this.eventDetails.id}`
         };
       } else {
         return {
           facebook: `https://www.facebook.com/dialog/share?app_id=431777641641190&href=${this.linkProp}&quote=${this.description}&hashtag=%23HumeOne`,
           twitter: `https://twitter.com/intent/tweet?url=${this.linkProp}&text=${this.description}&hashtags=HumeOne,ThingsToDo,Events`,
-          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url%3D${this.linkProp}`
+          linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${this.linkProp}`
         };
       }
     }
